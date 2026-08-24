@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg-slate: #0b1120;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(148, 163, 184, 0.12);
+      --border-hover: rgba(6, 182, 212, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-indigo: #818cf8;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #c084fc;
+      --code-bg: #030712;
+      --code-color: #38bdf8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 10px;
+      color: var(--text-main);
+    }
+
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Hero Header */
+    .header-container {
+      background: radial-gradient(circle at top right, rgba(244, 63, 94, 0.12), transparent 45%),
+                  radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.12), transparent 50%),
+                  #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 30px 34px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+    }
+
+    .header-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #f43f5e, #818cf8, #06b6d4);
+    }
+
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1.5px solid rgba(244, 63, 94, 0.45);
+      background: #1e293b;
+      box-shadow: 0 0 16px rgba(244, 63, 94, 0.25);
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-rose);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(244, 63, 94, 0.1);
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #fda4af;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-rose);
+      box-shadow: 0 0 8px var(--accent-rose);
+    }
+
+    .hero-content {
+      max-width: 860px;
+    }
+
+    .hero-title {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);
+    }
+    .btn-primary:hover {
+      background: #22d3ee;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      color: #e2e8f0;
+      border: 1px solid var(--card-border);
+    }
+    .btn-secondary:hover {
+      background: rgba(51, 65, 85, 0.8);
+      border-color: rgba(148, 163, 184, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Section Card */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #f1f5f9;
+    }
+
+    .pill {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+    .pill-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border: 1px solid rgba(6, 182, 212, 0.3); }
+    .pill-emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    /* Category Mechanism Table */
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    th {
+      padding: 10px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    .tag-badge {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      text-align: center;
+      min-width: 26px;
+    }
+
+    .tag-h { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+    .tag-b { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .tag-d { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border: 1px solid rgba(6, 182, 212, 0.3); }
+    .tag-s { background: rgba(129, 140, 248, 0.15); color: var(--accent-indigo); border: 1px solid rgba(129, 140, 248, 0.3); }
+    .tag-v { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .tag-g { background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3); }
+    .tag-t { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .tag-o { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.3); }
+
+    /* Lesson Card Grid */
+    .lessons-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .lesson-item {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 16px 20px;
+      transition: all 0.2s ease;
+    }
+
+    .lesson-item:hover {
+      border-color: var(--border-hover);
+      transform: translateX(4px);
+    }
+
+    .lesson-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .lesson-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lesson-number {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .lesson-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .lesson-body {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .lesson-takeaway {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #cbd5e1;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 10px 14px;
+      border-left: 3px solid var(--accent-cyan);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .code-inline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11.5px;
+      color: var(--code-color);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* TL;DR Strip */
+    .tldr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .tldr-box {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 12.5px;
+      color: #cbd5e1;
+      line-height: 1.45;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .tldr-dot {
+      color: var(--accent-cyan);
+      font-weight: 800;
+    }
+
+    /* Footer */
+    .footer-container {
+      background: radial-gradient(circle at bottom center, rgba(6, 182, 212, 0.08), transparent 70%), #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 32px 36px 24px 36px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+      margin-top: 12px;
+    }
+
+    .footer-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #f43f5e, #06b6d4, transparent);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 32px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .brand-col { display: flex; flex-direction: column; gap: 12px; }
+    .brand-header { display: flex; align-items: center; gap: 12px; }
+
+    .footer-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1.5px solid rgba(6, 182, 212, 0.4);
+      background: #1e293b;
+    }
+
+    .brand-title { font-size: 16px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.01em; }
+    .brand-desc { font-size: 13px; line-height: 1.55; color: var(--text-muted); max-width: 380px; }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+      margin-bottom: 14px;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #38bdf8; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #64748b;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .spec-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      .header-container { padding: 20px; }
+      .hero-title { font-size: 22px; }
+      .top-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-top { grid-template-columns: 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- HERO HEADER -->
+    <header class="header-container">
+      <div class="top-meta">
+        <div class="brand-group">
+          <img 
+            src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+            alt="AgenticAIExplorer Logo" 
+            class="brand-logo"
+          />
+          <div class="brand-name">
+            <span>AgenticAIExplorer</span>
+            <span class="brand-sub">Lessons Learnt &bull; crypto-tax-mcp</span>
+          </div>
+        </div>
+
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>Session: 2026-08-15 Hardened</span>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">Lessons Learned &mdash; crypto-tax-mcp (MCP Building)</h1>
+        <p class="hero-description">
+          Captured from live MCP integration debugging in Claude Desktop: tracing fabricated chat explanations back to real runtime defects, hardening server contracts, and enforcing zero-hallucination protocols.
+        </p>
+
+        <div class="btn-group">
+          <a data-path="/projects/mcp/crypto-tax-mcp" target="_top" class="btn btn-primary">
+            <span>← Crypto Tax Features &amp; 31 Tools</span>
+          </a>
+          <a data-path="/architecture/a-crypto-mcp" target="_top" class="btn btn-secondary">
+            <span>Architecture Specs</span>
+          </a>
+          <a data-path="/projects/mcp" target="_top" class="btn btn-secondary">
+            <span>MCP Registry</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: CATEGORY MECHANISM DEFINITION -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>🏷️ Category Tagging Mechanism (<code style="color:#38bdf8;">LESSONS_CATEGORIES</code>)</span>
+        <span class="pill pill-cyan">Standardized Taxonomy</span>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5;">
+        This repository implements a standardized tagging system for engineering post-mortems and lessons learned. Projects can adopt this mechanism by mapping entries to these category tags:
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 22%;">Category</th>
+              <th style="width: 8%; text-align: center;">Tag</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>HALLUCINATION</strong></td>
+              <td style="text-align: center;"><span class="tag-badge tag-h">H</span></td>
+              <td style="color: #cbd5e1;">Chat confidently invents mechanisms/mechanisms to explain tool results.</td>
+            </tr>
+            <tr>
+              <td><strong>BUG_DETECTION</strong></td>
+              <td style="text-align: center;"><span class="tag-badge tag-b">B</span></td>
+              <td style="color: #cbd5e1;">Faithful reporting uncovers real defects masked by model explanations.</td>
+            </tr>
+            <tr>
+              <td><strong>DEPENDENCY_MANAGEMENT</strong></td>
+              <td style="text-align: center;"><span class="tag-badge tag-d">D</span></td>
+              <td style="color: #cbd5e1;">Runtime dependencies must be explicitly declared and tested.</td>
+            </tr>
+            <tr>
+              <td><strong>SERVER_CONTRACTS</strong></td>
+              <td style="text-align: center;"><span class="tag-badge tag-s">S</span></td>
+              <td style="color: #cbd5e1;">Trust rules should be server-enforced, not per-conversation.</td>
+            </tr>
+            <tr>
+              <td><strong>VALIDATION</strong></td>
+              <td style="text-align: center;"><span class="tag-badge tag-v">V</span></td>
+              <td style="color: #cbd5e1;">Validation results must name the schema they validate against.</td>
+            </tr>
+            <tr>
+              <td><strong>GIT_OPS</strong></td>
+              <td style="text-align: center;"><span class="tag-badge tag-g">G</span></td>
+              <td style="color: #cbd5e1;">Git operations require awareness of state and reflog for safe recovery.</td>
+            </tr>
+            <tr>
+              <td><strong>TESTING_STRATEGY</strong></td>
+              <td style="text-align: center;"><span class="tag-badge tag-t">T</span></td>
+              <td style="color: #cbd5e1;">Sample-driven and surface testing catches data-quality traps.</td>
+            </tr>
+            <tr>
+              <td><strong>DOCUMENTATION</strong></td>
+              <td style="text-align: center;"><span class="tag-badge tag-o">O</span></td>
+              <td style="color: #cbd5e1;">Documentation should mirror documented failure modes with prompts.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SECTION 2: DETAILED LESSONS BY CATEGORY -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>📖 Captured Lessons by Category</span>
+        <span class="pill pill-emerald">10 Practical Rules</span>
+      </div>
+
+      <div class="lessons-grid">
+
+        <!-- Lesson 1 -->
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <div class="lesson-title-group">
+              <span class="lesson-number">01</span>
+              <span class="lesson-title">A chat's confident explanation is not evidence</span>
+            </div>
+            <span class="tag-badge tag-h">H</span>
+          </div>
+          <p class="lesson-body">
+            Claude Desktop summarized tool results into prose and invented mechanisms: it claimed a bridge failed on an "asset mismatch (ETH vs wETH)" when the canonical-asset registry (<code class="code-inline">engine/bridge.py</code>) resolves WETH&rarr;ETH and the real cause was a wallet-label mismatch; it claimed unpaired legs were in an "UNRESOLVED queue" (which only exists in on-chain staging, not CSV); and it reported an AES-SIV key as "32 bytes / 256-bit" when it is 64 bytes.
+          </p>
+          <div class="lesson-takeaway">
+            <strong>Lesson:</strong> When a chat cites a reason, treat it as a <em>Hypothesis To Verify</em>, not a fact. Reproduce with the tool directly (pure call, MCP Inspector, or Python invoke) &mdash; never trust the narrative.
+          </div>
+        </div>
+
+        <!-- Lesson 2 -->
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <div class="lesson-title-group">
+              <span class="lesson-number">02</span>
+              <span class="lesson-title">The numbers the tool returns are always correct; the interpretation is where lies form</span>
+            </div>
+            <div>
+              <span class="tag-badge tag-h">H</span>
+              <span class="tag-badge tag-t">T</span>
+            </div>
+          </div>
+          <p class="lesson-body">
+            Every numeric/flag fabrication traced to the model filling gaps around the numbers: <code class="code-inline">gl_balance:"0"</code> &rarr; it needed to name accounts; <code class="code-inline">valid:true</code> &rarr; it needed a schema. The raw output was accurate every time. Fix the explanation layer, not the engine.
+          </p>
+          <div class="lesson-takeaway">
+            <strong>Lesson:</strong> An "I don't know" from the model is a debugging asset. When the model stops explaining, start reading the stack trace.
+          </div>
+        </div>
+
+        <!-- Lesson 3 -->
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <div class="lesson-title-group">
+              <span class="lesson-number">03</span>
+              <span class="lesson-title">Fabrication can hide real bugs &mdash; and faithful reporting finds them</span>
+            </div>
+            <span class="tag-badge tag-b">B</span>
+          </div>
+          <p class="lesson-body">
+            Before the fidelity contract, the model glossed the encrypt failure as a "server-side implementation issue", masking a genuine defect: <code class="code-inline">security_encrypt_field</code> crashed with <code class="code-inline">NameError: name 'os' is not defined</code> (<code class="code-inline">os</code> used but never imported). Once the contract forced quoting raw errors, the bug was visible and fixed in minutes.
+          </p>
+          <div class="lesson-takeaway">
+            <strong>Lesson:</strong> Faithful, unembellished raw error reporting uncovers masked defects immediately.
+          </div>
+        </div>
+
+        <!-- Lesson 4 -->
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <div class="lesson-title-group">
+              <span class="lesson-number">04</span>
+              <span class="lesson-title">A one-line runtime dependency omission is invisible until a "success" path hits it</span>
+            </div>
+            <span class="tag-badge tag-d">D</span>
+          </div>
+          <p class="lesson-body">
+            The XSD validator (<code class="code-inline">validate_xsd</code>) was implemented but (a) <code class="code-inline">lxml</code> was missing in <code class="code-inline">pyproject.toml</code> and (b) never wired into <code class="code-inline">validate()</code>. <code class="code-inline">dac8_generate_report</code> returned <code class="code-inline">valid:true</code> from structural rules only, and the chat upgraded that to "fully conformant to the OECD schema". Both flaws were found by testing the public surface.
+          </p>
+          <div class="lesson-takeaway">
+            <strong>Lesson:</strong> Document and test the public surface (MCP tool outputs), not just internals. If a validator exists but is unreachable, the consumer sees silence where a failure should be.
+          </div>
+        </div>
+
+        <!-- Lesson 5 -->
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <div class="lesson-title-group">
+              <span class="lesson-number">05</span>
+              <span class="lesson-title">Encode trust rules in the server, not in a per-conversation prompt</span>
+            </div>
+            <span class="tag-badge tag-s">S</span>
+          </div>
+          <p class="lesson-body">
+            A pasted prompt worked only for that specific chat window. Baking the Fidelity Contract into the MCP server's <code class="code-inline">instructions</code> field (<code class="code-inline">MCPServer</code>, <code class="code-inline">server.py</code>) forces it to load into every session automatically.
+          </p>
+          <div class="lesson-takeaway">
+            <strong>Lesson:</strong> Server-enforced contracts beat per-conversation prompts for anything that must always hold across all client sessions.
+          </div>
+        </div>
+
+        <!-- Lesson 6 -->
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <div class="lesson-title-group">
+              <span class="lesson-number">06</span>
+              <span class="lesson-title">A "validation" result needs to name what it validated</span>
+            </div>
+            <div>
+              <span class="tag-badge tag-b">B</span>
+              <span class="tag-badge tag-v">V</span>
+            </div>
+          </div>
+          <p class="lesson-body">
+            After wiring XSD validation, the tools return <code class="code-inline">xsd_valid</code> and <code class="code-inline">schema</code> (<code class="code-inline">DAC8CARFMessage.xsd (OECD CARF v1)</code>). The contract rule says <code class="code-inline">valid:true</code> is not a conformance claim unless the output names the schema. Ground truth in the output prevents overclaiming.
+          </p>
+          <div class="lesson-takeaway">
+            <strong>Lesson:</strong> Validation output must name the schema it validates against to be meaningful and verifiable.
+          </div>
+        </div>
+
+        <!-- Lesson 7 -->
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <div class="lesson-title-group">
+              <span class="lesson-number">07</span>
+              <span class="lesson-title">Git hook failures spew sed noise and hide behind exit 0</span>
+            </div>
+            <span class="tag-badge tag-g">G</span>
+          </div>
+          <p class="lesson-body">
+            The pre-commit hook's attribution stripper broke because <code class="code-inline">/</code> (sed's default delimiter) collided with pattern slashes (<code class="code-inline">// Generated by Claude.*</code>) &rarr; bad flag in substitute command on every commit. Because it was masked with <code class="code-inline">exit 0</code>, commits still succeeded silently.
+          </p>
+          <div class="lesson-takeaway">
+            <strong>Lesson:</strong> When a hook prints errors but commits succeed, check for delimiter collisions and <code class="code-inline">|| true</code> / <code class="code-inline">exit 0</code> masking. Fix: use a safe delimiter (<code class="code-inline">s|pattern||</code>).
+          </div>
+        </div>
+
+        <!-- Lesson 8 -->
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <div class="lesson-title-group">
+              <span class="lesson-number">08</span>
+              <span class="lesson-title">Git surgery needs reflog awareness</span>
+            </div>
+            <span class="tag-badge tag-g">G</span>
+          </div>
+          <p class="lesson-body">
+            Resetting <code class="code-inline">HEAD~1</code> twice overstepped back past the intended commit. While <code class="code-inline">reflog</code> and <code class="code-inline">origin/main</code> made recovery straightforward, a <code class="code-inline">git reset --hard</code> with uncommitted docs would have destroyed work permanently.
+          </p>
+          <div class="lesson-takeaway">
+            <strong>Lesson:</strong> Prefer <code class="code-inline">git reset --soft/mixed</code> to specific commit SHAs, and confirm <code class="code-inline">git status</code> clean before and after.
+          </div>
+        </div>
+
+        <!-- Lesson 9 -->
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <div class="lesson-title-group">
+              <span class="lesson-number">09</span>
+              <span class="lesson-title">Sample-driven testing catches data-quality traps</span>
+            </div>
+            <span class="tag-badge tag-t">T</span>
+          </div>
+          <p class="lesson-body">
+            Imported transfer legs with mismatched wallet labels exposed that (a) the matcher is deliberately conservative, (b) canonical-asset logic matters for reasons, and (c) warnings surface unpaired legs that chat prose would otherwise mask as "unresolved".
+          </p>
+          <div class="lesson-takeaway">
+            <strong>Lesson:</strong> Maintain a small, dirty, adversarial CSV in <code class="code-inline">data/</code> to test conservative matching, edge cases, and canonical asset resolution.
+          </div>
+        </div>
+
+        <!-- Lesson 10 -->
+        <div class="lesson-item">
+          <div class="lesson-header">
+            <div class="lesson-title-group">
+              <span class="lesson-number">10</span>
+              <span class="lesson-title">Documentation follows the failure mode</span>
+            </div>
+            <span class="tag-badge tag-o">O</span>
+          </div>
+          <p class="lesson-body">
+            Three dedicated documents mirror the recorded failure incidents: <code class="code-inline">docs/MCP_SETUP.md</code> (connection guide), <code class="code-inline">docs/PLAYBOOK.md</code> (trap tests for fabrication), and this retrospective. Future sessions can localize fabrications in minutes using T1&ndash;T7 prompts.
+          </p>
+          <div class="lesson-takeaway">
+            <strong>Lesson:</strong> Documentation should directly reflect real failure modes with localized test prompts to verify system trust boundaries.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 3: TL;DR EXECUTIVE SUMMARY -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>⚡ Executive Summary (TL;DR)</span>
+      </div>
+
+      <div class="tldr-grid">
+        <div class="tldr-box">
+          <span class="tldr-dot">&bull;</span>
+          <span><strong>Tool output is ground truth</strong>; chat prose is always a hypothesis to verify.</span>
+        </div>
+        <div class="tldr-box">
+          <span class="tldr-dot">&bull;</span>
+          <span>When a chat cannot explain, that is a signal to inspect the stack trace and code.</span>
+        </div>
+        <div class="tldr-box">
+          <span class="tldr-dot">&bull;</span>
+          <span><strong>Test the exported surface</strong> (MCP tools), not just isolated internal logic.</span>
+        </div>
+        <div class="tldr-box">
+          <span class="tldr-dot">&bull;</span>
+          <span><strong>Server-enforced contracts</strong> beat per-conversation prompt instructions.</span>
+        </div>
+        <div class="tldr-box">
+          <span class="tldr-dot">&bull;</span>
+          <span>Validation output must name the exact schema it validated against.</span>
+        </div>
+        <div class="tldr-box">
+          <span class="tldr-dot">&bull;</span>
+          <span>Silent git hook failures will persist; test hook scripts and commits explicitly.</span>
+        </div>
+        <div class="tldr-box">
+          <span class="tldr-dot">&bull;</span>
+          <span>Git surgery requires reflog awareness and soft/mixed reset discipline.</span>
+        </div>
+        <div class="tldr-box">
+          <span class="tldr-dot">&bull;</span>
+          <span>Sample-driven testing with dirty CSVs catches data-matching traps early.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-container">
+      <div class="footer-top">
+        <div class="brand-col">
+          <div class="brand-header">
+            <img 
+              src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+              alt="AgenticAIExplorer Logo" 
+              class="footer-logo"
+            />
+            <div class="brand-title">AgenticAIExplorer</div>
+          </div>
+          <p class="brand-desc">
+            Continuous technical log documenting deterministic architectures, Model Context Protocol primitives, and production engineering retrospectives.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Relevant Pages</h4>
+          <ul class="footer-links">
+            <li><a data-path="/projects/mcp/crypto-tax-mcp" target="_top">Crypto Tax Features (31 Tools)</a></li>
+            <li><a data-path="/architecture/a-crypto-mcp" target="_top">Crypto Tax Architecture &amp; Security</a></li>
+            <li><a data-path="/projects/mcp" target="_top">MCP Server Registry</a></li>
+            <li><a data-path="/home" target="_top">Home Dashboard</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Category Taxonomy</h4>
+          <ul class="footer-links">
+            <li><a href="#" style="pointer-events: none;">[H] Hallucination Defense</a></li>
+            <li><a href="#" style="pointer-events: none;">[B] Bug Detection &amp; Fidelity</a></li>
+            <li><a href="#" style="pointer-events: none;">[S] Server-Enforced Contracts</a></li>
+            <li><a href="#" style="pointer-events: none;">[V] Schema Validation</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <span>&copy; AgenticAIExplorer. Lessons Learnt &bull; crypto-tax-mcp.</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <span class="spec-pill">FastMCP</span>
+          <span class="spec-pill">LESSONS_CATEGORIES</span>
+          <span class="spec-pill">Fidelity Contract</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- RAW GITHUB CONFIG SOURCE OF TRUTH (Bypasses CDN Cache) -->
+  <script src="https://raw.githubusercontent.com/th-an/site-config/main/site-config.js"></script>
+  <script>
+    (function() {
+      const config = window.SITE_CONFIG || {
+        base: "https://sites.google.com/view/s-agenticaiexplorer",
+        routes: {
+          home: "/home",
+          projects: "/projects",
+          architecture: "/architecture",
+          lessonsLearnt: "/lessons-learnt",
+          mcp: "/projects/mcp",
+          cryptoTax: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxArch: "/architecture/a-crypto-mcp",
+          cryptoTaxLessons: "/lessons-learnt/l-crypto-tax"
+        }
+      };
+
+      document.querySelectorAll("a[data-path]").forEach(function(el) {
+        el.href = (window.GLOBAL_SITE_BASE || config.base) + el.getAttribute("data-path");
+      });
+
+      document.querySelectorAll("a[data-route]").forEach(function(el) {
+        const key = el.getAttribute("data-route");
+        if (config.routes && config.routes[key]) {
+          el.href = (window.GLOBAL_SITE_BASE || config.base) + config.routes[key];
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
