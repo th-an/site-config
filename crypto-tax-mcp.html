@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg-slate: #0b1120;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(148, 163, 184, 0.12);
+      --border-hover: rgba(6, 182, 212, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-indigo: #818cf8;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --code-bg: #1e293b;
+      --code-color: #38bdf8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 10px;
+      color: var(--text-main);
+    }
+
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Hero Header */
+    .header-container {
+      background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.14), transparent 45%),
+                  radial-gradient(circle at bottom left, rgba(129, 140, 248, 0.12), transparent 50%),
+                  #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 30px 34px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+    }
+
+    .header-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #06b6d4, #818cf8, #10b981);
+    }
+
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1.5px solid rgba(6, 182, 212, 0.45);
+      background: #1e293b;
+      box-shadow: 0 0 16px rgba(6, 182, 212, 0.25);
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #67e8f9;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 8px var(--accent-cyan);
+    }
+
+    .hero-content {
+      max-width: 820px;
+    }
+
+    .hero-title {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);
+    }
+    .btn-primary:hover {
+      background: #22d3ee;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      color: #e2e8f0;
+      border: 1px solid var(--card-border);
+    }
+    .btn-secondary:hover {
+      background: rgba(51, 65, 85, 0.8);
+      border-color: rgba(148, 163, 184, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-amber {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .btn-amber:hover {
+      background: rgba(245, 158, 11, 0.25);
+      border-color: var(--accent-amber);
+      transform: translateY(-2px);
+    }
+
+    /* Metric Tiles */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      position: relative;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .card-tools::before { background: linear-gradient(90deg, #06b6d4, #3b82f6); }
+    .card-resources::before { background: linear-gradient(90deg, #10b981, #059669); }
+    .card-prompts::before { background: linear-gradient(90deg, #818cf8, #a855f7); }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.65);
+      border-color: rgba(148, 163, 184, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .card-tools .icon-badge { background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6, 182, 212, 0.3); color: var(--accent-cyan); }
+    .card-resources .icon-badge { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--accent-emerald); }
+    .card-prompts .icon-badge { background: rgba(129, 140, 248, 0.12); border: 1px solid rgba(129, 140, 248, 0.3); color: var(--accent-indigo); }
+
+    .badge-pill {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+
+    .card-tools .badge-pill { background: rgba(6, 182, 212, 0.15); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.25); }
+    .card-resources .badge-pill { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.25); }
+    .card-prompts .badge-pill { background: rgba(129, 140, 248, 0.15); color: #c7d2fe; border: 1px solid rgba(129, 140, 248, 0.25); }
+
+    .metric-value { font-size: 34px; font-weight: 800; line-height: 1.1; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .metric-title { font-size: 17px; font-weight: 700; color: #e2e8f0; margin-bottom: 12px; }
+
+    .tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .tag {
+      font-size: 11px;
+      font-weight: 500;
+      background: rgba(15, 23, 42, 0.6);
+      color: #cbd5e1;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .description { font-size: 13px; line-height: 1.5; color: var(--text-muted); margin-top: 6px; }
+
+    /* Accordions */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; margin-bottom: 4px; }
+    .section-title { font-size: 18px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.01em; }
+
+    .accordion-container { display: flex; flex-direction: column; gap: 12px; }
+
+    details {
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    details[open] { border-color: var(--border-hover); box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4); }
+
+    summary {
+      list-style: none;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      background: rgba(30, 41, 59, 0.3);
+      transition: background 0.2s ease;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+    summary:hover { background: rgba(30, 41, 59, 0.6); }
+
+    .summary-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .tool-count-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      background: rgba(6, 182, 212, 0.12);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+
+    .chevron { font-size: 12px; color: var(--text-muted); transition: transform 0.25s ease; }
+    details[open] .chevron { transform: rotate(180deg); color: var(--accent-cyan); }
+
+    .table-wrapper { padding: 12px 20px 20px 20px; overflow-x: auto; }
+
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+    th {
+      padding: 10px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+    }
+    td { padding: 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.06); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+
+    .tool-name {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--code-color);
+      background: var(--code-bg);
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .tool-desc { color: #cbd5e1; line-height: 1.45; }
+
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Footer */
+    .footer-container {
+      background: radial-gradient(circle at bottom center, rgba(6, 182, 212, 0.08), transparent 70%), #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 32px 36px 24px 36px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+      margin-top: 12px;
+    }
+
+    .footer-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #06b6d4, #818cf8, transparent);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 32px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .brand-col { display: flex; flex-direction: column; gap: 12px; }
+    .brand-header { display: flex; align-items: center; gap: 12px; }
+
+    .footer-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1.5px solid rgba(6, 182, 212, 0.4);
+      background: #1e293b;
+    }
+
+    .brand-title { font-size: 16px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.01em; }
+    .brand-desc { font-size: 13px; line-height: 1.55; color: var(--text-muted); max-width: 380px; }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+      margin-bottom: 14px;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #38bdf8; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #64748b;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .spec-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      .header-container { padding: 20px; }
+      .hero-title { font-size: 22px; }
+      .top-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-top { grid-template-columns: 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- HERO HEADER -->
+    <header class="header-container">
+      <div class="top-meta">
+        <div class="brand-group">
+          <img 
+            src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+            alt="AgenticAIExplorer Logo" 
+            class="brand-logo"
+          />
+          <div class="brand-name">
+            <span>AgenticAIExplorer</span>
+            <span class="brand-sub">Crypto Tax MCP Primitives</span>
+          </div>
+        </div>
+
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>FastMCP Server v1.0 Live</span>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">Crypto Tax MCP Feature Inventory &amp; Primitives</h1>
+        <p class="hero-description">
+          Complete inventory of 31 executable tools, 3 deterministic read-only resources, and guided compliance workflows enforcing German EStG §23/§22 tax rules, DAC8/CARF shadow reporting, and RFC 5297 cryptographic attestation.
+        </p>
+
+        <div class="btn-group">
+          <a data-path="/projects/mcp" target="_top" class="btn btn-secondary">
+            <span>← MCP Server Registry</span>
+          </a>
+          <a data-path="/architecture/a-crypto-mcp" target="_top" class="btn btn-primary">
+            <span>Architecture &amp; Security Specs →</span>
+          </a>
+          <a data-path="/lessons-learnt/l-crypto-tax" target="_top" class="btn btn-amber">
+            <span>Lessons Learnt (Post-Mortem) ⚠️</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- TOP METRIC TILES -->
+    <div class="grid-container">
+      <div class="card card-tools">
+        <div>
+          <div class="card-header">
+            <div class="icon-badge">⚡</div>
+            <span class="badge-pill">Primitives</span>
+          </div>
+          <div class="metric-value">31</div>
+          <div class="metric-title">MCP Tools</div>
+          <p class="description">Executable primitives handling real-time ledger accounting, compliance pipelines, and crypto forensic operations.</p>
+        </div>
+        <div class="tag-container">
+          <span class="tag">Portfolio</span>
+          <span class="tag">Cross-Chain</span>
+          <span class="tag">German Tax</span>
+          <span class="tag">ERP Sync</span>
+          <span class="tag">Forensics</span>
+          <span class="tag">Security</span>
+          <span class="tag">DAC8</span>
+          <span class="tag">On-Chain</span>
+        </div>
+      </div>
+
+      <div class="card card-resources">
+        <div>
+          <div class="card-header">
+            <div class="icon-badge">📦</div>
+            <span class="badge-pill">Read-Only</span>
+          </div>
+          <div class="metric-value">03</div>
+          <div class="metric-title">Deterministic Resources</div>
+          <p class="description">URI-addressable, write-once snapshots providing deterministic states directly into the model context.</p>
+        </div>
+        <div class="tag-container">
+          <span class="tag">Holdings Summary</span>
+          <span class="tag">Open Tax Lots</span>
+          <span class="tag">DAC8 / CARF XML</span>
+        </div>
+      </div>
+
+      <div class="card card-prompts">
+        <div>
+          <div class="card-header">
+            <div class="icon-badge">🧭</div>
+            <span class="badge-pill">Workflows</span>
+          </div>
+          <div class="metric-value">01</div>
+          <div class="metric-title">Guided Prompt</div>
+          <p class="description">End-to-end interactive tax assessment engine with zero-fabrication guarantees.</p>
+        </div>
+        <div class="tag-container">
+          <span class="tag">german_tax_review</span>
+          <span class="tag">Import → Analyse → Simulate → Report</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 ACCORDIONS -->
+    <div class="section-header">
+      <div class="section-title">Complete Tool Primitives Inventory</div>
+    </div>
+
+    <div class="accordion-container">
+      <!-- Group 1 -->
+      <details open>
+        <summary>
+          <div class="summary-title">
+            <span>📊 Portfolio &amp; Ledger</span>
+            <span class="tool-count-badge">3 Tools</span>
+          </div>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th style="width: 32%;">Primitive</th><th>Functional Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="tool-name">portfolio_create</span></td><td class="tool-desc">Create a client portfolio (individual, tax-client, or treasury).</td></tr>
+              <tr><td><span class="tool-name">portfolio_list</span></td><td class="tool-desc">List all portfolios currently registered in the database.</td></tr>
+              <tr><td><span class="tool-name">transactions_import_csv</span></td><td class="tool-desc">Import transactions from CSV (canonical format with automatic column alias resolution).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- Group 2 -->
+      <details>
+        <summary>
+          <div class="summary-title">
+            <span>🌉 Cross-Chain Bridges</span>
+            <span class="tool-count-badge">1 Tool</span>
+          </div>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th style="width: 32%;">Primitive</th><th>Functional Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="tool-name">reconcile_crosschain_bridges</span></td><td class="tool-desc">Pair bridge/wrapped-transfer legs (<code style="color:#67e8f9">SIGNALS/HEURISTIC</code>) and preserve cost basis across chains.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- Group 3 -->
+      <details>
+        <summary>
+          <div class="summary-title">
+            <span>🇩🇪 German Tax Engine (§23 EStG / §22 Nr.3)</span>
+            <span class="tool-count-badge">6 Tools</span>
+          </div>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th style="width: 32%;">Primitive</th><th>Functional Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="tool-name">tax_calculate</span></td><td class="tool-desc">Per-jurisdiction tax summary calculation for one calendar year.</td></tr>
+              <tr><td><span class="tool-name">tax_jurisdictions</span></td><td class="tool-desc">List installed rule jurisdictions, strategies, and statutory exemption limits.</td></tr>
+              <tr><td><span class="tool-name">tax_freigrenze_status</span></td><td class="tool-desc">Gains so far vs the §23 Freigrenze headroom (€600/€1,000, all-or-nothing evaluation).</td></tr>
+              <tr><td><span class="tool-name">tax_holding_analysis</span></td><td class="tool-desc">Per-lot holding-period analysis: tax-exempt lots and maturity schedule for active lots.</td></tr>
+              <tr><td><span class="tool-name">tax_simulate_disposal</span></td><td class="tool-desc">What-if liquidation scenario: lots consumed, realized gains, and Freigrenze limit impact.</td></tr>
+              <tr><td><span class="tool-name">tax_report</span></td><td class="tool-desc">Structured tax report generation for one year (Markdown summary + JSON audit payload).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- Group 4 -->
+      <details>
+        <summary>
+          <div class="summary-title">
+            <span>💼 ERP &amp; GL Sync</span>
+            <span class="tool-count-badge">3 Tools</span>
+          </div>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th style="width: 32%;">Primitive</th><th>Functional Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="tool-name">export_gl_entries</span></td><td class="tool-desc">Balanced SKR03/SKR04 double-entry journal (debit/credit posting lines).</td></tr>
+              <tr><td><span class="tool-name">export_datev_extf</span></td><td class="tool-desc">DATEV EXTF CSV batch export (Buchungsstapel, format version 13).</td></tr>
+              <tr><td><span class="tool-name">export_gl_json</span></td><td class="tool-desc">JSON export of the balanced journal tailored for modern ERP APIs.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- Group 5 -->
+      <details>
+        <summary>
+          <div class="summary-title">
+            <span>🔍 Forensics &amp; MEV Detection</span>
+            <span class="tool-count-badge">2 Tools</span>
+          </div>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th style="width: 32%;">Primitive</th><th>Functional Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="tool-name">forensics_classify_incoming</span></td><td class="tool-desc">Dust/spam classification pipeline (BMF Rz. 72–73) for unsolicited incoming transfers.</td></tr>
+              <tr><td><span class="tool-name">forensics_detect_mev</span></td><td class="tool-desc">Detect atomic intra-block structures (flash loans, same-block sandwich exploits).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- Group 6 -->
+      <details>
+        <summary>
+          <div class="summary-title">
+            <span>🔐 Security &amp; Attestation</span>
+            <span class="tool-count-badge">5 Tools</span>
+          </div>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th style="width: 32%;">Primitive</th><th>Functional Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="tool-name">security_generate_key</span></td><td class="tool-desc">Generate an RFC 5297 AES-SIV key (64 bytes &rarr; AES-256-SIV).</td></tr>
+              <tr><td><span class="tool-name">security_encrypt_field</span></td><td class="tool-desc">Deterministically encrypt a low-entropy, searchable database field.</td></tr>
+              <tr><td><span class="tool-name">security_decrypt_field</span></td><td class="tool-desc">Decrypt and authenticate a ciphertext (verifying matching key + authentication tag).</td></tr>
+              <tr><td><span class="tool-name">security_attest_year</span></td><td class="tool-desc">Tamper-evident HMAC-SHA256 attestation seal of a single calendar year's computation.</td></tr>
+              <tr><td><span class="tool-name">security_attest_verify</span></td><td class="tool-desc">Verify an attestation HMAC against the original payload state.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- Group 7 -->
+      <details>
+        <summary>
+          <div class="summary-title">
+            <span>📜 DAC8 / CARF Shadow Reporting</span>
+            <span class="tool-count-badge">4 Tools</span>
+          </div>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th style="width: 32%;">Primitive</th><th>Functional Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="tool-name">dac8_generate_report</span></td><td class="tool-desc">Generate the exact XML a CASP would file regarding the taxpayer (reconciliation artifact).</td></tr>
+              <tr><td><span class="tool-name">dac8_validate</span></td><td class="tool-desc">Validate DAC8/CARF XML: structural constraints + OECD CARF v1 XSD conformance.</td></tr>
+              <tr><td><span class="tool-name">dac8_reconcile</span></td><td class="tool-desc">Diff the taxpayer's shadow report against a CASP's published tax report.</td></tr>
+              <tr><td><span class="tool-name">dac8_archive_list</span></td><td class="tool-desc">Immutable DAC8 shadow-report snapshots (§147 AO 10-year statutory retention).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- Group 8 -->
+      <details>
+        <summary>
+          <div class="summary-title">
+            <span>⛓️ On-Chain Ingestion</span>
+            <span class="tool-count-badge">7 Tools</span>
+          </div>
+          <span class="chevron">▼</span>
+        </summary>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th style="width: 32%;">Primitive</th><th>Functional Purpose</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="tool-name">ingest_start_sync</span></td><td class="tool-desc">Attach an on-chain Ethereum wallet address to an active portfolio.</td></tr>
+              <tr><td><span class="tool-name">ingest_sync_status</span></td><td class="tool-desc">Query block head vs finalized block height, staging queue depth, and resolved counts.</td></tr>
+              <tr><td><span class="tool-name">ingest_unresolved</span></td><td class="tool-desc">Honest-boundary queue: unclassified events held out of the main ledger.</td></tr>
+              <tr><td><span class="tool-name">ingest_set_price</span></td><td class="tool-desc">Pin a manual historical EUR price into the write-once price snapshot.</td></tr>
+              <tr><td><span class="tool-name">ingest_finalize</span></td><td class="tool-desc">Commit finalized-depth staged events across the ledger gate into core state.</td></tr>
+              <tr><td><span class="tool-name">ingest_resolve_event</span></td><td class="tool-desc">Re-run the deterministic classification pipeline for a single UNRESOLVED event.</td></tr>
+              <tr><td><span class="tool-name">ingest_backfill</span></td><td class="tool-desc">Historical <code style="color:#67e8f9">eth_getLogs</code> scan stub (RPC archive connection placeholder).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- REGULATORY ALIGNMENT MATRIX -->
+    <div class="section-card">
+      <div class="section-header" style="margin-top:0; margin-bottom: 12px;">
+        <div class="section-title">Regulatory &amp; Statutory Compliance Matrix</div>
+      </div>
+      <div class="table-wrapper" style="padding:0;">
+        <table>
+          <thead>
+            <tr><th style="width: 30%;">Instrument / Standard</th><th>Regulatory Coverage &amp; Implementation Scope</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>German EStG §23</strong></td><td>Private disposal gains; 1-yr / 10-yr holding periods; €600/€1,000 Freigrenze</td></tr>
+            <tr><td><strong>German EStG §22 Nr.3</strong></td><td>Taxable income from staking, lending, airdrops, and mining</td></tr>
+            <tr><td><strong>BMF Schreiben 10.05.2022</strong></td><td>Holding-period rules (Rz. 60) and dust/spam treatment (Rz. 72–73)</td></tr>
+            <tr><td><strong>DAC8 / OECD CARF</strong></td><td>Shadow-report XML generation; full validation against DAC8CARFMessage.xsd v1</td></tr>
+            <tr><td><strong>German AO §147</strong></td><td>10-year immutable audit retention for DAC8 archives</td></tr>
+            <tr><td><strong>RFC 5297</strong></td><td>AES-SIV deterministic at-rest field encryption</td></tr>
+            <tr><td><strong>GDPR (EU 2016/679)</strong></td><td>Data minimisation via synthetic test sets; zero repo key persistence</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-container">
+      <div class="footer-top">
+        <div class="brand-col">
+          <div class="brand-header">
+            <img 
+              src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+              alt="AgenticAIExplorer Logo" 
+              class="footer-logo"
+            />
+            <div class="brand-title">AgenticAIExplorer</div>
+          </div>
+          <p class="brand-desc">
+            Continuous technical log documenting deterministic architectures, Model Context Protocol primitives, and production engineering retrospectives.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a data-path="/home" target="_top">Home Dashboard</a></li>
+            <li><a data-path="/projects/mcp" target="_top">MCP Server Registry</a></li>
+            <li><a data-path="/architecture/a-crypto-mcp" target="_top">Crypto Tax Architecture</a></li>
+            <li><a data-path="/lessons-learnt/l-crypto-tax" target="_top">Crypto Tax Lessons Learnt</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Standards</h4>
+          <ul class="footer-links">
+            <li><a href="#" style="pointer-events: none;">Model Context Protocol</a></li>
+            <li><a href="#" style="pointer-events: none;">RFC 5297 AES-SIV</a></li>
+            <li><a href="#" style="pointer-events: none;">Deterministic Zero-Drift</a></li>
+            <li><a href="#" style="pointer-events: none;">Fidelity Contract v1.0</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <span>&copy; AgenticAIExplorer. Model Context Protocol Primitives Registry.</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <span class="spec-pill">FastMCP</span>
+          <span class="spec-pill">Python 3.11+</span>
+          <span class="spec-pill">Append-Only Audit</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- RAW GITHUB CONFIG SOURCE OF TRUTH (Bypasses CDN Cache) -->
+  <script src="https://raw.githubusercontent.com/th-an/site-config/main/site-config.js"></script>
+  <script>
+    (function() {
+      const config = window.SITE_CONFIG || {
+        base: "https://sites.google.com/view/s-agenticaiexplorer",
+        routes: {
+          home: "/home",
+          projects: "/projects",
+          architecture: "/architecture",
+          lessonsLearnt: "/lessons-learnt",
+          mcp: "/projects/mcp",
+          cryptoTax: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxArch: "/architecture/a-crypto-mcp",
+          cryptoTaxLessons: "/lessons-learnt/l-crypto-tax"
+        }
+      };
+
+      document.querySelectorAll("a[data-path]").forEach(function(el) {
+        el.href = (window.GLOBAL_SITE_BASE || config.base) + el.getAttribute("data-path");
+      });
+
+      document.querySelectorAll("a[data-route]").forEach(function(el) {
+        const key = el.getAttribute("data-route");
+        if (config.routes && config.routes[key]) {
+          el.href = (window.GLOBAL_SITE_BASE || config.base) + config.routes[key];
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
