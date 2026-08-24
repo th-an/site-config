@@ -119,6 +119,45 @@ Created `EMBED_TROUBLESHOOTING.md:b86075c` (2.8KB) with 4 solutions (touch-actio
 
 **Lesson:** Paste actual Chrome console excerpts (`about:blank:1 ...`, `content.js:7 ...`, `l-crypto-tax:1 Uncaught ...`) into the doc — future debugging localizes in minutes via `grep` for `allow-top-navigation` or `X-Frame-Options`.
 
+### ARCHITECTURE (continued)
+
+#### A12. `Content-Security-Policy: frame-ancestors https://google-admin.corp.google.com` blocks framing `sites.google.com` inside Pages
+After `b3ae80a` (`target="_self"` for `By URL` same-embed), clicks did `window.location.href = "https://sites.google.com/view/s-agenticaiexplorer/..."` inside `https://th-an.github.io/site-config/*.html` iframe. Chrome console showed `Framing 'https://sites.google.com/' violates ... frame-ancestors https://google-admin.corp.google.com` — the Google Sites page can only be framed by `google-admin.corp.google.com`, not by `th-an.github.io`.
+
+**Lesson:** Google Sites URLs **cannot be framed** at all (CSP `frame-ancestors` + `X-Frame-Options: DENY`). For same-embed navigation in a Pages iframe, never navigate to `sites.google.com` — stay on `th-an.github.io` origin.
+
+#### A13. GitHub Pages must be enabled and repo must be PUBLIC for `By URL` to work
+`gh repo view th-an/site-config --json visibility` showed `PUBLIC`, but `gh api repos/th-an/site-config/pages` returned `404` (Pages not enabled). `By URL` with `https://raw.githubusercontent.com/...` failed with `cant embed due to provider site permissions` because `raw.githubusercontent` serves `Content-Type: text/plain` + `CSP: default-src 'none'` — Google rejects it. `POST repos/th-an/site-config/pages {"source":{"branch":"main","path":"/"}}` enabled `https://th-an.github.io/site-config/` (`Content-Type: text/html`, no `DENY`), which `By URL` accepts.
+
+**Lesson:** For `By URL` embeds, enable Pages (`gh api POST`) and use `https://th-an.github.io/site-config/*.html` (not raw). Verify with `curl -I` that it returns `200` and no `frame-ancestors` block before embedding.
+
+### NAVIGATION (continued)
+
+#### N14. Same-embed via `pageMap` avoids CSP/X-Frame-Options — the fix that made it work
+Fixed at `ff95dbe` (8 files, `b3ae80a`→`ff95dbe`): when `window.location.hostname === "th-an.github.io"` (i.e., Pages `By URL` embed), clicks no longer do `base + "/projects/mcp/crypto-tax-mcp"` → `sites.google.com` (blocked). Instead, `pageMap` does `window.location.href = "./" + file` → e.g., `a-crypto-mcp.html` → `./crypto-tax-mcp.html` = `https://th-an.github.io/site-config/crypto-tax-mcp.html` (same origin, no CSP, stays inside embed, no new tab). `href` still set to Google Sites URL for SEO/fallback, but `click` handler overrides for Pages.
+
+```js
+const pageMap = {"/home":"home.html","/projects":"projects.html","/projects/mcp":"mcp.html","/projects/mcp/crypto-tax-mcp":"crypto-tax-mcp.html","/architecture":"architecture.html","/architecture/a-crypto-mcp":"a-crypto-mcp.html","/lessons-learnt":"lessons-learnt.html","/lessons-learnt/l-crypto-tax":"l-crypto-tax.html"};
+if (isPagesEmbed) { window.location.href = "./" + pageMap[rawPath]; }
+```
+
+**Lesson:** For `By URL` Pages embeds, **do not** navigate to `sites.google.com` inside the iframe — map routes to sibling `*.html` files on the same `th-an.github.io` origin. This gives same-embed navigation without sandbox/CSP blocks or new tabs (confirmed working after `ff95dbe`).
+
+#### N15. `_self` vs `_top` vs `_blank` decision tree for Google Sites embeds
+- `Embed → Embed code` (`inner-frame-minified.html` sandbox without `allow-top-navigation`): `_top` always blocked in Chrome/Safari → must use `_blank` via `allow-popups` (new tab) — `c5c4696`/`519c071`
+- `Embed → By URL` with `raw.githubusercontent` (text/plain, CSP `default-src 'none'`): provider rejects — “cant embed due to provider site permissions”
+- `Embed → By URL` with `th-an.github.io` Pages (no `DENY`, norestrictive `frame-ancestors`): `_self` + `pageMap` → same-embed (no new tab, no CSP) — `ff95dbe` (the working fix)
+- `target="_top"` + simple `el.href = base+path` only works if embed method is not sandboxed (which Google never provides for custom code)
+
+**Lesson:** Document the decision tree: `Embed code → _blank (new tab)` vs `By URL Pages → _self + pageMap (same-embed)`. If same-tab **top** (change Google Sites URL bar) is required, do not use an embed at all — use Google Sites native page links.
+
+### BROWSER_COMPAT (continued)
+
+#### B16. `BrowserAutomation` extension noise vs real `frame-ancestors`/`X-Frame-Options` errors
+Console showed `content.js:7 [BrowserAutomation] Content script loaded` + `Uncaught (in promise) Error: A listener indicated an asynchronous response ... message channel closed`. This is a **Chrome extension**, not your code — disable the extension to confirm. Real block is `Framing 'https://sites.google.com/' violates ... frame-ancestors` (CSP) and `Unsafe attempt ... allow-top-navigation` (sandbox).
+
+**Lesson:** Filter console: ignore `BrowserAutomation` and `allow-same-origin can escape` info, focus on `frame-ancestors` and `allow-top-navigation` — those are the actionable blocks.
+
 ---
 
 ## TL;DR
@@ -127,11 +166,14 @@ Created `EMBED_TROUBLESHOOTING.md:b86075c` (2.8KB) with 4 solutions (touch-actio
 - Use `https://raw.githubusercontent.com/.../site-config.js` in embeds — jsDelivr CDN caches stale.
 - Google Sites Embed code is sandboxed **without** `allow-top-navigation` — `target="_top"` always blocked in Chrome.
 - Google Sites `X-Frame-Options: DENY` blocks iframe fallback — go `top → _blank` directly.
-- Chrome new-tab via `_blank`/`allow-popups` is the only Chrome-compatible embed navigation; Safari same-tab is lenient — test both.
+- Chrome new-tab via `_blank`/`allow-popups` is the only Chrome-compatible **Embed code** navigation; Safari same-tab is lenient — test both.
 - `html,body{touch-action:pan-y}` + viewport + adequate embed height fixes Android gesture, not CSS alone.
 - Batch `sed -i '' 's/Post-Mortem/Retrospective/g'` etc. enforces neutral terms — check for double `retrospective retrospectives`.
 - 8-page sequence needs reflog-aware `git log` and raw GitHub verification, not CDN.
 - Document real console errors verbatim for fast future triage.
+- `frame-ancestors https://google-admin.corp.google.com` also blocks framing `sites.google.com` inside Pages — use same-origin `pageMap` (`ff95dbe`) for `By URL` same-embed.
+- Enable Pages (`gh api POST pages`) and use `https://th-an.github.io/site-config/*.html` for `By URL` — `raw.githubusercontent` is rejected by provider permissions.
+- Ignore `BrowserAutomation` extension `message channel closed` noise — focus on `frame-ancestors`/`allow-top-navigation`.
 
 | Tag | When to Use |
 |-----|-------------|
