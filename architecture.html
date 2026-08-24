@@ -471,13 +471,13 @@
         </p>
 
         <div class="btn-group">
-          <a data-path="/home" target="_self" class="btn btn-secondary">
+          <a data-path="/home" target="_blank" class="btn btn-secondary">
             <span>← Home Dashboard</span>
           </a>
-          <a data-path="/projects/mcp" target="_self" class="btn btn-primary">
+          <a data-path="/projects/mcp" target="_blank" class="btn btn-primary">
             <span>MCP Ecosystem Hub →</span>
           </a>
-          <a data-path="/lessons-learnt" target="_self" class="btn btn-secondary">
+          <a data-path="/lessons-learnt" target="_blank" class="btn btn-secondary">
             <span>Lessons Learnt Hub</span>
           </a>
         </div>
@@ -492,7 +492,7 @@
       <div class="grid-arch">
 
         <!-- Blueprint 1: Crypto Tax MCP -->
-        <a data-path="/architecture/a-crypto-mcp" target="_self" class="arch-card card-crypto">
+        <a data-path="/architecture/a-crypto-mcp" target="_blank" class="arch-card card-crypto">
           <div>
             <div class="card-top">
               <div class="arch-logo-box">⚖️</div>
@@ -523,7 +523,7 @@
         </a>
 
         <!-- Blueprint 2: CSRDBAFIN Compliance -->
-        <a data-path="/architecture/a-csrd-mcp" target="_self" class="arch-card card-csrd">
+        <a data-path="/architecture/a-csrd-mcp" target="_blank" class="arch-card card-csrd">
           <div>
             <div class="card-top">
               <div class="arch-logo-box">📊</div>
@@ -554,7 +554,7 @@
         </a>
 
         <!-- Blueprint 3: DORA WEALTH -->
-        <a data-path="/architecture/a-dora-mcp" target="_self" class="arch-card card-dora">
+        <a data-path="/architecture/a-dora-mcp" target="_blank" class="arch-card card-dora">
           <div>
             <div class="card-top">
               <div class="arch-logo-box">🛡️</div>
@@ -585,7 +585,7 @@
         </a>
 
         <!-- Blueprint 4: ESTATE Simulator -->
-        <a data-path="/architecture/a-estate-mcp" target="_self" class="arch-card card-estate">
+        <a data-path="/architecture/a-estate-mcp" target="_blank" class="arch-card card-estate">
           <div>
             <div class="card-top">
               <div class="arch-logo-box">🏛️</div>
@@ -616,7 +616,7 @@
         </a>
 
         <!-- Blueprint 5: TISAX Hypercar -->
-        <a data-path="/architecture/a-tisax-mcp" target="_self" class="arch-card card-tisax">
+        <a data-path="/architecture/a-tisax-mcp" target="_blank" class="arch-card card-tisax">
           <div>
             <div class="card-top">
               <div class="arch-logo-box">⚡</div>
@@ -688,10 +688,10 @@
         <div class="footer-col">
           <h4>Navigation</h4>
           <ul class="footer-links">
-            <li><a data-path="/home" target="_self">Home Dashboard</a></li>
-            <li><a data-path="/projects/mcp" target="_self">MCP Server Registry</a></li>
-            <li><a data-path="/lessons-learnt" target="_self">Lessons Learnt</a></li>
-            <li><a data-path="/lessons-learnt/l-crypto-tax" target="_self">Crypto Tax Lessons</a></li>
+            <li><a data-path="/home" target="_blank">Home Dashboard</a></li>
+            <li><a data-path="/projects/mcp" target="_blank">MCP Server Registry</a></li>
+            <li><a data-path="/lessons-learnt" target="_blank">Lessons Learnt</a></li>
+            <li><a data-path="/lessons-learnt/l-crypto-tax" target="_blank">Crypto Tax Lessons</a></li>
           </ul>
         </div>
 
@@ -758,10 +758,6 @@
               window.top.location.href = url;
               return;
             } catch (err) {}
-            try {
-              window.location.href = url;
-              return;
-            } catch (e2) {}
             window.open(url, '_blank', 'noopener');
           });
         });

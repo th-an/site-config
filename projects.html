@@ -479,13 +479,13 @@
         </p>
 
         <div class="btn-group">
-          <a data-path="/home" target="_self" class="btn btn-secondary">
+          <a data-path="/home" target="_blank" class="btn btn-secondary">
             <span>← Home Hub</span>
           </a>
-          <a data-path="/architecture" target="_self" class="btn btn-primary">
+          <a data-path="/architecture" target="_blank" class="btn btn-primary">
             <span>Architecture Blueprints →</span>
           </a>
-          <a data-path="/lessons-learnt" target="_self" class="btn btn-secondary">
+          <a data-path="/lessons-learnt" target="_blank" class="btn btn-secondary">
             <span>Lessons Learnt</span>
           </a>
         </div>
@@ -496,7 +496,7 @@
     <div class="grid-categories">
 
       <!-- Category 1: Agentic AI -->
-      <a data-path="/projects/agentic-ai" target="_self" class="category-card card-ai">
+      <a data-path="/projects/agentic-ai" target="_blank" class="category-card card-ai">
         <div>
           <div class="card-header">
             <div class="icon-box">🤖</div>
@@ -529,7 +529,7 @@
       </a>
 
       <!-- Category 2: MCP -->
-      <a data-path="/projects/mcp" target="_self" class="category-card card-mcp">
+      <a data-path="/projects/mcp" target="_blank" class="category-card card-mcp">
         <div>
           <div class="card-header">
             <div class="icon-box">⚡</div>
@@ -561,7 +561,7 @@
       </a>
 
       <!-- Category 3: Web Applications -->
-      <a data-path="/projects/web-applications" target="_self" class="category-card card-web">
+      <a data-path="/projects/web-applications" target="_blank" class="category-card card-web">
         <div>
           <div class="card-header">
             <div class="icon-box">🌐</div>
@@ -592,7 +592,7 @@
       </a>
 
       <!-- Category 4: Desktop Applications -->
-      <a data-path="/projects/desktop-applications" target="_self" class="category-card card-desktop">
+      <a data-path="/projects/desktop-applications" target="_blank" class="category-card card-desktop">
         <div>
           <div class="card-header">
             <div class="icon-box">🖥️</div>
@@ -621,7 +621,7 @@
       </a>
 
       <!-- Category 5: Templates & Infrastructure -->
-      <a data-path="/projects/templates" target="_self" class="category-card card-infra">
+      <a data-path="/projects/templates" target="_blank" class="category-card card-infra">
         <div>
           <div class="card-header">
             <div class="icon-box">🛠️</div>
@@ -671,10 +671,10 @@
         <div class="footer-col">
           <h4>Navigation</h4>
           <ul class="footer-links">
-            <li><a data-path="/home" target="_self">Home Dashboard</a></li>
-            <li><a data-path="/projects" target="_self">Projects Portal</a></li>
-            <li><a data-path="/architecture" target="_self">Architecture Blueprints</a></li>
-            <li><a data-path="/lessons-learnt" target="_self">Lessons Learnt</a></li>
+            <li><a data-path="/home" target="_blank">Home Dashboard</a></li>
+            <li><a data-path="/projects" target="_blank">Projects Portal</a></li>
+            <li><a data-path="/architecture" target="_blank">Architecture Blueprints</a></li>
+            <li><a data-path="/lessons-learnt" target="_blank">Lessons Learnt</a></li>
           </ul>
         </div>
 
@@ -740,10 +740,6 @@
               window.top.location.href = url;
               return;
             } catch (err) {}
-            try {
-              window.location.href = url;
-              return;
-            } catch (e2) {}
             window.open(url, '_blank', 'noopener');
           });
         });
