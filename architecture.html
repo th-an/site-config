@@ -740,14 +740,48 @@
         }
       };
       const base = window.GLOBAL_SITE_BASE || config.base;
+      // Map Google Sites routes to Pages html files for same-embed navigation (avoids CSP frame-ancestors block)
+      const pageMap = {
+        "/home": "home.html",
+        "/projects": "projects.html",
+        "/projects/mcp": "mcp.html",
+        "/projects/mcp/crypto-tax-mcp": "crypto-tax-mcp.html",
+        "/architecture": "architecture.html",
+        "/architecture/a-crypto-mcp": "a-crypto-mcp.html",
+        "/lessons-learnt": "lessons-learnt.html",
+        "/lessons-learnt/l-crypto-tax": "l-crypto-tax.html"
+      };
+      const isPagesEmbed = window.location.hostname === "th-an.github.io";
       document.querySelectorAll("a[data-path]").forEach(function(el) {
-        el.href = base + el.getAttribute("data-path");
+        const rawPath = el.getAttribute("data-path");
+        // For href, keep Google Sites URL for _blank fallback / SEO
+        el.href = base + rawPath;
+        el.addEventListener('click', function(e) {
+          if (!isPagesEmbed) return; // let normal _self/_blank handle Google Sites embed
+          e.preventDefault();
+          const file = pageMap[rawPath];
+          if (file) {
+            window.location.href = "./" + file;
+          } else {
+            window.open(base + rawPath, '_blank', 'noopener');
+          }
+        });
       });
       document.querySelectorAll("a[data-route]").forEach(function(el) {
         const key = el.getAttribute("data-route");
-        if (config.routes && config.routes[key]) {
-          el.href = base + config.routes[key];
-        }
+        const path = config.routes && config.routes[key];
+        if (!path) return;
+        el.href = base + path;
+        el.addEventListener('click', function(e) {
+          if (!isPagesEmbed) return;
+          e.preventDefault();
+          const file = pageMap[path];
+          if (file) {
+            window.location.href = "./" + file;
+          } else {
+            window.open(base + path, '_blank', 'noopener');
+          }
+        });
       });
     })();
   </script>
