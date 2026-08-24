@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg-slate: #0b1120;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(148, 163, 184, 0.15);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-indigo: #818cf8;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --code-bg: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 10px;
+      color: var(--text-main);
+    }
+
+    .page-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Hero Header */
+    .header-container {
+      background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.14), transparent 45%),
+                  radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.12), transparent 50%),
+                  #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 30px 34px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+    }
+
+    .header-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #06b6d4, #10b981, #818cf8);
+    }
+
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1.5px solid rgba(6, 182, 212, 0.45);
+      background: #1e293b;
+      box-shadow: 0 0 16px rgba(6, 182, 212, 0.25);
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #6ee7b7;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .hero-content {
+      max-width: 820px;
+    }
+
+    .hero-title {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);
+    }
+    .btn-primary:hover {
+      background: #22d3ee;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      color: #e2e8f0;
+      border: 1px solid var(--card-border);
+    }
+    .btn-secondary:hover {
+      background: rgba(51, 65, 85, 0.8);
+      border-color: rgba(148, 163, 184, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Dispatch Alert Banner */
+    .dispatch-banner {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-left: 4px solid var(--accent-amber);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+    }
+
+    .dispatch-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dispatch-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-amber);
+    }
+
+    .dispatch-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .dispatch-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .dispatch-link {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #0f172a;
+      background: var(--accent-amber);
+      padding: 7px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+    .dispatch-link:hover {
+      background: #fbbf24;
+    }
+
+    /* Navigation Cards Grid */
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .grid-portal {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .portal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    .portal-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.7);
+      border-color: rgba(148, 163, 184, 0.35);
+    }
+
+    .card-proj::before  { background: linear-gradient(90deg, #06b6d4, #3b82f6); }
+    .card-mcp::before   { background: linear-gradient(90deg, #818cf8, #a855f7); }
+    .card-arch::before  { background: linear-gradient(90deg, #10b981, #059669); }
+    .card-learn::before { background: linear-gradient(90deg, #f59e0b, #f43f5e); }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .card-proj .icon-box  { background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6, 182, 212, 0.3); color: var(--accent-cyan); }
+    .card-mcp .icon-box   { background: rgba(129, 140, 248, 0.12); border: 1px solid rgba(129, 140, 248, 0.3); color: var(--accent-indigo); }
+    .card-arch .icon-box  { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--accent-emerald); }
+    .card-learn .icon-box { background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--accent-amber); }
+
+    .scope-pill {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .items-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .items-list li {
+      font-size: 12px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .items-list li::before {
+      content: "•";
+      color: var(--accent-cyan);
+      font-size: 14px;
+    }
+
+    .card-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      padding-top: 12px;
+      border-top: 1px solid rgba(148, 163, 184, 0.08);
+    }
+
+    .card-proj .card-action  { color: var(--accent-cyan); }
+    .card-mcp .card-action   { color: var(--accent-indigo); }
+    .card-arch .card-action  { color: var(--accent-emerald); }
+    .card-learn .card-action { color: var(--accent-amber); }
+
+    /* Footer */
+    .footer-container {
+      background: radial-gradient(circle at bottom center, rgba(6, 182, 212, 0.08), transparent 70%), #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 32px 36px 24px 36px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+      margin-top: 10px;
+    }
+
+    .footer-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #06b6d4, #10b981, transparent);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 32px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .brand-col { display: flex; flex-direction: column; gap: 12px; }
+    .brand-header { display: flex; align-items: center; gap: 12px; }
+
+    .footer-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1.5px solid rgba(6, 182, 212, 0.4);
+      background: #1e293b;
+    }
+
+    .brand-title { font-size: 16px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.01em; }
+    .brand-desc { font-size: 13px; line-height: 1.55; color: var(--text-muted); max-width: 380px; }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+      margin-bottom: 14px;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #38bdf8; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #64748b;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .spec-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      .header-container { padding: 20px; }
+      .hero-title { font-size: 22px; }
+      .top-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-top { grid-template-columns: 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- 1. HERO HEADER -->
+    <header class="header-container">
+      <div class="top-meta">
+        <div class="brand-group">
+          <img 
+            src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+            alt="AgenticAIExplorer Logo" 
+            class="brand-logo"
+          />
+          <div class="brand-name">
+            <span>AgenticAIExplorer</span>
+            <span class="brand-sub">Deterministic AI &amp; Protocol Engineering</span>
+          </div>
+        </div>
+
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>Ecosystem Operational</span>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">Deterministic Agentic Engineering &amp; MCP Protocol Hub</h1>
+        <p class="hero-description">
+          Open-source reference implementations, Model Context Protocol servers, production-ready system architectures, and unfiltered engineering post-mortems.
+        </p>
+
+        <div class="btn-group">
+          <a data-path="/projects/mcp" target="_top" class="btn btn-primary">
+            <span>Explore MCP Registry →</span>
+          </a>
+          <a data-path="/architecture" target="_top" class="btn btn-secondary">
+            <span>Architecture Blueprints</span>
+          </a>
+          <a data-path="/lessons-learnt" target="_top" class="btn btn-secondary">
+            <span>Lessons Learnt Hub</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. ENGINEERING DISPATCH CALLOUT BANNER -->
+    <div class="dispatch-banner">
+      <div class="dispatch-left">
+        <span class="dispatch-tag">⚡ Latest Engineering Dispatch · 2026-08-15 Hardening</span>
+        <div class="dispatch-title">Crypto Tax MCP Live Integration &amp; Anti-Hallucination Post-Mortem</div>
+        <div class="dispatch-desc">Tracing chat model fabrications back to runtime defects, enforcing server instructions, and implementing named schema validation.</div>
+      </div>
+      <a data-path="/lessons-learnt/l-crypto-tax" target="_top" class="dispatch-link">
+        Read Post-Mortem →
+      </a>
+    </div>
+
+    <!-- 3. PLATFORM CORE PORTAL NAVIGATION -->
+    <div>
+      <div class="section-title">Platform Portals &amp; Engineering Disciplines</div>
+      <div class="section-sub">Direct access to repository catalogs, protocol servers, cryptographic specs, and retrospective post-mortems.</div>
+
+      <div class="grid-portal">
+
+        <!-- Card 1: Project Portfolio -->
+        <a data-path="/projects" target="_top" class="portal-card card-proj">
+          <div>
+            <div class="card-header">
+              <div class="icon-box">📁</div>
+              <span class="scope-pill">5 Domains</span>
+            </div>
+            <div class="card-title">Projects Portfolio</div>
+            <p class="card-desc">Categorized inventory covering Autonomous Agents, MCP protocol bridges, Web &amp; Desktop applications, and DevOps templates.</p>
+            <ul class="items-list">
+              <li>Agentic AI &amp; Diffusion video pipelines</li>
+              <li>Interactive 3D spatial web visualizations</li>
+              <li>Infrastructure &amp; MCP starter templates</li>
+            </ul>
+          </div>
+          <div class="card-action">
+            <span>Explore Project Portfolio</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Card 2: MCP Servers -->
+        <a data-path="/projects/mcp" target="_top" class="portal-card card-mcp">
+          <div>
+            <div class="card-header">
+              <div class="icon-box">⚡</div>
+              <span class="scope-pill">FastMCP Core</span>
+            </div>
+            <div class="card-title">MCP Server Registry</div>
+            <p class="card-desc">Standards-compliant Model Context Protocol servers connecting LLMs to deterministic execution layers and statutory tools.</p>
+            <ul class="items-list">
+              <li>Crypto Tax (31 tools, 3 resources, DAC8 XML)</li>
+              <li>CSRD-BaFin &amp; DORA Wealth compliance engines</li>
+              <li>TISAX AL3 Automotive telematics servers</li>
+            </ul>
+          </div>
+          <div class="card-action">
+            <span>View MCP Registry</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Card 3: Architecture -->
+        <a data-path="/architecture" target="_top" class="portal-card card-arch">
+          <div>
+            <div class="card-header">
+              <div class="icon-box">📐</div>
+              <span class="scope-pill">Blueprints</span>
+            </div>
+            <div class="card-title">Architecture Specs</div>
+            <p class="card-desc">Comprehensive system topology, zero-drift decimal math engines, RFC 5297 cryptographic sealing, and §147 AO trigger locks.</p>
+            <ul class="items-list">
+              <li>Decoupled source layout (<code style="font-family:monospace; color:#34d399;">engine/</code> vs <code style="font-family:monospace; color:#34d399;">store/</code>)</li>
+              <li>RFC 5297 AES-SIV deterministic field encryption</li>
+              <li>10 Invariant Anti-Fabrication Fidelity rules</li>
+            </ul>
+          </div>
+          <div class="card-action">
+            <span>Inspect Architecture Blueprints</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <!-- Card 4: Lessons Learnt -->
+        <a data-path="/lessons-learnt" target="_top" class="portal-card card-learn">
+          <div>
+            <div class="card-header">
+              <div class="icon-box">📖</div>
+              <span class="scope-pill">Retrospectives</span>
+            </div>
+            <div class="card-title">Lessons Learnt &amp; Post-Mortems</div>
+            <p class="card-desc">Real-world post-implementation records capturing model hallucination traps, git hook failures, and runtime dependency oversights.</p>
+            <ul class="items-list">
+              <li>Tagged using the <code style="font-family:monospace; color:#fcd34d;">LESSONS_CATEGORIES</code> taxonomy</li>
+              <li>Faithful error reporting uncovering masked bugs</li>
+              <li>Adversarial CSV sample-driven test patterns</li>
+            </ul>
+          </div>
+          <div class="card-action">
+            <span>Read Retrospectives Hub</span>
+            <span>→</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- 4. FOOTER -->
+    <footer class="footer-container">
+      <div class="footer-top">
+        <div class="brand-col">
+          <div class="brand-header">
+            <img 
+              src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+              alt="AgenticAIExplorer Logo" 
+              class="footer-logo"
+            />
+            <div class="brand-title">AgenticAIExplorer</div>
+          </div>
+          <p class="brand-desc">
+            Continuous technical log documenting deterministic architectures, Model Context Protocol primitives, and production engineering retrospectives.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a data-path="/projects" target="_top">Projects Portfolio</a></li>
+            <li><a data-path="/projects/mcp" target="_top">MCP Registry</a></li>
+            <li><a data-path="/architecture" target="_top">Architecture Blueprints</a></li>
+            <li><a data-path="/lessons-learnt" target="_top">Lessons Learnt Hub</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Standards</h4>
+          <ul class="footer-links">
+            <li><a href="#" style="pointer-events: none;">Model Context Protocol</a></li>
+            <li><a href="#" style="pointer-events: none;">RFC 5297 AES-SIV</a></li>
+            <li><a href="#" style="pointer-events: none;">Deterministic Zero-Drift</a></li>
+            <li><a href="#" style="pointer-events: none;">Fidelity Contract v1.0</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <span>&copy; AgenticAIExplorer. Continuous Technical Log &amp; Engineering Registry.</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <span class="spec-pill">FastMCP</span>
+          <span class="spec-pill">Python 3.11+</span>
+          <span class="spec-pill">Append-Only Audit</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- RAW GITHUB CONFIG SOURCE OF TRUTH (Bypasses CDN Cache) -->
+  <script src="https://raw.githubusercontent.com/th-an/site-config/main/site-config.js"></script>
+  <script>
+    (function() {
+      const config = window.SITE_CONFIG || {
+        base: "https://sites.google.com/view/s-agenticaiexplorer",
+        routes: {
+          home: "/home",
+          projects: "/projects",
+          architecture: "/architecture",
+          lessonsLearnt: "/lessons-learnt",
+          mcp: "/projects/mcp",
+          cryptoTax: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxArch: "/architecture/a-crypto-mcp",
+          cryptoTaxLessons: "/lessons-learnt/l-crypto-tax"
+        }
+      };
+
+      document.querySelectorAll("a[data-path]").forEach(function(el) {
+        el.href = (window.GLOBAL_SITE_BASE || config.base) + el.getAttribute("data-path");
+      });
+
+      document.querySelectorAll("a[data-route]").forEach(function(el) {
+        const key = el.getAttribute("data-route");
+        if (config.routes && config.routes[key]) {
+          el.href = (window.GLOBAL_SITE_BASE || config.base) + config.routes[key];
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
