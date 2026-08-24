@@ -15,9 +15,9 @@ window.SITE_CONFIG = {
     templates: "/projects/templates",
     cryptoTax: "/projects/mcp/crypto-tax-mcp",
     cryptoTaxArch: "/architecture/a-crypto-mcp",
-    csrd: "/projects/mcp/csrdbafin-compliant-mcp",
-    dora: "/projects/mcp/dora-wealth-mcp",
-    estate: "/projects/mcp/estate-simulator-mcp",
-    tisax: "/projects/mcp/tisax-hypercar"
+    csrdArch: "/architecture/a-csrd-mcp",
+    doraArch: "/architecture/a-dora-mcp",
+    estateArch: "/architecture/a-estate-mcp",
+    tisaxArch: "/architecture/a-tisax-mcp"
   }
 };
