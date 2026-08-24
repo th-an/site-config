@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg-slate: #0b1120;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(148, 163, 184, 0.15);
+      --border-hover: rgba(16, 185, 129, 0.45);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-indigo: #818cf8;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --code-bg: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 10px;
+      color: var(--text-main);
+    }
+
+    .page-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Hero Header */
+    .header-container {
+      background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.14), transparent 45%),
+                  radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.12), transparent 50%),
+                  #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 30px 34px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+    }
+
+    .header-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #10b981, #06b6d4, #818cf8);
+    }
+
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1.5px solid rgba(16, 185, 129, 0.45);
+      background: #1e293b;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-emerald);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #6ee7b7;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    .hero-content {
+      max-width: 840px;
+    }
+
+    .hero-title {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 40%, #a7f3d0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent-emerald);
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+    .btn-primary:hover {
+      background: #34d399;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      color: #e2e8f0;
+      border: 1px solid var(--card-border);
+    }
+    .btn-secondary:hover {
+      background: rgba(51, 65, 85, 0.8);
+      border-color: rgba(148, 163, 184, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Architecture Blueprint Cards Grid */
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .grid-arch {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 22px;
+    }
+
+    .arch-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    .arch-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .arch-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.7);
+      border-color: rgba(148, 163, 184, 0.35);
+    }
+
+    .card-crypto::before { background: linear-gradient(90deg, #06b6d4, #10b981); }
+    .card-csrd::before   { background: linear-gradient(90deg, #10b981, #059669); }
+    .card-dora::before   { background: linear-gradient(90deg, #818cf8, #6366f1); }
+    .card-estate::before { background: linear-gradient(90deg, #f59e0b, #ea580c); }
+    .card-tisax::before  { background: linear-gradient(90deg, #f43f5e, #e11d48); }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .arch-logo-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .card-crypto .arch-logo-box { background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6, 182, 212, 0.35); color: var(--accent-cyan); }
+    .card-csrd .arch-logo-box   { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); color: var(--accent-emerald); }
+    .card-dora .arch-logo-box   { background: rgba(129, 140, 248, 0.12); border: 1px solid rgba(129, 140, 248, 0.35); color: var(--accent-indigo); }
+    .card-estate .arch-logo-box { background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); color: var(--accent-amber); }
+    .card-tisax .arch-logo-box  { background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.35); color: var(--accent-rose); }
+
+    .arch-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+    }
+
+    .arch-title { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; color: #f8fafc; margin-bottom: 6px; }
+    .arch-tagline { font-size: 12.5px; font-weight: 600; margin-bottom: 12px; }
+
+    .card-crypto .arch-tagline { color: #67e8f9; }
+    .card-csrd .arch-tagline   { color: #6ee7b7; }
+    .card-dora .arch-tagline   { color: #c7d2fe; }
+    .card-estate .arch-tagline { color: #fcd34d; }
+    .card-tisax .arch-tagline  { color: #fda4af; }
+
+    .arch-desc { font-size: 13px; line-height: 1.55; color: var(--text-muted); margin-bottom: 16px; }
+
+    .pillars-list { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+    .pillars-list li { font-size: 12px; color: #cbd5e1; display: flex; align-items: center; gap: 8px; }
+    .pillars-list li::before { content: "🛡️"; font-size: 11px; }
+
+    .meta-footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.08);
+      padding-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tags-strip { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      background: rgba(30, 41, 59, 0.7);
+      color: #94a3b8;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .arch-action-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-emerald);
+      padding-top: 4px;
+    }
+
+    /* Cross-Cutting Pillars */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .tenet-box {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .tenet-box h4 {
+      font-size: 14px;
+      color: var(--accent-emerald);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .tenet-box p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Footer */
+    .footer-container {
+      background: radial-gradient(circle at bottom center, rgba(16, 185, 129, 0.08), transparent 70%), #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 32px 36px 24px 36px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+      margin-top: 10px;
+    }
+
+    .footer-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #10b981, #06b6d4, transparent);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 32px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .brand-col { display: flex; flex-direction: column; gap: 12px; }
+    .brand-header { display: flex; align-items: center; gap: 12px; }
+
+    .footer-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1.5px solid rgba(16, 185, 129, 0.4);
+      background: #1e293b;
+    }
+
+    .brand-title { font-size: 16px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.01em; }
+    .brand-desc { font-size: 13px; line-height: 1.55; color: var(--text-muted); max-width: 380px; }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-emerald);
+      margin-bottom: 14px;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #34d399; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #64748b;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .spec-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      .header-container { padding: 20px; }
+      .hero-title { font-size: 22px; }
+      .top-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-top { grid-template-columns: 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- 1. HERO HEADER -->
+    <header class="header-container">
+      <div class="top-meta">
+        <div class="brand-group">
+          <img 
+            src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+            alt="AgenticAIExplorer Logo" 
+            class="brand-logo"
+          />
+          <div class="brand-name">
+            <span>AgenticAIExplorer</span>
+            <span class="brand-sub">System Architecture &amp; Blueprints</span>
+          </div>
+        </div>
+
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>Deterministic Engineering Core</span>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">System Architecture, Security Boundaries &amp; Integrity Blueprints</h1>
+        <p class="hero-description">
+          Engineering specifications detailing the isolation of computational cores, zero-fabrication server fidelity contracts, RFC 5297 cryptographic sealing, and statutory retention controls across FastMCP servers.
+        </p>
+
+        <div class="btn-group">
+          <a data-path="/home" target="_top" class="btn btn-secondary">
+            <span>← Home Dashboard</span>
+          </a>
+          <a data-path="/projects/mcp" target="_top" class="btn btn-primary">
+            <span>MCP Ecosystem Hub →</span>
+          </a>
+          <a data-path="/lessons-learnt" target="_top" class="btn btn-secondary">
+            <span>Lessons Learnt Hub</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. ARCHITECTURE SYSTEM CARDS -->
+    <div>
+      <div class="section-title">MCP Server Architecture Specifications</div>
+      <div class="section-sub">Select a protocol domain to inspect repository structure, execution contracts, and cryptographic defense boundaries.</div>
+
+      <div class="grid-arch">
+
+        <!-- Blueprint 1: Crypto Tax MCP -->
+        <a data-path="/architecture/a-crypto-mcp" target="_top" class="arch-card card-crypto">
+          <div>
+            <div class="card-top">
+              <div class="arch-logo-box">⚖️</div>
+              <span class="arch-badge">Deterministic Tax Core</span>
+            </div>
+            <div class="arch-title">Crypto Tax Architecture</div>
+            <div class="arch-tagline">RFC 5297 AES-SIV · DAC8 CARF XSD · §147 AO Trigger Locks</div>
+            <p class="arch-desc">
+              Decoupled pure-engine topology isolating mathematical tax logic from I/O, deterministic field encryption, append-only price oracles, and the server-enforced 10-rule Fidelity Contract.
+            </p>
+            <ul class="pillars-list">
+              <li>Pure store-agnostic engine with decimal-only arithmetic</li>
+              <li>Named XSD validation against DAC8CARFMessage.xsd v1</li>
+              <li>HMAC-SHA256 computational attestation sealing</li>
+            </ul>
+          </div>
+          <div class="meta-footer">
+            <div class="tags-strip">
+              <span class="tag">src/crypto_tax_mcp/</span>
+              <span class="tag">AES-256-SIV</span>
+              <span class="tag">Fidelity v1.0</span>
+            </div>
+            <div class="arch-action-link">
+              <span>View Crypto Tax Architecture</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Blueprint 2: CSRDBAFIN Compliance -->
+        <a data-path="/architecture/a-csrd-mcp" target="_top" class="arch-card card-csrd">
+          <div>
+            <div class="card-top">
+              <div class="arch-logo-box">📊</div>
+              <span class="arch-badge">RegTech / XBRL Core</span>
+            </div>
+            <div class="arch-title">CSRDBAFIN Compliance Architecture</div>
+            <div class="arch-tagline">Double Materiality Graph · BaFin Rulebooks · ESRS Standards</div>
+            <p class="arch-desc">
+              Deterministic ESG metric aggregation engine with circular dependency pruning, XBRL taxonomic mapping, and immutable sustainability filing registries.
+            </p>
+            <ul class="pillars-list">
+              <li>Acyclic supplier ESG graph traversal &amp; timeout bounding</li>
+              <li>Strict Pydantic typing against dynamic EU taxonomy changes</li>
+              <li>Zero-hallucination statutory disclosure gatekeeper</li>
+            </ul>
+          </div>
+          <div class="meta-footer">
+            <div class="tags-strip">
+              <span class="tag">ESRS Metrics</span>
+              <span class="tag">XBRL Schema</span>
+              <span class="tag">BaFin Gate</span>
+            </div>
+            <div class="arch-action-link">
+              <span>View CSRD Architecture</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Blueprint 3: DORA WEALTH -->
+        <a data-path="/architecture/a-dora-mcp" target="_top" class="arch-card card-dora">
+          <div>
+            <div class="card-top">
+              <div class="arch-logo-box">🛡️</div>
+              <span class="arch-badge">Resilience &amp; Chaos</span>
+            </div>
+            <div class="arch-title">DORA WEALTH Architecture</div>
+            <div class="arch-tagline">ICT Fault Injection · Tenant Sandboxing · Risk Engine</div>
+            <p class="arch-desc">
+              Fault-isolated financial resiliency testing framework enforcing Digital Operational Resilience Act controls, multi-tenant sandbox partitions, and asset stress simulations.
+            </p>
+            <ul class="pillars-list">
+              <li>Isolated state sandboxing preventing cross-tenant bleed</li>
+              <li>Asynchronous simulation queues with SQLite WAL tuning</li>
+              <li>Deterministic liquidity stress-test boundary gates</li>
+            </ul>
+          </div>
+          <div class="meta-footer">
+            <div class="tags-strip">
+              <span class="tag">DORA Art. 16</span>
+              <span class="tag">Fault Isolation</span>
+              <span class="tag">WAL Lock</span>
+            </div>
+            <div class="arch-action-link">
+              <span>View DORA Architecture</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Blueprint 4: ESTATE Simulator -->
+        <a data-path="/architecture/a-estate-mcp" target="_top" class="arch-card card-estate">
+          <div>
+            <div class="card-top">
+              <div class="arch-logo-box">🏛️</div>
+              <span class="arch-badge">Actuarial Discrete Math</span>
+            </div>
+            <div class="arch-title">ESTATE Simulator Architecture</div>
+            <div class="arch-tagline">Combinatorial Tree Pruning · Multi-Gen Tax Cliff Engine</div>
+            <p class="arch-desc">
+              Actuarial simulation architecture handling non-linear marginal tax rate spikes, depth-bounded succession trees, and deterministic statutory inheritance optimization.
+            </p>
+            <ul class="pillars-list">
+              <li>Depth-bounded branch evaluation avoiding memory exhaustion</li>
+              <li>Discrete marginal tax bracket cliff calculators</li>
+              <li>Statutory forced heirship validation logic</li>
+            </ul>
+          </div>
+          <div class="meta-footer">
+            <div class="tags-strip">
+              <span class="tag">Branch Pruning</span>
+              <span class="tag">Actuarial Core</span>
+              <span class="tag">Heirship Gate</span>
+            </div>
+            <div class="arch-action-link">
+              <span>View Estate Architecture</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Blueprint 5: TISAX Hypercar -->
+        <a data-path="/architecture/a-tisax-mcp" target="_top" class="arch-card card-tisax">
+          <div>
+            <div class="card-top">
+              <div class="arch-logo-box">⚡</div>
+              <span class="arch-badge">Automotive AL3 Security</span>
+            </div>
+            <div class="arch-title">TISAX Hypercar Architecture</div>
+            <div class="arch-tagline">100Hz CAN Ring Buffers · DME Pulse Math · Prototype Isolation</div>
+            <p class="arch-desc">
+              High-throughput telematics architecture satisfying VDA-ISA / TISAX AL3 security requirements for prototype vehicles, engine rev forensics, and low-latency packet decoding.
+            </p>
+            <ul class="pillars-list">
+              <li>Lockless ring buffers preventing JSON-RPC stream saturation</li>
+              <li>CAN clock jitter correction &amp; over-rev timing verification</li>
+              <li>Memory-isolated telemetry partitions meeting AL3 standards</li>
+            </ul>
+          </div>
+          <div class="meta-footer">
+            <div class="tags-strip">
+              <span class="tag">TISAX AL3</span>
+              <span class="tag">CAN-Bus 100Hz</span>
+              <span class="tag">DME Forensics</span>
+            </div>
+            <div class="arch-action-link">
+              <span>View TISAX Architecture</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- 3. PLATFORM ARCHITECTURAL TENETS -->
+    <div>
+      <div class="section-title">Core Architectural Tenets Across the Ecosystem</div>
+      <div class="grid-3" style="margin-top: 12px;">
+        <div class="tenet-box">
+          <h4>1. Pure Engine Isolation</h4>
+          <p>Computational domains maintain zero direct I/O. Engines receive immutable records and output deterministic decimals, eliminating floating-point drift and external side effects.</p>
+        </div>
+        <div class="tenet-box">
+          <h4>2. Server-Side Fidelity Enforcement</h4>
+          <p>Trust constraints and anti-hallucination rules are baked directly into the MCP server instructions, guaranteeing invariant enforcement across all client interaction sessions.</p>
+        </div>
+        <div class="tenet-box">
+          <h4>3. Cryptographic Proof &amp; Immutability</h4>
+          <p>Sensitive attributes use RFC 5297 AES-SIV field encryption; audit ledgers enforce 10-year statutory immutability via SQLite triggers and HMAC attestation seals.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. FOOTER -->
+    <footer class="footer-container">
+      <div class="footer-top">
+        <div class="brand-col">
+          <div class="brand-header">
+            <img 
+              src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+              alt="AgenticAIExplorer Logo" 
+              class="footer-logo"
+            />
+            <div class="brand-title">AgenticAIExplorer</div>
+          </div>
+          <p class="brand-desc">
+            Continuous technical log documenting deterministic architectures, Model Context Protocol primitives, and production engineering retrospectives.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a data-path="/home" target="_top">Home Dashboard</a></li>
+            <li><a data-path="/projects/mcp" target="_top">MCP Server Registry</a></li>
+            <li><a data-path="/lessons-learnt" target="_top">Lessons Learnt</a></li>
+            <li><a data-path="/lessons-learnt/l-crypto-tax" target="_top">Crypto Tax Lessons</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Standards</h4>
+          <ul class="footer-links">
+            <li><a href="#" style="pointer-events: none;">Model Context Protocol</a></li>
+            <li><a href="#" style="pointer-events: none;">RFC 5297 AES-SIV</a></li>
+            <li><a href="#" style="pointer-events: none;">Deterministic Zero-Drift</a></li>
+            <li><a href="#" style="pointer-events: none;">Fidelity Contract v1.0</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <span>&copy; AgenticAIExplorer. System Architecture &amp; Blueprints.</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <span class="spec-pill">FastMCP</span>
+          <span class="spec-pill">Python 3.11+</span>
+          <span class="spec-pill">RFC 5297</span>
+          <span class="spec-pill">Audit Trigger Locks</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- RAW GITHUB CONFIG SOURCE OF TRUTH (Bypasses CDN Cache) -->
+  <script src="https://raw.githubusercontent.com/th-an/site-config/main/site-config.js"></script>
+  <script>
+    (function() {
+      const config = window.SITE_CONFIG || {
+        base: "https://sites.google.com/view/s-agenticaiexplorer",
+        routes: {
+          home: "/home",
+          projects: "/projects",
+          architecture: "/architecture",
+          lessonsLearnt: "/lessons-learnt",
+          mcp: "/projects/mcp",
+          cryptoTax: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxArch: "/architecture/a-crypto-mcp",
+          cryptoTaxLessons: "/lessons-learnt/l-crypto-tax"
+        }
+      };
+
+      document.querySelectorAll("a[data-path]").forEach(function(el) {
+        el.href = (window.GLOBAL_SITE_BASE || config.base) + el.getAttribute("data-path");
+      });
+
+      document.querySelectorAll("a[data-route]").forEach(function(el) {
+        const key = el.getAttribute("data-route");
+        if (config.routes && config.routes[key]) {
+          el.href = (window.GLOBAL_SITE_BASE || config.base) + config.routes[key];
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
