@@ -16,11 +16,7 @@ window.SITE_CONFIG = {
     cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp",
     cryptoTaxArch: "/architecture/a-crypto-mcp",
 
-    // Updated paths matching Google Sites hierarchy
+    // Lessons Learned paths (verify these exist on your Google Site)
     cryptoTaxLessons: "/lessons-learnt/l-crypto-tax",
-    csrdLessons: "/lessons-learnt/l-csrd",
-    doraLessons: "/lessons-learnt/l-dora",
-    estateLessons: "/lessons-learnt/l-estate",
-    tisaxLessons: "/lessons-learnt/l-tisax"
   }
 };
