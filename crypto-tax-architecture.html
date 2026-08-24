@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg-slate: #0b1120;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(148, 163, 184, 0.15);
+      --border-hover: rgba(6, 182, 212, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-indigo: #818cf8;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --code-bg: #030712;
+      --tree-branch: #38bdf8;
+      --comment: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 10px;
+      color: var(--text-main);
+    }
+
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .header-container {
+      background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.14), transparent 45%),
+                  radial-gradient(circle at bottom left, rgba(129, 140, 248, 0.12), transparent 50%),
+                  #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 30px 34px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+    }
+
+    .header-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #06b6d4, #818cf8, #10b981);
+    }
+
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1.5px solid rgba(6, 182, 212, 0.45);
+      background: #1e293b;
+      box-shadow: 0 0 16px rgba(6, 182, 212, 0.25);
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #6ee7b7;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .hero-content {
+      max-width: 820px;
+    }
+
+    .hero-title {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);
+    }
+    .btn-primary:hover {
+      background: #22d3ee;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      color: #e2e8f0;
+      border: 1px solid var(--card-border);
+    }
+    .btn-secondary:hover {
+      background: rgba(51, 65, 85, 0.8);
+      border-color: rgba(148, 163, 184, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #f1f5f9;
+    }
+
+    .pill {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+    .pill-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border: 1px solid rgba(6, 182, 212, 0.3); }
+    .pill-emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .pill-rose { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+    .pill-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+
+    .tree-block {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #e2e8f0;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .t-pkg { color: #38bdf8; font-weight: 700; }
+    .t-file { color: #f8fafc; }
+    .t-comm { color: var(--comment); font-style: italic; }
+
+    .grid-5 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .rule-card {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .rule-card h5 {
+      font-size: 12.5px;
+      color: var(--accent-cyan);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .rule-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .security-box {
+      background: rgba(30, 41, 59, 0.35);
+      border-left: 3px solid var(--accent-emerald);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .security-box h4 {
+      font-size: 13.5px;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    .security-box p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .rules-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 10px;
+      list-style: none;
+      margin-top: 12px;
+    }
+    .rule-item {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #cbd5e1;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      line-height: 1.45;
+    }
+    .rule-num {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-weight: 800;
+      color: var(--accent-rose);
+    }
+
+    .footer-container {
+      background: radial-gradient(circle at bottom center, rgba(6, 182, 212, 0.08), transparent 70%), #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 32px 36px 24px 36px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+      margin-top: 10px;
+    }
+
+    .footer-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #06b6d4, #818cf8, transparent);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 32px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .brand-col { display: flex; flex-direction: column; gap: 12px; }
+    .brand-header { display: flex; align-items: center; gap: 12px; }
+
+    .footer-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1.5px solid rgba(6, 182, 212, 0.4);
+      background: #1e293b;
+    }
+
+    .brand-title { font-size: 16px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.01em; }
+    .brand-desc { font-size: 13px; line-height: 1.55; color: var(--text-muted); max-width: 380px; }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-cyan);
+      margin-bottom: 14px;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #38bdf8; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #64748b;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .spec-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      .header-container { padding: 20px; }
+      .hero-title { font-size: 22px; }
+      .top-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-top { grid-template-columns: 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- HERO HEADER -->
+    <header class="header-container">
+      <div class="top-meta">
+        <div class="brand-group">
+          <img 
+            src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+            alt="AgenticAIExplorer Logo" 
+            class="brand-logo"
+          />
+          <div class="brand-name">
+            <span>AgenticAIExplorer</span>
+            <span class="brand-sub">Crypto Tax Architecture & Security</span>
+          </div>
+        </div>
+
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>Deterministic Architecture Active</span>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">Crypto Tax Architecture, Security & Privacy Model</h1>
+        <p class="hero-description">
+          In-depth technical specification of the decoupled repository topology, RFC 5297 cryptographic boundaries, statutory immutability constraints, and the server-enforced anti-fabrication Fidelity Contract.
+        </p>
+
+        <div class="btn-group">
+          <a data-route="cryptoTax" target="_top" class="btn btn-primary">
+            <span>← View 31 Tools & Primitives</span>
+          </a>
+          <a data-route="mcp" target="_top" class="btn btn-secondary">
+            <span>MCP Registry</span>
+          </a>
+          <a data-route="lessonsLearnt" target="_top" class="btn btn-secondary">
+            <span>Lessons Learnt</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: SOURCE TOPOLOGY -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>📁 FastMCP Source Repository Topology</span>
+        <span class="pill pill-cyan">Strict Layer Separation</span>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+        Private source layout enforcing total isolation between mathematical tax logic, I/O entry, and MCP execution:
+      </p>
+      
+      <div class="tree-block"><span class="t-pkg">src/crypto_tax_mcp/</span>
+├── <span class="t-file">server.py</span>                  <span class="t-comm"># FastMCP server: tool/resource/prompt wiring, Fidelity Contract</span>
+│
+├── <span class="t-pkg">engine/</span>                    <span class="t-comm"># pure, store-agnostic tax core (strictly no I/O)</span>
+│   ├── <span class="t-file">models.py</span>              <span class="t-comm"># canonical Transaction / Lot records</span>
+│   ├── <span class="t-file">money.py</span>               <span class="t-comm"># decimal-only money & quantity helpers (no float drift)</span>
+│   ├── <span class="t-file">lots.py</span>                <span class="t-comm"># lot accounting: FIFO/LIFO/HIFO, basis carry, wrapped tokens</span>
+│   ├── <span class="t-file">calculator.py</span>          <span class="t-comm"># per-year engine: §23 gains, §22 income, Freigrenze, ledger</span>
+│   ├── <span class="t-file">simulator.py</span>           <span class="t-comm"># what-if disposal simulation (which lots, what gain)</span>
+│   ├── <span class="t-file">bridge.py</span>              <span class="t-comm"># cross-chain bridge/wrap matcher (SIGNALS/HEURISTIC)</span>
+│   ├── <span class="t-file">chains.py</span>              <span class="t-comm"># EIP-155 chain registry surfaced in MCP outputs</span>
+│   ├── <span class="t-file">dac8.py</span>                <span class="t-comm"># DAC8/CARF classification: the CASP's view of the taxpayer</span>
+│   ├── <span class="t-file">dac8_xml.py</span>            <span class="t-comm"># DAC8CARFMessage XML emitter + vendored OECD CARF v1 XSD check</span>
+│   └── <span class="t-pkg">rules/</span>                 <span class="t-comm"># pluggable jurisdiction interface</span>
+│       ├── <span class="t-file">base.py</span>            <span class="t-comm"># Jurisdiction contract + registry</span>
+│       ├── <span class="t-file">germany.py</span>         <span class="t-comm"># DE — settled §23/§22 engine, strategies, Freigrenze</span>
+│       ├── <span class="t-file">uk.py</span>              <span class="t-comm"># framework demo (counsel sign-off required)</span>
+│       └── <span class="t-file">us.py</span>              <span class="t-comm"># framework demo (counsel sign-off required)</span>
+│
+├── <span class="t-pkg">ingest/</span>                    <span class="t-comm"># deterministic data entry</span>
+│   ├── <span class="t-file">csv_loader.py</span>          <span class="t-comm"># canonical CSV parsing + column-alias normalization</span>
+│   ├── <span class="t-file">sample.py</span>              <span class="t-comm"># deterministic synthetic sample dataset</span>
+│   ├── <span class="t-file">pricing.py</span>             <span class="t-comm"># price-oracle fetch layer (CoinGecko USD × ECB EUR, fixtures)</span>
+│   ├── <span class="t-file">finalize.py</span>            <span class="t-comm"># finalize gate: staging → core ledger at finalized depth</span>
+│   └── <span class="t-pkg">rpc/</span>                   <span class="t-comm"># on-chain ingestion pipeline (Phase 3)</span>
+│       ├── <span class="t-file">client.py</span>          <span class="t-comm"># Ethereum JSON-RPC client (batching, backoff, replay)</span>
+│       ├── <span class="t-file">blocks.py</span>          <span class="t-comm"># ReorgTracker: latest/safe/finalized depth</span>
+│       ├── <span class="t-file">events.py</span>          <span class="t-comm"># topic0 constants (vector-verified keccak256)</span>
+│       ├── <span class="t-file">parsers.py</span>         <span class="t-comm"># receipt → RawEvent, kind-inference tree, gas math</span>
+│       ├── <span class="t-file">metadata.py</span>        <span class="t-comm"># ERC-20 decimals/symbol (DB-cached eth_call)</span>
+│       ├── <span class="t-file">classify.py</span>        <span class="t-comm"># counterparty: own / casp (CARF601/505) / other / unhosted</span>
+│       └── <span class="t-file">translate.py</span>       <span class="t-comm"># RawEvent → canonical Transaction rows (AUTO_FILLED/UNRESOLVED)</span>
+│
+├── <span class="t-pkg">export/</span>                    <span class="t-comm"># ERP / GL output layers (Phase 2)</span>
+│   ├── <span class="t-file">gl_mapper.py</span>           <span class="t-comm"># §23/§22 records → balanced SKR03/SKR04 journal</span>
+│   └── <span class="t-file">datev.py</span>               <span class="t-comm"># journal → DATEV EXTF (Buchungsstapel, format v13)</span>
+│
+├── <span class="t-pkg">forensics/</span>                 <span class="t-comm"># on-chain data enrichment (Phase 4)</span>
+│   ├── <span class="t-file">mev.py</span>                 <span class="t-comm"># flash-loan / same-block sandwich detection</span>
+│   └── <span class="t-file">dust.py</span>                <span class="t-comm"># dust & spam filtration (BMF Rz. 72–73 pipeline)</span>
+│
+├── <span class="t-pkg">security/</span>                  <span class="t-comm"># security & hardening (Phase 5)</span>
+│   ├── <span class="t-file">crypto.py</span>              <span class="t-comm"># RFC 5297 AES-SIV deterministic encryption (vetted lib)</span>
+│   └── <span class="t-file">attestation.py</span>         <span class="t-comm"># HMAC-SHA256 year attestation (ZKP evaluated & deferred)</span>
+│
+└── <span class="t-pkg">store/</span>                     <span class="t-comm"># persistence layer</span>
+    ├── <span class="t-file">db.py</span>                  <span class="t-comm"># SQLite schema (Decimal as TEXT, tz-aware ISO-8601)</span>
+    ├── <span class="t-file">transactions.py</span>        <span class="t-comm"># transaction & tax lot tables</span>
+    ├── <span class="t-file">portfolios.py</span>          <span class="t-comm"># portfolio records + configuration</span>
+    ├── <span class="t-file">pricing.py</span>             <span class="t-comm"># write-once price_snapshot (guard triggers)</span>
+    ├── <span class="t-file">ingest.py</span>              <span class="t-comm"># staging buffer + undo engine + UNRESOLVED queue</span>
+    └── <span class="t-file">dac8.py</span>                <span class="t-comm"># registries + append-only DAC8 archive</span></div>
+
+      <div class="grid-5">
+        <div class="rule-card"><h5>1. Pure Engine First</h5><p>No I/O in <code style="color:#38bdf8">engine/</code>. Feeds on Transaction records and asserts exact decimals.</p></div>
+        <div class="rule-card"><h5>2. Deterministic Entry</h5><p>Prices resolve once to snapshot; transactions commit only past finalize depth gate.</p></div>
+        <div class="rule-card"><h5>3. Append-Only Law</h5><p>DAC8 archives & price records are structurally immutable via SQLite triggers.</p></div>
+        <div class="rule-card"><h5>4. Honest Boundaries</h5><p>Unmatched transfers stay in <code style="color:#67e8f9">UNRESOLVED</code> queue with reasons, never silently booked.</p></div>
+        <div class="rule-card"><h5>5. Synthetic Demo</h5><p>All demo records derive from seeded scripts; zero client or live secrets permitted.</p></div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: SECURITY & PRIVACY -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>🔐 Security & Privacy Architecture</span>
+        <span class="pill pill-emerald">Zero-Leak Design</span>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="security-box">
+            <h4>RFC 5297 AES-SIV Field Encryption</h4>
+            <p>Sensitive fields (addresses, labels) encrypt deterministically using vetted cryptography primitives. Exact-match DB queries remain functional without storing keys in the repo (<code style="color:#38bdf8">CRYPTO_TAX_ENC_KEY</code>).</p>
+          </div>
+          <div class="security-box">
+            <h4>Tamper-Evident HMAC Attestation</h4>
+            <p>Computations seal via HMAC-SHA256 digests over canonical calculation JSON bound to engine and jurisdiction versions (<code style="color:#38bdf8">CRYPTO_TAX_ATTEST_KEY</code>).</p>
+          </div>
+        </div>
+        <div>
+          <div class="security-box" style="border-left-color: var(--accent-indigo);">
+            <h4>GDPR Privacy by Design</h4>
+            <p>Operates strictly on synthetic demo data and recorded fixtures. Because historical rates never re-query and rows never mutate, zero personal data exists at rest.</p>
+          </div>
+          <div class="security-box" style="border-left-color: var(--accent-indigo);">
+            <h4>Statutory Immutability (§147 AO)</h4>
+            <p>DAC8 report snapshots enforce 10-year statutory retention via trigger-locked SQLite append-only tables, preventing accidental or malicious row alterations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: 10 FIDELITY RULES -->
+    <div class="section-card" style="border-color: rgba(244, 63, 94, 0.3);">
+      <div class="section-title">
+        <span>🛡️ Anti-Fabrication Fidelity Contract (10 Invariant Rules)</span>
+        <span class="pill pill-rose">Prompt Defenses</span>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted);">
+        Hard rules loaded into every session to stop the chat model from inventing reasons, labels, or unearned compliance claims:
+      </p>
+      <ul class="rules-list">
+        <li class="rule-item"><span class="rule-num">01</span><span>Quote raw tool JSON first, verbatim before adding prose.</span></li>
+        <li class="rule-item"><span class="rule-num">02</span><span>Never invent internal mechanisms (queues, tables, internal modules).</span></li>
+        <li class="rule-item"><span class="rule-num">03</span><span>No invented identifiers (e.g. "flagged", "suppressed") unless present.</span></li>
+        <li class="rule-item"><span class="rule-num">04</span><span>Numbers are sacred — never round, recalculate, or drift values.</span></li>
+        <li class="rule-item"><span class="rule-num">05</span><span>Zero cross-scope extrapolation between distinct accounts.</span></li>
+        <li class="rule-item"><span class="rule-num">06</span><span>Strictly separate fact (output) from interpretation from unknown.</span></li>
+        <li class="rule-item"><span class="rule-num">07</span><span>When uncertain or missing data, explicitly state "I don't know".</span></li>
+        <li class="rule-item"><span class="rule-num">08</span><span>Never improvise next steps outside the explicit workflow.</span></li>
+        <li class="rule-item"><span class="rule-num">09</span><span>Never attach speculative meanings to unlabelled numeric codes.</span></li>
+        <li class="rule-item"><span class="rule-num">10</span><span><code>valid: true</code> is banned unless citing the exact schema validated against.</span></li>
+      </ul>
+    </div>
+
+    <!-- SECTION 4: HONEST LIMITS -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>⚖️ Honest Limits & Boundary Statements</span>
+        <span class="pill pill-amber">Scope Transparency</span>
+      </div>
+      <div class="grid-3" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+        <div style="background: rgba(30, 41, 59, 0.4); padding: 14px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2);">
+          <h4 style="font-size: 13px; color: var(--accent-amber); margin-bottom: 6px;">Demo Prototype Status</h4>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">No direct exchange or regulator connectivity; <code style="color:#67e8f9">ingest_backfill</code> is a documented stub until an archive-node RPC is linked.</p>
+        </div>
+        <div style="background: rgba(30, 41, 59, 0.4); padding: 14px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2);">
+          <h4 style="font-size: 13px; color: var(--accent-amber); margin-bottom: 6px;">Key Boundary Scope</h4>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Field-level AES-SIV is an application boundary defense, not a replacement for disk encryption or hardware HSMs.</p>
+        </div>
+        <div style="background: rgba(30, 41, 59, 0.4); padding: 14px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2);">
+          <h4 style="font-size: 13px; color: var(--accent-amber); margin-bottom: 6px;">Legal Disclaimer</h4>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Deterministic computational reference engine; does not constitute licensed legal, tax, or investment advice.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-container">
+      <div class="footer-top">
+        <div class="brand-col">
+          <div class="brand-header">
+            <img 
+              src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+              alt="AgenticAIExplorer Logo" 
+              class="footer-logo"
+            />
+            <div class="brand-title">AgenticAIExplorer</div>
+          </div>
+          <p class="brand-desc">
+            Continuous technical log documenting deterministic architectures, Model Context Protocol primitives, and production engineering retrospectives.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a data-route="home" target="_top">Home Dashboard</a></li>
+            <li><a data-route="cryptoTax" target="_top">Crypto Tax Tools</a></li>
+            <li><a data-route="mcp" target="_top">MCP Registry</a></li>
+            <li><a data-route="lessonsLearnt" target="_top">Lessons Learnt</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Standards</h4>
+          <ul class="footer-links">
+            <li><a href="#" style="pointer-events: none;">Model Context Protocol</a></li>
+            <li><a href="#" style="pointer-events: none;">RFC 5297 AES-SIV</a></li>
+            <li><a href="#" style="pointer-events: none;">Deterministic Zero-Drift</a></li>
+            <li><a href="#" style="pointer-events: none;">Fidelity Contract v1.0</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <span>&copy; AgenticAIExplorer. System Architecture & Security Specs.</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <span class="spec-pill">FastMCP</span>
+          <span class="spec-pill">Python 3.11+</span>
+          <span class="spec-pill">Append-Only Audit</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- CENTRAL ROUTE RESOLVER SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/gh/th-an/site-config/site-config.js"></script>
+  <script>
+    (function() {
+      const config = window.SITE_CONFIG || {
+        base: "https://sites.google.com/view/s-agenticaiexplorer",
+        routes: {
+          home: "/home",
+          cryptoTax: "/projects/mcp/crypto-tax-mcp",
+          mcp: "/projects/mcp",
+          lessonsLearnt: "/projects/lessons-learnt"
+        }
+      };
+      document.querySelectorAll("a[data-route]").forEach(function(el) {
+        const key = el.getAttribute("data-route");
+        if (config.routes && config.routes[key]) {
+          el.href = config.base + config.routes[key];
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
