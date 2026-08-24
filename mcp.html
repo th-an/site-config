@@ -432,13 +432,13 @@
         </p>
 
         <div class="btn-group">
-          <a data-path="/projects" target="_blank" class="btn btn-secondary">
+          <a data-path="/projects" target="_self" class="btn btn-secondary">
             <span>← All Projects</span>
           </a>
-          <a data-path="/architecture" target="_blank" class="btn btn-primary">
+          <a data-path="/architecture" target="_self" class="btn btn-primary">
             <span>Architecture Specs →</span>
           </a>
-          <a data-path="/lessons-learnt" target="_blank" class="btn btn-secondary">
+          <a data-path="/lessons-learnt" target="_self" class="btn btn-secondary">
             <span>Lessons Learnt</span>
           </a>
         </div>
@@ -449,7 +449,7 @@
     <div class="grid-mcp">
 
       <!-- Project 1: Crypto Tax MCP -->
-      <a data-path="/projects/mcp/crypto-tax-mcp" target="_blank" class="mcp-card card-crypto">
+      <a data-path="/projects/mcp/crypto-tax-mcp" target="_self" class="mcp-card card-crypto">
         <div>
           <div class="card-top">
             <div class="project-logo-box">
@@ -489,7 +489,7 @@
       </a>
 
       <!-- Project 2: CSRDBAFIN Compliance -->
-      <a data-path="/projects/mcp/csrdbafin-compliant-mcp" target="_blank" class="mcp-card card-csrd">
+      <a data-path="/projects/mcp/csrdbafin-compliant-mcp" target="_self" class="mcp-card card-csrd">
         <div>
           <div class="card-top">
             <div class="project-logo-box">
@@ -529,7 +529,7 @@
       </a>
 
       <!-- Project 3: DORA WEALTH -->
-      <a data-path="/projects/mcp/dora-wealth-mcp" target="_blank" class="mcp-card card-dora">
+      <a data-path="/projects/mcp/dora-wealth-mcp" target="_self" class="mcp-card card-dora">
         <div>
           <div class="card-top">
             <div class="project-logo-box">
@@ -570,7 +570,7 @@
       </a>
 
       <!-- Project 4: ESTATE Simulator -->
-      <a data-path="/projects/mcp/estate-simulator-mcp" target="_blank" class="mcp-card card-estate">
+      <a data-path="/projects/mcp/estate-simulator-mcp" target="_self" class="mcp-card card-estate">
         <div>
           <div class="card-top">
             <div class="project-logo-box">
@@ -610,7 +610,7 @@
       </a>
 
       <!-- Project 5: TISAX Hypercar -->
-      <a data-path="/projects/mcp/tisax-hypercar" target="_blank" class="mcp-card card-tisax">
+      <a data-path="/projects/mcp/tisax-hypercar" target="_self" class="mcp-card card-tisax">
         <div>
           <div class="card-top">
             <div class="project-logo-box">
@@ -672,10 +672,10 @@
         <div class="footer-col">
           <h4>Navigation</h4>
           <ul class="footer-links">
-            <li><a data-path="/home" target="_blank">Home Dashboard</a></li>
-            <li><a data-path="/projects" target="_blank">Projects Portal</a></li>
-            <li><a data-path="/architecture" target="_blank">Architecture Blueprints</a></li>
-            <li><a data-path="/lessons-learnt" target="_blank">Lessons Learnt</a></li>
+            <li><a data-path="/home" target="_self">Home Dashboard</a></li>
+            <li><a data-path="/projects" target="_self">Projects Portal</a></li>
+            <li><a data-path="/architecture" target="_self">Architecture Blueprints</a></li>
+            <li><a data-path="/lessons-learnt" target="_self">Lessons Learnt</a></li>
           </ul>
         </div>
 
@@ -716,20 +716,41 @@
           architecture: "/architecture",
           lessonsLearnt: "/lessons-learnt",
           mcp: "/projects/mcp",
-          cryptoTax: "/projects/mcp/crypto-tax-mcp"
+          cryptoTax: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxArch: "/architecture/a-crypto-mcp",
+          cryptoTaxLessons: "/lessons-learnt/l-crypto-tax"
         }
       };
-
-      document.querySelectorAll("a[data-path]").forEach(function(el) {
-        el.href = (window.GLOBAL_SITE_BASE || config.base) + el.getAttribute("data-path");
-      });
-
-      document.querySelectorAll("a[data-route]").forEach(function(el) {
-        const key = el.getAttribute("data-route");
-        if (config.routes && config.routes[key]) {
-          el.href = (window.GLOBAL_SITE_BASE || config.base) + config.routes[key];
-        }
-      });
+      const base = window.GLOBAL_SITE_BASE || config.base;
+      function bindLinks(selector, getRaw) {
+        document.querySelectorAll(selector).forEach(function(el) {
+          const raw = getRaw(el);
+          let path = raw;
+          if (config.routes && config.routes[raw]) {
+            path = config.routes[raw];
+          } else if (!raw.startsWith('/')) {
+            if (config.routes && config.routes[raw]) path = config.routes[raw];
+            else return;
+          }
+          const url = base + path;
+          el.href = url;
+          el.addEventListener('click', function(e) {
+            e.preventDefault();
+            try {
+              window.top.location.href = url;
+              return;
+            } catch (err) {}
+            try {
+              window.location.href = url;
+              return;
+            } catch (e2) {}
+            window.open(url, '_blank', 'noopener');
+          });
+        });
+      }
+      bindLinks('a[data-path]', function(el){ return el.getAttribute('data-path'); });
+      bindLinks('a[data-route]', function(el){ const k=el.getAttribute('data-route'); return config.routes && config.routes[k] ? config.routes[k] : k; });
     })();
   </script>
 

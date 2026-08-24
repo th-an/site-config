@@ -471,13 +471,13 @@
         </p>
 
         <div class="btn-group">
-          <a data-path="/home" target="_blank" class="btn btn-secondary">
+          <a data-path="/home" target="_self" class="btn btn-secondary">
             <span>← Home Dashboard</span>
           </a>
-          <a data-path="/architecture" target="_blank" class="btn btn-primary">
+          <a data-path="/architecture" target="_self" class="btn btn-primary">
             <span>Architecture Blueprints →</span>
           </a>
-          <a data-path="/projects/mcp" target="_blank" class="btn btn-secondary">
+          <a data-path="/projects/mcp" target="_self" class="btn btn-secondary">
             <span>MCP Ecosystem</span>
           </a>
         </div>
@@ -492,7 +492,7 @@
       <div class="grid-lessons">
 
         <!-- Retrospective 1: Crypto Tax -->
-        <a data-path="/lessons-learnt/l-crypto-tax" target="_blank" class="lesson-card card-crypto">
+        <a data-path="/lessons-learnt/l-crypto-tax" target="_self" class="lesson-card card-crypto">
           <div>
             <div class="card-top">
               <div class="lesson-logo-box">⚖️</div>
@@ -524,7 +524,7 @@
         </a>
 
         <!-- Retrospective 2: CSRD Compliance -->
-        <a data-path="/lessons-learnt/l-csrd" target="_blank" class="lesson-card card-csrd">
+        <a data-path="/lessons-learnt/l-csrd" target="_self" class="lesson-card card-csrd">
           <div>
             <div class="card-top">
               <div class="lesson-logo-box">📊</div>
@@ -555,7 +555,7 @@
         </a>
 
         <!-- Retrospective 3: DORA Wealth -->
-        <a data-path="/lessons-learnt/l-dora" target="_blank" class="lesson-card card-dora">
+        <a data-path="/lessons-learnt/l-dora" target="_self" class="lesson-card card-dora">
           <div>
             <div class="card-top">
               <div class="lesson-logo-box">🛡️</div>
@@ -586,7 +586,7 @@
         </a>
 
         <!-- Retrospective 4: Estate Simulator -->
-        <a data-path="/lessons-learnt/l-estate" target="_blank" class="lesson-card card-estate">
+        <a data-path="/lessons-learnt/l-estate" target="_self" class="lesson-card card-estate">
           <div>
             <div class="card-top">
               <div class="lesson-logo-box">🏛️</div>
@@ -617,7 +617,7 @@
         </a>
 
         <!-- Retrospective 5: TISAX Hypercar -->
-        <a data-path="/lessons-learnt/l-tisax" target="_blank" class="lesson-card card-tisax">
+        <a data-path="/lessons-learnt/l-tisax" target="_self" class="lesson-card card-tisax">
           <div>
             <div class="card-top">
               <div class="lesson-logo-box">⚡</div>
@@ -689,10 +689,10 @@
         <div class="footer-col">
           <h4>Navigation</h4>
           <ul class="footer-links">
-            <li><a data-path="/home" target="_blank">Home Dashboard</a></li>
-            <li><a data-path="/projects" target="_blank">Projects Portal</a></li>
-            <li><a data-path="/architecture" target="_blank">Architecture Blueprints</a></li>
-            <li><a data-path="/lessons-learnt" target="_blank">Lessons Learnt Hub</a></li>
+            <li><a data-path="/home" target="_self">Home Dashboard</a></li>
+            <li><a data-path="/projects" target="_self">Projects Portal</a></li>
+            <li><a data-path="/architecture" target="_self">Architecture Blueprints</a></li>
+            <li><a data-path="/lessons-learnt" target="_self">Lessons Learnt Hub</a></li>
           </ul>
         </div>
 
@@ -739,17 +739,35 @@
           cryptoTaxLessons: "/lessons-learnt/l-crypto-tax"
         }
       };
-
-      document.querySelectorAll("a[data-path]").forEach(function(el) {
-        el.href = (window.GLOBAL_SITE_BASE || config.base) + el.getAttribute("data-path");
-      });
-
-      document.querySelectorAll("a[data-route]").forEach(function(el) {
-        const key = el.getAttribute("data-route");
-        if (config.routes && config.routes[key]) {
-          el.href = (window.GLOBAL_SITE_BASE || config.base) + config.routes[key];
-        }
-      });
+      const base = window.GLOBAL_SITE_BASE || config.base;
+      function bindLinks(selector, getRaw) {
+        document.querySelectorAll(selector).forEach(function(el) {
+          const raw = getRaw(el);
+          let path = raw;
+          if (config.routes && config.routes[raw]) {
+            path = config.routes[raw];
+          } else if (!raw.startsWith('/')) {
+            if (config.routes && config.routes[raw]) path = config.routes[raw];
+            else return;
+          }
+          const url = base + path;
+          el.href = url;
+          el.addEventListener('click', function(e) {
+            e.preventDefault();
+            try {
+              window.top.location.href = url;
+              return;
+            } catch (err) {}
+            try {
+              window.location.href = url;
+              return;
+            } catch (e2) {}
+            window.open(url, '_blank', 'noopener');
+          });
+        });
+      }
+      bindLinks('a[data-path]', function(el){ return el.getAttribute('data-path'); });
+      bindLinks('a[data-route]', function(el){ const k=el.getAttribute('data-route'); return config.routes && config.routes[k] ? config.routes[k] : k; });
     })();
   </script>
 
