@@ -504,13 +504,13 @@
         </p>
 
         <div class="btn-group">
-          <a data-path="/projects/mcp" target="_blank" class="btn btn-primary">
+          <a data-path="/projects/mcp" target="_top" class="btn btn-primary">
             <span>Explore MCP Registry →</span>
           </a>
-          <a data-path="/architecture" target="_blank" class="btn btn-secondary">
+          <a data-path="/architecture" target="_top" class="btn btn-secondary">
             <span>Architecture Blueprints</span>
           </a>
-          <a data-path="/lessons-learnt" target="_blank" class="btn btn-secondary">
+          <a data-path="/lessons-learnt" target="_top" class="btn btn-secondary">
             <span>Lessons Learnt Hub</span>
           </a>
         </div>
@@ -524,7 +524,7 @@
         <div class="dispatch-title">Crypto Tax MCP Live Integration &amp; Anti-Hallucination Retrospective</div>
         <div class="dispatch-desc">Tracing chat model fabrications back to runtime defects, enforcing server instructions, and implementing named schema validation.</div>
       </div>
-      <a data-path="/lessons-learnt/l-crypto-tax" target="_blank" class="dispatch-link">
+      <a data-path="/lessons-learnt/l-crypto-tax" target="_top" class="dispatch-link">
         Read Retrospective →
       </a>
     </div>
@@ -537,7 +537,7 @@
       <div class="grid-portal">
 
         <!-- Card 1: Project Portfolio -->
-        <a data-path="/projects" target="_blank" class="portal-card card-proj">
+        <a data-path="/projects" target="_top" class="portal-card card-proj">
           <div>
             <div class="card-header">
               <div class="icon-box">📁</div>
@@ -558,7 +558,7 @@
         </a>
 
         <!-- Card 2: MCP Servers -->
-        <a data-path="/projects/mcp" target="_blank" class="portal-card card-mcp">
+        <a data-path="/projects/mcp" target="_top" class="portal-card card-mcp">
           <div>
             <div class="card-header">
               <div class="icon-box">⚡</div>
@@ -579,7 +579,7 @@
         </a>
 
         <!-- Card 3: Architecture -->
-        <a data-path="/architecture" target="_blank" class="portal-card card-arch">
+        <a data-path="/architecture" target="_top" class="portal-card card-arch">
           <div>
             <div class="card-header">
               <div class="icon-box">📐</div>
@@ -600,7 +600,7 @@
         </a>
 
         <!-- Card 4: Lessons Learnt -->
-        <a data-path="/lessons-learnt" target="_blank" class="portal-card card-learn">
+        <a data-path="/lessons-learnt" target="_top" class="portal-card card-learn">
           <div>
             <div class="card-header">
               <div class="icon-box">📖</div>
@@ -643,10 +643,10 @@
         <div class="footer-col">
           <h4>Navigation</h4>
           <ul class="footer-links">
-            <li><a data-path="/projects" target="_blank">Projects Portfolio</a></li>
-            <li><a data-path="/projects/mcp" target="_blank">MCP Registry</a></li>
-            <li><a data-path="/architecture" target="_blank">Architecture Blueprints</a></li>
-            <li><a data-path="/lessons-learnt" target="_blank">Lessons Learnt Hub</a></li>
+            <li><a data-path="/projects" target="_top">Projects Portfolio</a></li>
+            <li><a data-path="/projects/mcp" target="_top">MCP Registry</a></li>
+            <li><a data-path="/architecture" target="_top">Architecture Blueprints</a></li>
+            <li><a data-path="/lessons-learnt" target="_top">Lessons Learnt Hub</a></li>
           </ul>
         </div>
 
@@ -694,30 +694,15 @@
         }
       };
       const base = window.GLOBAL_SITE_BASE || config.base;
-      function bindLinks(selector, getRaw) {
-        document.querySelectorAll(selector).forEach(function(el) {
-          const raw = getRaw(el);
-          let path = raw;
-          if (config.routes && config.routes[raw]) {
-            path = config.routes[raw];
-          } else if (!raw.startsWith('/')) {
-            if (config.routes && config.routes[raw]) path = config.routes[raw];
-            else return;
-          }
-          const url = base + path;
-          el.href = url;
-          el.addEventListener('click', function(e) {
-            e.preventDefault();
-            try {
-              window.top.location.href = url;
-              return;
-            } catch (err) {}
-            window.open(url, '_blank', 'noopener');
-          });
-        });
-      }
-      bindLinks('a[data-path]', function(el){ return el.getAttribute('data-path'); });
-      bindLinks('a[data-route]', function(el){ const k=el.getAttribute('data-route'); return config.routes && config.routes[k] ? config.routes[k] : k; });
+      document.querySelectorAll("a[data-path]").forEach(function(el) {
+        el.href = base + el.getAttribute("data-path");
+      });
+      document.querySelectorAll("a[data-route]").forEach(function(el) {
+        const key = el.getAttribute("data-route");
+        if (config.routes && config.routes[key]) {
+          el.href = base + config.routes[key];
+        }
+      });
     })();
   </script>
 

@@ -503,13 +503,13 @@
         </p>
 
         <div class="btn-group">
-          <a data-path="/projects/mcp" target="_blank" class="btn btn-secondary">
+          <a data-path="/projects/mcp" target="_top" class="btn btn-secondary">
             <span>← MCP Server Registry</span>
           </a>
-          <a data-path="/architecture/a-crypto-mcp" target="_blank" class="btn btn-primary">
+          <a data-path="/architecture/a-crypto-mcp" target="_top" class="btn btn-primary">
             <span>Architecture &amp; Security Specs →</span>
           </a>
-          <a data-path="/lessons-learnt/l-crypto-tax" target="_blank" class="btn btn-amber">
+          <a data-path="/lessons-learnt/l-crypto-tax" target="_top" class="btn btn-amber">
             <span>Lessons Learnt (Retrospective) ⚠️</span>
           </a>
         </div>
@@ -815,10 +815,10 @@
         <div class="footer-col">
           <h4>Navigation</h4>
           <ul class="footer-links">
-            <li><a data-path="/home" target="_blank">Home Dashboard</a></li>
-            <li><a data-path="/projects/mcp" target="_blank">MCP Server Registry</a></li>
-            <li><a data-path="/architecture/a-crypto-mcp" target="_blank">Crypto Tax Architecture</a></li>
-            <li><a data-path="/lessons-learnt/l-crypto-tax" target="_blank">Crypto Tax Lessons Learnt</a></li>
+            <li><a data-path="/home" target="_top">Home Dashboard</a></li>
+            <li><a data-path="/projects/mcp" target="_top">MCP Server Registry</a></li>
+            <li><a data-path="/architecture/a-crypto-mcp" target="_top">Crypto Tax Architecture</a></li>
+            <li><a data-path="/lessons-learnt/l-crypto-tax" target="_top">Crypto Tax Lessons Learnt</a></li>
           </ul>
         </div>
 
@@ -866,30 +866,15 @@
         }
       };
       const base = window.GLOBAL_SITE_BASE || config.base;
-      function bindLinks(selector, getRaw) {
-        document.querySelectorAll(selector).forEach(function(el) {
-          const raw = getRaw(el);
-          let path = raw;
-          if (config.routes && config.routes[raw]) {
-            path = config.routes[raw];
-          } else if (!raw.startsWith('/')) {
-            if (config.routes && config.routes[raw]) path = config.routes[raw];
-            else return;
-          }
-          const url = base + path;
-          el.href = url;
-          el.addEventListener('click', function(e) {
-            e.preventDefault();
-            try {
-              window.top.location.href = url;
-              return;
-            } catch (err) {}
-            window.open(url, '_blank', 'noopener');
-          });
-        });
-      }
-      bindLinks('a[data-path]', function(el){ return el.getAttribute('data-path'); });
-      bindLinks('a[data-route]', function(el){ const k=el.getAttribute('data-route'); return config.routes && config.routes[k] ? config.routes[k] : k; });
+      document.querySelectorAll("a[data-path]").forEach(function(el) {
+        el.href = base + el.getAttribute("data-path");
+      });
+      document.querySelectorAll("a[data-route]").forEach(function(el) {
+        const key = el.getAttribute("data-route");
+        if (config.routes && config.routes[key]) {
+          el.href = base + config.routes[key];
+        }
+      });
     })();
   </script>
 
