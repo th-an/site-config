@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg-slate: #0b1120;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(148, 163, 184, 0.15);
+      --border-hover: rgba(16, 185, 129, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-emerald: #10b981;
+      --accent-cyan: #06b6d4;
+      --accent-indigo: #818cf8;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --code-bg: #030712;
+      --code-color: #34d399;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
+    }
+    body {
+      background: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 10px;
+      color: var(--text-main);
+    }
+
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* 1. HERO HEADER */
+    .header-container {
+      background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.14), transparent 45%),
+                  radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.12), transparent 50%),
+                  #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 30px 34px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+    }
+
+    .header-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #10b981, #06b6d4, #818cf8);
+    }
+
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 1.5px solid rgba(16, 185, 129, 0.45);
+      background: #1e293b;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+    }
+
+    .brand-name {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-emerald);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #6ee7b7;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    .hero-content {
+      max-width: 880px;
+    }
+
+    .hero-title {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent-emerald);
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+    .btn-primary:hover {
+      background: #34d399;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(30, 41, 59, 0.8);
+      color: #e2e8f0;
+      border: 1px solid var(--card-border);
+    }
+    .btn-secondary:hover {
+      background: rgba(51, 65, 85, 0.8);
+      border-color: rgba(148, 163, 184, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* 2. SUMMARY METRICS STRIP */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+    }
+
+    .metric-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    /* 3. SECTION CARDS & ACCORDIONS */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #f1f5f9;
+    }
+
+    .pill {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+    .pill-emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .pill-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border: 1px solid rgba(6, 182, 212, 0.3); }
+    .pill-indigo { background: rgba(129, 140, 248, 0.15); color: var(--accent-indigo); border: 1px solid rgba(129, 140, 248, 0.3); }
+    .pill-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .pill-rose { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+
+    /* Tables */
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    th {
+      padding: 10px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+      vertical-align: top;
+      color: #cbd5e1;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    .code-inline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11.5px;
+      color: var(--code-color);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* Tool Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .tool-box {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tool-box h4 {
+      font-size: 13.5px;
+      color: #38bdf8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .tool-box p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .io-tag {
+      font-size: 11.5px;
+      color: #94a3b8;
+      line-height: 1.45;
+    }
+
+    .io-tag strong {
+      color: #e2e8f0;
+    }
+
+    /* Tree View Codeblock */
+    .tree-block {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #e2e8f0;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .t-pkg { color: #34d399; font-weight: 700; }
+    .t-file { color: #f8fafc; }
+    .t-comm { color: #64748b; font-style: italic; }
+
+    /* 4. FOOTER */
+    .footer-container {
+      background: radial-gradient(circle at bottom center, rgba(16, 185, 129, 0.08), transparent 70%), #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 32px 36px 24px 36px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+      margin-top: 10px;
+    }
+
+    .footer-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #10b981, #06b6d4, transparent);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 32px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .brand-col { display: flex; flex-direction: column; gap: 12px; }
+    .brand-header { display: flex; align-items: center; gap: 12px; }
+
+    .footer-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1.5px solid rgba(16, 185, 129, 0.4);
+      background: #1e293b;
+    }
+
+    .brand-title { font-size: 16px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.01em; }
+    .brand-desc { font-size: 13px; line-height: 1.55; color: var(--text-muted); max-width: 380px; }
+
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-emerald);
+      margin-bottom: 14px;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #34d399; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #64748b;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .spec-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+      .header-container { padding: 20px; }
+      .hero-title { font-size: 22px; }
+      .top-meta { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-top { grid-template-columns: 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .tools-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- 1. HERO HEADER -->
+    <header class="header-container">
+      <div class="top-meta">
+        <div class="brand-group">
+          <img 
+            src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+            alt="AgenticAIExplorer Logo" 
+            class="brand-logo"
+          />
+          <div class="brand-name">
+            <span>AgenticAIExplorer</span>
+            <span class="brand-sub">CSRD / BaFin ESG Auditor MCP</span>
+          </div>
+        </div>
+
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>Dual Transport: stdio + HTTP/SSE</span>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">CSRD/BaFin-Compliant ESG Auditor MCP Server</h1>
+        <p class="hero-description">
+          A Model Context Protocol (MCP) server for automated ESG auditing of financial portfolios, featuring CRREM 1.5°C/2°C stranding risk modeling, brown discount NAV adjustments, and PCAF Scope 3 financed emissions computation.
+        </p>
+
+        <div class="btn-group">
+          <a data-path="/projects/mcp" target="_self" class="btn btn-primary">
+            <span>← MCP Server Registry</span>
+          </a>
+          <a data-path="/architecture" target="_self" class="btn btn-secondary">
+            <span>Platform Architecture</span>
+          </a>
+          <a data-path="/home" target="_self" class="btn btn-secondary">
+            <span>Home</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. SUMMARY METRICS STRIP -->
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--accent-emerald);">6 Primitives</div>
+        <div class="metric-label">MCP Audit &amp; Calculation Tools</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--accent-cyan);">5 URIs</div>
+        <div class="metric-label">Deterministic Resources</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--accent-indigo);">43 Unit Tests</div>
+        <div class="metric-label">Vitest Engine Coverage</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--accent-amber);">Dual Engine</div>
+        <div class="metric-label">PCAF + CRREM Real Estate</div>
+      </div>
+    </div>
+
+    <!-- 3. REGULATORY ALIGNMENT MATRIX -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>📋 Regulatory Alignment Matrix</span>
+        <span class="pill pill-emerald">European ESG Standards</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">Framework</th>
+              <th style="width: 35%;">Standard Reference</th>
+              <th>Coverage &amp; Implementation Scope</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>CSRD</strong></td>
+              <td><span class="code-inline">ESRS E1 (Climate)</span></td>
+              <td>GHG inventory, transition plans, energy mix breakdown, and carbon pricing liability.</td>
+            </tr>
+            <tr>
+              <td><strong>BaFin</strong></td>
+              <td><span class="code-inline">Circular (RS BFA-1)</span></td>
+              <td>Minimum expectations for sustainability risk management in financial portfolios.</td>
+            </tr>
+            <tr>
+              <td><strong>PCAF</strong></td>
+              <td><span class="code-inline">Global Standard 2022 + EU 2023</span></td>
+              <td>Scope 3 Category 15 (Private Equity) and Category 13 (Real Estate) financed emissions.</td>
+            </tr>
+            <tr>
+              <td><strong>CRREM</strong></td>
+              <td><span class="code-inline">1.5°C / 2.0°C Pathways</span></td>
+              <td>Real estate decarbonization trajectories across DE, AT, CH, UK, and FR.</td>
+            </tr>
+            <tr>
+              <td><strong>SFDR</strong></td>
+              <td><span class="code-inline">Level 2 (RTS) 2.0</span></td>
+              <td>Article 6, 8, and 9 classifications, breach audits, and Principal Adverse Impacts (PAI).</td>
+            </tr>
+            <tr>
+              <td><strong>EU Taxonomy</strong></td>
+              <td><span class="code-inline">Regulation 2020/852</span></td>
+              <td>Taxonomy alignment screening and remedial CapEx estimation.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 4. MCP TOOLS -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>🚀 MCP Tools Inventory</span>
+        <span class="pill pill-cyan">Standardized Interface</span>
+      </div>
+      <div class="tools-grid">
+        <div class="tool-box">
+          <h4>calculate_financed_emissions</h4>
+          <p>Calculates PCAF Scope 3 financed emissions, intensity, and weighted data quality scores across Private Equity and Real Estate holdings.</p>
+          <div class="io-tag"><strong>Input:</strong> <span class="code-inline">portfolioId</span>, <span class="code-inline">reportingYear</span>, <span class="code-inline">assetClassFilter?</span></div>
+          <div class="io-tag"><strong>Output:</strong> Cat 15 / Cat 13 emissions, GHG intensity, weighted DQS</div>
+        </div>
+
+        <div class="tool-box">
+          <h4>audit_sfdr_classification</h4>
+          <p>Audits SFDR 2.0 classification, flags compliance breaches, and calculates remediation CapEx required to maintain designated status.</p>
+          <div class="io-tag"><strong>Input:</strong> <span class="code-inline">portfolioId</span>, <span class="code-inline">targetCategory</span> (Article_6/8/9)</div>
+          <div class="io-tag"><strong>Output:</strong> Alignment percentage, detected breaches, CapEx summary</div>
+        </div>
+
+        <div class="tool-box">
+          <h4>assess_crrem_stranding</h4>
+          <p>Assesses stranding year, cumulative excess emissions, and carbon penalty liabilities against CRREM 1.5°C or 2.0°C decarbonization curves.</p>
+          <div class="io-tag"><strong>Input:</strong> <span class="code-inline">portfolioId/assetId</span>, <span class="code-inline">pathwayType</span>, <span class="code-inline">scenario</span></div>
+          <div class="io-tag"><strong>Output:</strong> Stranding year, excess GHG tons, carbon liability (€)</div>
+        </div>
+
+        <div class="tool-box">
+          <h4>calculate_brown_discount</h4>
+          <p>Quantifies brown discount and derives stranding-adjusted Net Asset Value (NAV) based on retrofit CapEx, yield expansion, and carbon drag.</p>
+          <div class="io-tag"><strong>Input:</strong> <span class="code-inline">portfolioId</span>, <span class="code-inline">targetYear</span>, <span class="code-inline">discountRate</span>, <span class="code-inline">yieldExpansion</span></div>
+          <div class="io-tag"><strong>Output:</strong> CapEx drag, yield impact, adjusted NAV</div>
+        </div>
+
+        <div class="tool-box">
+          <h4>extract_epc_rating</h4>
+          <p>Extracts certified EPC ratings, energy demands (primary/final), and CO2 performance from the German DIBt registry or uploaded certificates.</p>
+          <div class="io-tag"><strong>Input:</strong> <span class="code-inline">assetId?</span>, <span class="code-inline">dibRegistrationNumber?</span></div>
+          <div class="io-tag"><strong>Output:</strong> EPC rating, energy demand (kWh/m²a), verified status</div>
+        </div>
+
+        <div class="tool-box">
+          <h4>generate_csrd_statement</h4>
+          <p>Generates a formal CSRD ESRS E1 Climate sustainability disclosure structure with auto-referenced portfolio calculations.</p>
+          <div class="io-tag"><strong>Input:</strong> <span class="code-inline">portfolioId</span>, <span class="code-inline">reportingYear</span>, <span class="code-inline">includeOptions</span></div>
+          <div class="io-tag"><strong>Output:</strong> ESRS E1 outline with embedded audit payloads</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. RESOURCES & CLIENT CONFIG -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>📊 MCP Resources &amp; Client Configuration</span>
+        <span class="pill pill-indigo">Integration Specs</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+        <div>
+          <h4 style="font-size: 13.5px; color: #f1f5f9; margin-bottom: 8px;">Deterministic Resource URIs</h4>
+          <ul style="font-size: 12.5px; color: var(--text-muted); line-height: 1.8; list-style: none;">
+            <li><span class="code-inline">esrs://standards/e1</span> &mdash; Climate disclosure requirements</li>
+            <li><span class="code-inline">pcaf://standards/methodology</span> &mdash; GHG accounting standard</li>
+            <li><span class="code-inline">crrem://pathways/{country}/{assetClass}</span> &mdash; Decarbonization curves</li>
+            <li><span class="code-inline">sfdr://taxonomy/alignment</span> &mdash; EU Taxonomy criteria</li>
+            <li><span class="code-inline">regulatory://germany/bafin</span> &mdash; Circular RS BFA-1 specs</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size: 13.5px; color: #f1f5f9; margin-bottom: 8px;">Claude Desktop Client Config (stdio)</h4>
+          <div class="tree-block" style="padding: 12px; font-size: 11.5px;">{
+  "mcpServers": {
+    "esg-auditor": {
+      "command": "node",
+      "args": ["/path/to/CSRDBAFINCompliant-MCP/dist/index.js"],
+      "env": { "NODE_ENV": "production" }
+    }
+  }
+}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. SOURCE TOPOLOGY -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>📁 Repository Topology &amp; Architecture</span>
+        <span class="pill pill-emerald">TypeScript / Node.js</span>
+      </div>
+      <div class="tree-block"><span class="t-pkg">CSRDBAFINCompliant-MCP/</span>
+├── <span class="t-file">package.json</span>                 <span class="t-comm"># Project scripts and dependencies</span>
+├── <span class="t-file">Makefile</span>                     <span class="t-comm"># Build automation shortcuts</span>
+├── <span class="t-pkg">deploy/</span>                      <span class="t-comm"># Dockerfile and environment templates</span>
+├── <span class="t-pkg">src/</span>
+│   ├── <span class="t-file">index.ts</span>                 <span class="t-comm"># Stdio transport entry point (Claude Desktop)</span>
+│   ├── <span class="t-file">server.ts</span>                <span class="t-comm"># Core MCP server logic & schema wiring</span>
+│   ├── <span class="t-file">server-http.ts</span>           <span class="t-comm"># HTTP/SSE transport entry point (Port 3000)</span>
+│   ├── <span class="t-pkg">connectors/</span>              <span class="t-comm"># External registry integrations (DIBt, EU ETS)</span>
+│   ├── <span class="t-pkg">engine/</span>                  <span class="t-comm"># Domain engines: PCAF, CRREM, SFDR, Brown Discount</span>
+│   ├── <span class="t-pkg">resources/</span>               <span class="t-comm"># MCP resource providers</span>
+│   ├── <span class="t-pkg">tools/</span>                   <span class="t-comm"># 6 MCP tool handlers</span>
+│   ├── <span class="t-pkg">transports/</span>              <span class="t-comm"># Transport abstraction (stdio vs HTTP/SSE)</span>
+│   └── <span class="t-pkg">types/</span>                   <span class="t-comm"># TypeScript schema & Zod validators</span>
+└── <span class="t-pkg">tests/</span>                       <span class="t-comm"># Vitest test suite (43 unit tests green)</span></div>
+    </div>
+
+    <!-- 7. LIMITATIONS & DISCLAIMER -->
+    <div class="section-card" style="border-color: rgba(245, 158, 11, 0.3);">
+      <div class="section-title">
+        <span>⚖️ Honest Limits &amp; Regulatory Disclaimer</span>
+        <span class="pill pill-amber">Scope Boundaries</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+        <div style="background: rgba(30, 41, 59, 0.4); padding: 14px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2);">
+          <h4 style="font-size: 13px; color: var(--accent-amber); margin-bottom: 6px;">Audit Assistance Tool</h4>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Provides calculation and pre-audit assistance; does not substitute for third-party assurance (IDW PS 991 / ISSA 5000).</p>
+        </div>
+        <div style="background: rgba(30, 41, 59, 0.4); padding: 14px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2);">
+          <h4 style="font-size: 13px; color: var(--accent-amber); margin-bottom: 6px;">Local Privacy Model</h4>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Zero external telemetry or data leaks; all calculations and portfolio assessments execute in-memory or on local JSON stores.</p>
+        </div>
+        <div style="background: rgba(30, 41, 59, 0.4); padding: 14px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2);">
+          <h4 style="font-size: 13px; color: var(--accent-amber); margin-bottom: 6px;">Factor Resolution</h4>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.45;">Uses annual UBA/BDEW baseline emission factors; production workflows should pair with smart meter ingestion feeds.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. FOOTER -->
+    <footer class="footer-container">
+      <div class="footer-top">
+        <div class="brand-col">
+          <div class="brand-header">
+            <img 
+              src="https://raw.githubusercontent.com/th-an/mcp-project-template/baffb5e4e7b6a8d75a1f9c513737c5bd57819672/SujithAgenticAIExplorer.png" 
+              alt="AgenticAIExplorer Logo" 
+              class="footer-logo"
+            />
+            <div class="brand-title">AgenticAIExplorer</div>
+          </div>
+          <p class="brand-desc">
+            Continuous technical log documenting deterministic architectures, Model Context Protocol primitives, and production engineering retrospectives.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a data-path="/home" target="_self">Home Dashboard</a></li>
+            <li><a data-path="/projects/mcp" target="_self">MCP Server Registry</a></li>
+            <li><a data-path="/projects/mcp/crypto-tax-mcp" target="_self">Crypto Tax MCP</a></li>
+            <li><a data-path="/architecture" target="_self">Architecture Hub</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Protocols &amp; Standards</h4>
+          <ul class="footer-links">
+            <li><a href="#" style="pointer-events: none;">Model Context Protocol (v1)</a></li>
+            <li><a href="#" style="pointer-events: none;">PCAF GHG Standard 2022</a></li>
+            <li><a href="#" style="pointer-events: none;">CRREM 1.5°C / 2.0°C</a></li>
+            <li><a href="#" style="pointer-events: none;">CSRD ESRS E1 Climate</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <span>&copy; AgenticAIExplorer. CSRDBAFIN Compliant MCP.</span>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <span class="spec-pill">TypeScript</span>
+          <span class="spec-pill">Vitest (43 Tests)</span>
+          <span class="spec-pill">Docker Ready</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- RAW GITHUB CONFIG SOURCE OF TRUTH (Bypasses CDN Cache) -->
+  <script src="https://raw.githubusercontent.com/th-an/site-config/main/site-config.js"></script>
+  <script>
+    (function() {
+      const config = window.SITE_CONFIG || {
+        base: "https://sites.google.com/view/s-agenticaiexplorer",
+        routes: {
+          home: "/home",
+          projects: "/projects",
+          architecture: "/architecture",
+          lessonsLearnt: "/lessons-learnt",
+          mcp: "/projects/mcp",
+          cryptoTax: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp",
+          cryptoTaxArch: "/architecture/a-crypto-mcp",
+          cryptoTaxLessons: "/lessons-learnt/l-crypto-tax",
+          csrdBafin: "/projects/mcp/csrdbafin-compliant-mcp",
+          csrdBafinMCP: "/projects/mcp/csrdbafin-compliant-mcp"
+        }
+      };
+      const base = window.GLOBAL_SITE_BASE || config.base;
+      // Map Google Sites routes to Pages html files for same-embed navigation (avoids CSP frame-ancestors block)
+      const pageMap = {
+        "/home": "home.html",
+        "/projects": "projects.html",
+        "/projects/mcp": "mcp.html",
+        "/projects/mcp/crypto-tax-mcp": "crypto-tax-mcp.html",
+        "/projects/mcp/csrdbafin-compliant-mcp": "csrdbafin-compliant-mcp.html",
+        "/architecture": "architecture.html",
+        "/architecture/a-crypto-mcp": "a-crypto-mcp.html",
+        "/lessons-learnt": "lessons-learnt.html",
+        "/lessons-learnt/l-crypto-tax": "l-crypto-tax.html"
+      };
+      const isPagesEmbed = window.location.hostname === "th-an.github.io";
+      document.querySelectorAll("a[data-path]").forEach(function(el) {
+        const rawPath = el.getAttribute("data-path");
+        // For href, keep Google Sites URL for _blank fallback / SEO
+        el.href = base + rawPath;
+        el.addEventListener('click', function(e) {
+          if (!isPagesEmbed) return; // let normal _self/_blank handle Google Sites embed
+          e.preventDefault();
+          const file = pageMap[rawPath];
+          if (file) {
+            window.location.href = "./" + file;
+          } else {
+            window.open(base + rawPath, '_blank', 'noopener');
+          }
+        });
+      });
+      document.querySelectorAll("a[data-route]").forEach(function(el) {
+        const key = el.getAttribute("data-route");
+        const path = config.routes && config.routes[key];
+        if (!path) return;
+        el.href = base + path;
+        el.addEventListener('click', function(e) {
+          if (!isPagesEmbed) return;
+          e.preventDefault();
+          const file = pageMap[path];
+          if (file) {
+            window.location.href = "./" + file;
+          } else {
+            window.open(base + path, '_blank', 'noopener');
+          }
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

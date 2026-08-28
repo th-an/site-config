@@ -16,6 +16,9 @@ window.SITE_CONFIG = {
     cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp",
     cryptoTaxArch: "/architecture/a-crypto-mcp",
 
+    csrdBafin: "/projects/mcp/csrdbafin-compliant-mcp",
+    csrdBafinMCP: "/projects/mcp/csrdbafin-compliant-mcp",
+
     // Lessons Learned paths (verify these exist on your Google Site)
     cryptoTaxLessons: "/lessons-learnt/l-crypto-tax",
   }
