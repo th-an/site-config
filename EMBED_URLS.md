@@ -13,13 +13,14 @@ Central reference for Google Sites embeds. Use **GitHub Pages** URLs for `Embed 
 | 3 | MCP Registry | `/projects/mcp` | `https://th-an.github.io/site-config/mcp.html` |
 | 4 | Crypto Tax Inventory | `/projects/mcp/crypto-tax-mcp` | `https://th-an.github.io/site-config/crypto-tax-mcp.html` |
 | 5 | CSRD/BaFin ESG Auditor | `/projects/mcp/csrdbafin-compliant-mcp` | `https://th-an.github.io/site-config/csrdbafin-compliant-mcp.html` |
-| 6 | Main Architecture Hub | `/architecture` | `https://th-an.github.io/site-config/architecture.html` |
-| 7 | Crypto Tax Arch Deep Dive | `/architecture/a-crypto-mcp` | `https://th-an.github.io/site-config/a-crypto-mcp.html` |
-| 8 | Lessons Hub | `/lessons-learnt` | `https://th-an.github.io/site-config/lessons-learnt.html` |
-| 9 | Crypto Tax Retrospective | `/lessons-learnt/l-crypto-tax` | `https://th-an.github.io/site-config/l-crypto-tax.html` |
+| 6 | CSRD/BaFin Architecture | `/architecture/a-csrd-bafin-mcp` | `https://th-an.github.io/site-config/a-csrd-bafin-mcp.html` |
+| 7 | Main Architecture Hub | `/architecture` | `https://th-an.github.io/site-config/architecture.html` |
+| 8 | Crypto Tax Arch Deep Dive | `/architecture/a-crypto-mcp` | `https://th-an.github.io/site-config/a-crypto-mcp.html` |
+| 9 | Lessons Hub | `/lessons-learnt` | `https://th-an.github.io/site-config/lessons-learnt.html` |
+| 10 | Crypto Tax Retrospective | `/lessons-learnt/l-crypto-tax` | `https://th-an.github.io/site-config/l-crypto-tax.html` |
 
 **Notes:**
-- All 9 pages use neutral terminology (`Retrospective` vs `Post-Mortem`, `Learnings` vs `Gotchas`) at `562ac8e`.
+- All 10 pages use neutral terminology (`Retrospective` vs `Post-Mortem`, `Learnings` vs `Gotchas`) at `562ac8e`.
 - Pages are served via GitHub Pages (`https://th-an.github.io/site-config/`) with `Content-Type: text/html` — embeddable via `By URL` (avoids `raw.githubusercontent` provider block).
 - For `Embed → Embed code` (paste HTML), copy **Raw** content: `https://raw.githubusercontent.com/th-an/site-config/main/<file>.html` and paste directly — updates require re-paste.
 
@@ -33,7 +34,7 @@ Central reference for Google Sites embeds. Use **GitHub Pages** URLs for `Embed 
 
 Base: `https://sites.google.com/view/s-agenticaiexplorer`
 Routes in `site-config.js`:
-- `home: "/home"`, `projects: "/projects"`, `architecture: "/architecture"`, `lessonsLearnt: "/lessons-learnt"`, `mcp: "/projects/mcp"`, `cryptoTax: "/projects/mcp/crypto-tax-mcp"`, `cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp"`, `cryptoTaxArch: "/architecture/a-crypto-mcp"`, `cryptoTaxLessons: "/lessons-learnt/l-crypto-tax"`, `csrdBafin: "/projects/mcp/csrdbafin-compliant-mcp"`, `csrdBafinMCP: "/projects/mcp/csrdbafin-compliant-mcp"`
+- `home: "/home"`, `projects: "/projects"`, `architecture: "/architecture"`, `lessonsLearnt: "/lessons-learnt"`, `mcp: "/projects/mcp"`, `cryptoTax: "/projects/mcp/crypto-tax-mcp"`, `cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp"`, `cryptoTaxArch: "/architecture/a-crypto-mcp"`, `cryptoTaxLessons: "/lessons-learnt/l-crypto-tax"`, `csrdBafin: "/projects/mcp/csrdbafin-compliant-mcp"`, `csrdBafinMCP: "/projects/mcp/csrdbafin-compliant-mcp"`, `csrdBafinArch: "/architecture/a-csrd-bafin-mcp"`
 
 Use in embeds:
 ```html
@@ -57,6 +58,7 @@ Use in embeds:
 | MCP Registry | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/mcp.html` |
 | Crypto Tax Inventory | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/crypto-tax-mcp.html` |
 | CSRD/BaFin ESG Auditor | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/csrdbafin-compliant-mcp.html` |
+| CSRD/BaFin Architecture | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/a-csrd-bafin-mcp.html` |
 | Architecture Hub | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/architecture.html` |
 | Crypto Tax Arch | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/a-crypto-mcp.html` |
 | Lessons Hub | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/lessons-learnt.html` |
@@ -64,4 +66,4 @@ Use in embeds:
 
 ---
 
-*Generated 2026-08-28 — 9 pages at `27f4c77` + CSRD/BaFin ESG Auditor (`csrdbafin-compliant-mcp.html`). Pages via `https://th-an.github.io/site-config/`.*
+*Generated 2026-08-28 — 10 pages at `5ea6829` + CSRD/BaFin Architecture (`a-csrd-bafin-mcp.html`). Pages via `https://th-an.github.io/site-config/`.*

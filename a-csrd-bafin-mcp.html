@@ -8,15 +8,17 @@
       --bg-slate: #0b1120;
       --card-bg: rgba(15, 23, 42, 0.85);
       --card-border: rgba(148, 163, 184, 0.15);
-      --border-hover: rgba(16, 185, 129, 0.45);
+      --border-hover: rgba(16, 185, 129, 0.4);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --accent-cyan: #06b6d4;
       --accent-emerald: #10b981;
+      --accent-cyan: #06b6d4;
       --accent-indigo: #818cf8;
       --accent-amber: #f59e0b;
       --accent-rose: #f43f5e;
-      --code-bg: #1e293b;
+      --code-bg: #030712;
+      --tree-branch: #34d399;
+      --comment: #64748b;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,7 +33,7 @@
       color: var(--text-main);
     }
 
-    .page-wrapper {
+    .wrapper {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
@@ -39,7 +41,7 @@
       gap: 24px;
     }
 
-    /* Hero Header */
+    /* 1. HERO HEADER */
     .header-container {
       background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.14), transparent 45%),
                   radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.12), transparent 50%),
@@ -122,7 +124,7 @@
     }
 
     .hero-content {
-      max-width: 840px;
+      max-width: 860px;
     }
 
     .hero-title {
@@ -131,7 +133,7 @@
       letter-spacing: -0.02em;
       line-height: 1.25;
       margin-bottom: 12px;
-      background: linear-gradient(135deg, #ffffff 40%, #a7f3d0 100%);
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -182,170 +184,184 @@
       transform: translateY(-2px);
     }
 
-    /* Architecture Blueprint Cards Grid */
-    .section-title {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      color: #f1f5f9;
-      margin-bottom: 4px;
-    }
-
-    .section-sub {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-    }
-
-    .grid-arch {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 22px;
-    }
-
-    .arch-card {
+    /* 2. SECTION CARDS */
+    .section-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
+      border-radius: 14px;
       padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
     }
 
-    .arch-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      border-radius: 16px 16px 0 0;
-    }
-
-    .arch-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.7);
-      border-color: rgba(148, 163, 184, 0.35);
-    }
-
-    .card-crypto::before { background: linear-gradient(90deg, #06b6d4, #10b981); }
-    .card-csrd::before   { background: linear-gradient(90deg, #10b981, #059669); }
-    .card-dora::before   { background: linear-gradient(90deg, #818cf8, #6366f1); }
-    .card-estate::before { background: linear-gradient(90deg, #f59e0b, #ea580c); }
-    .card-tisax::before  { background: linear-gradient(90deg, #f43f5e, #e11d48); }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 16px;
-    }
-
-    .arch-logo-box {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 22px;
+      justify-content: space-between;
+      color: #f1f5f9;
     }
 
-    .card-crypto .arch-logo-box { background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6, 182, 212, 0.35); color: var(--accent-cyan); }
-    .card-csrd .arch-logo-box   { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); color: var(--accent-emerald); }
-    .card-dora .arch-logo-box   { background: rgba(129, 140, 248, 0.12); border: 1px solid rgba(129, 140, 248, 0.35); color: var(--accent-indigo); }
-    .card-estate .arch-logo-box { background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); color: var(--accent-amber); }
-    .card-tisax .arch-logo-box  { background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.35); color: var(--accent-rose); }
-
-    .arch-badge {
+    .pill {
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 4px 10px;
+      padding: 3px 10px;
       border-radius: 9999px;
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #cbd5e1;
+      letter-spacing: 0.05em;
     }
+    .pill-emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .pill-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border: 1px solid rgba(6, 182, 212, 0.3); }
+    .pill-indigo { background: rgba(129, 140, 248, 0.15); color: var(--accent-indigo); border: 1px solid rgba(129, 140, 248, 0.3); }
+    .pill-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
 
-    .arch-title { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; color: #f8fafc; margin-bottom: 6px; }
-    .arch-tagline { font-size: 12.5px; font-weight: 600; margin-bottom: 12px; }
-
-    .card-crypto .arch-tagline { color: #67e8f9; }
-    .card-csrd .arch-tagline   { color: #6ee7b7; }
-    .card-dora .arch-tagline   { color: #c7d2fe; }
-    .card-estate .arch-tagline { color: #fcd34d; }
-    .card-tisax .arch-tagline  { color: #fda4af; }
-
-    .arch-desc { font-size: 13px; line-height: 1.55; color: var(--text-muted); margin-bottom: 16px; }
-
-    .pillars-list { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
-    .pillars-list li { font-size: 12px; color: #cbd5e1; display: flex; align-items: center; gap: 8px; }
-    .pillars-list li::before { content: "🛡️"; font-size: 11px; }
-
-    .meta-footer {
-      border-top: 1px solid rgba(148, 163, 184, 0.08);
-      padding-top: 14px;
+    /* Visual Architecture Stack */
+    .stack-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-    }
-
-    .tags-strip { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 11px;
-      background: rgba(30, 41, 59, 0.7);
-      color: #94a3b8;
-      padding: 3px 8px;
-      border-radius: 4px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .arch-action-link {
-      display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+    }
+
+    .stack-client {
+      width: 65%;
+      text-align: center;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px dashed var(--accent-emerald);
       font-size: 13px;
       font-weight: 600;
-      color: var(--accent-emerald);
-      padding-top: 4px;
+      color: #6ee7b7;
+      padding: 12px;
+      border-radius: 8px;
     }
 
-    /* Cross-Cutting Pillars */
-    .grid-3 {
+    .arrow-connector {
+      font-size: 12px;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      font-family: ui-monospace, monospace;
+      letter-spacing: 0.05em;
+    }
+
+    .stack-layer {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 10px;
+      padding: 18px 22px;
+      position: relative;
+    }
+
+    .layer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .layer-name {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #34d399;
+    }
+
+    .layer-content {
+      font-size: 12.5px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .sub-modules {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .mod-tag {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    /* Grids */
+    .grid-2 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 16px;
     }
 
-    .tenet-box {
-      background: rgba(30, 41, 59, 0.4);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 20px;
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
     }
 
-    .tenet-box h4 {
-      font-size: 14px;
+    .rule-card {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .rule-card h5 {
+      font-size: 12.5px;
       color: var(--accent-emerald);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-weight: 700;
     }
-
-    .tenet-box p {
-      font-size: 12.5px;
+    .rule-card p {
+      font-size: 12px;
       color: var(--text-muted);
-      line-height: 1.55;
+      line-height: 1.45;
     }
 
-    /* Footer */
+    /* Tree View Codeblock */
+    .tree-block {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      color: #e2e8f0;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .t-pkg { color: #34d399; font-weight: 700; }
+    .t-file { color: #f8fafc; }
+    .t-comm { color: var(--comment); font-style: italic; }
+
+    /* Security Box */
+    .security-box {
+      background: rgba(30, 41, 59, 0.35);
+      border-left: 3px solid var(--accent-emerald);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .security-box h4 {
+      font-size: 13.5px;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    .security-box p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* 3. FOOTER */
     .footer-container {
       background: radial-gradient(circle at bottom center, rgba(16, 185, 129, 0.08), transparent 70%), #0f172a;
       border: 1px solid var(--card-border);
@@ -441,7 +457,7 @@
 </head>
 <body>
 
-  <div class="page-wrapper">
+  <div class="wrapper">
 
     <!-- 1. HERO HEADER -->
     <header class="header-container">
@@ -454,221 +470,190 @@
           />
           <div class="brand-name">
             <span>AgenticAIExplorer</span>
-            <span class="brand-sub">System Architecture &amp; Blueprints</span>
+            <span class="brand-sub">CSRD / BaFin ESG Architecture</span>
           </div>
         </div>
 
         <div class="status-badge">
           <span class="status-dot"></span>
-          <span>Deterministic Engineering Core</span>
+          <span>Dual-Transport Engine Active</span>
         </div>
       </div>
 
       <div class="hero-content">
-        <h1 class="hero-title">System Architecture, Security Boundaries &amp; Integrity Blueprints</h1>
+        <h1 class="hero-title">CSRD/BaFin ESG Auditor Architecture &amp; System Flow</h1>
         <p class="hero-description">
-          Engineering specifications detailing the isolation of computational cores, zero-fabrication server fidelity contracts, RFC 5297 cryptographic sealing, and statutory retention controls across FastMCP servers.
+          Technical specifications of the multi-transport MCP server architecture, decoupled ESG calculation engines (PCAF, CRREM, SFDR, Brown Discount), and zero-telemetry local execution boundaries.
         </p>
 
         <div class="btn-group">
-          <a data-path="/home" target="_self" class="btn btn-secondary">
-            <span>← Home Dashboard</span>
+          <a data-path="/projects/mcp/csrdbafin-compliant-mcp" target="_self" class="btn btn-primary">
+            <span>← View Tools &amp; Primitives</span>
           </a>
-          <a data-path="/projects/mcp" target="_self" class="btn btn-primary">
-            <span>MCP Ecosystem Hub →</span>
+          <a data-path="/projects/mcp" target="_self" class="btn btn-secondary">
+            <span>MCP Server Registry</span>
           </a>
-          <a data-path="/lessons-learnt" target="_self" class="btn btn-secondary">
-            <span>Lessons Learnt Hub</span>
+          <a data-path="/architecture" target="_self" class="btn btn-secondary">
+            <span>Architecture Hub</span>
           </a>
         </div>
       </div>
     </header>
 
-    <!-- 2. ARCHITECTURE SYSTEM CARDS -->
-    <div>
-      <div class="section-title">MCP Server Architecture Specifications</div>
-      <div class="section-sub">Select a protocol domain to inspect repository structure, execution contracts, and cryptographic defense boundaries.</div>
-
-      <div class="grid-arch">
-
-        <!-- Blueprint 1: Crypto Tax MCP -->
-        <a data-path="/architecture/a-crypto-mcp" target="_self" class="arch-card card-crypto">
-          <div>
-            <div class="card-top">
-              <div class="arch-logo-box">⚖️</div>
-              <span class="arch-badge">Deterministic Tax Core</span>
-            </div>
-            <div class="arch-title">Crypto Tax Architecture</div>
-            <div class="arch-tagline">RFC 5297 AES-SIV · DAC8 CARF XSD · §147 AO Trigger Locks</div>
-            <p class="arch-desc">
-              Decoupled pure-engine topology isolating mathematical tax logic from I/O, deterministic field encryption, append-only price oracles, and the server-enforced 10-rule Fidelity Contract.
-            </p>
-            <ul class="pillars-list">
-              <li>Pure store-agnostic engine with decimal-only arithmetic</li>
-              <li>Named XSD validation against DAC8CARFMessage.xsd v1</li>
-              <li>HMAC-SHA256 computational attestation sealing</li>
-            </ul>
-          </div>
-          <div class="meta-footer">
-            <div class="tags-strip">
-              <span class="tag">src/crypto_tax_mcp/</span>
-              <span class="tag">AES-256-SIV</span>
-              <span class="tag">Fidelity v1.0</span>
-            </div>
-            <div class="arch-action-link">
-              <span>View Crypto Tax Architecture</span>
-              <span>→</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Blueprint 2: CSRDBAFIN Compliance -->
-        <a data-path="/architecture/a-csrd-mcp" target="_self" class="arch-card card-csrd">
-          <div>
-            <div class="card-top">
-              <div class="arch-logo-box">📊</div>
-              <span class="arch-badge">RegTech / XBRL Core</span>
-            </div>
-            <div class="arch-title">CSRDBAFIN Compliance Architecture</div>
-            <div class="arch-tagline">Double Materiality Graph · BaFin Rulebooks · ESRS Standards</div>
-            <p class="arch-desc">
-              Deterministic ESG metric aggregation engine with circular dependency pruning, XBRL taxonomic mapping, and immutable sustainability filing registries.
-            </p>
-            <ul class="pillars-list">
-              <li>Acyclic supplier ESG graph traversal &amp; timeout bounding</li>
-              <li>Strict Pydantic typing against dynamic EU taxonomy changes</li>
-              <li>Zero-hallucination statutory disclosure gatekeeper</li>
-            </ul>
-          </div>
-          <div class="meta-footer">
-            <div class="tags-strip">
-              <span class="tag">ESRS Metrics</span>
-              <span class="tag">XBRL Schema</span>
-              <span class="tag">BaFin Gate</span>
-            </div>
-            <div class="arch-action-link">
-              <span>View CSRD Architecture</span>
-              <span>→</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Blueprint 3: DORA WEALTH -->
-        <a data-path="/architecture/a-dora-mcp" target="_self" class="arch-card card-dora">
-          <div>
-            <div class="card-top">
-              <div class="arch-logo-box">🛡️</div>
-              <span class="arch-badge">Resilience &amp; Chaos</span>
-            </div>
-            <div class="arch-title">DORA WEALTH Architecture</div>
-            <div class="arch-tagline">ICT Fault Injection · Tenant Sandboxing · Risk Engine</div>
-            <p class="arch-desc">
-              Fault-isolated financial resiliency testing framework enforcing Digital Operational Resilience Act controls, multi-tenant sandbox partitions, and asset stress simulations.
-            </p>
-            <ul class="pillars-list">
-              <li>Isolated state sandboxing preventing cross-tenant bleed</li>
-              <li>Asynchronous simulation queues with SQLite WAL tuning</li>
-              <li>Deterministic liquidity stress-test boundary gates</li>
-            </ul>
-          </div>
-          <div class="meta-footer">
-            <div class="tags-strip">
-              <span class="tag">DORA Art. 16</span>
-              <span class="tag">Fault Isolation</span>
-              <span class="tag">WAL Lock</span>
-            </div>
-            <div class="arch-action-link">
-              <span>View DORA Architecture</span>
-              <span>→</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Blueprint 4: ESTATE Simulator -->
-        <a data-path="/architecture/a-estate-mcp" target="_self" class="arch-card card-estate">
-          <div>
-            <div class="card-top">
-              <div class="arch-logo-box">🏛️</div>
-              <span class="arch-badge">Actuarial Discrete Math</span>
-            </div>
-            <div class="arch-title">ESTATE Simulator Architecture</div>
-            <div class="arch-tagline">Combinatorial Tree Pruning · Multi-Gen Tax Cliff Engine</div>
-            <p class="arch-desc">
-              Actuarial simulation architecture handling non-linear marginal tax rate spikes, depth-bounded succession trees, and deterministic statutory inheritance optimization.
-            </p>
-            <ul class="pillars-list">
-              <li>Depth-bounded branch evaluation avoiding memory exhaustion</li>
-              <li>Discrete marginal tax bracket cliff calculators</li>
-              <li>Statutory forced heirship validation logic</li>
-            </ul>
-          </div>
-          <div class="meta-footer">
-            <div class="tags-strip">
-              <span class="tag">Branch Pruning</span>
-              <span class="tag">Actuarial Core</span>
-              <span class="tag">Heirship Gate</span>
-            </div>
-            <div class="arch-action-link">
-              <span>View Estate Architecture</span>
-              <span>→</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Blueprint 5: TISAX Hypercar -->
-        <a data-path="/architecture/a-tisax-mcp" target="_self" class="arch-card card-tisax">
-          <div>
-            <div class="card-top">
-              <div class="arch-logo-box">⚡</div>
-              <span class="arch-badge">Automotive AL3 Security</span>
-            </div>
-            <div class="arch-title">TISAX Hypercar Architecture</div>
-            <div class="arch-tagline">100Hz CAN Ring Buffers · DME Pulse Math · Prototype Isolation</div>
-            <p class="arch-desc">
-              High-throughput telematics architecture satisfying VDA-ISA / TISAX AL3 security requirements for prototype vehicles, engine rev forensics, and low-latency packet decoding.
-            </p>
-            <ul class="pillars-list">
-              <li>Lockless ring buffers preventing JSON-RPC stream saturation</li>
-              <li>CAN clock jitter correction &amp; over-rev timing verification</li>
-              <li>Memory-isolated telemetry partitions meeting AL3 standards</li>
-            </ul>
-          </div>
-          <div class="meta-footer">
-            <div class="tags-strip">
-              <span class="tag">TISAX AL3</span>
-              <span class="tag">CAN-Bus 100Hz</span>
-              <span class="tag">DME Forensics</span>
-            </div>
-            <div class="arch-action-link">
-              <span>View TISAX Architecture</span>
-              <span>→</span>
-            </div>
-          </div>
-        </a>
-
+    <!-- 2. LAYER SEPARATION STACK (DIAGRAMS) -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>🏗️ System Architecture &amp; Protocol Layer Separation</span>
+        <span class="pill pill-emerald">MCP Protocol Flow</span>
       </div>
-    </div>
 
-    <!-- 3. PLATFORM ARCHITECTURAL TENETS -->
-    <div>
-      <div class="section-title">Core Architectural Tenets Across the Ecosystem</div>
-      <div class="grid-3" style="margin-top: 12px;">
-        <div class="tenet-box">
-          <h4>1. Pure Engine Isolation</h4>
-          <p>Computational domains maintain zero direct I/O. Engines receive immutable records and output deterministic decimals, eliminating floating-point drift and external side effects.</p>
+      <div class="stack-wrapper">
+        <div class="stack-client">
+          🤖 MCP Host / Client (Claude Desktop, Cursor IDE, Remote API Consumer)
         </div>
-        <div class="tenet-box">
-          <h4>2. Server-Side Fidelity Enforcement</h4>
-          <p>Trust constraints and anti-hallucination rules are baked directly into the MCP server instructions, guaranteeing invariant enforcement across all client interaction sessions.</p>
+
+        <div class="arrow-connector">▼ STDIO / HTTP + SSE Transport Layer</div>
+
+        <!-- Surface Layer -->
+        <div class="stack-layer" style="border-left: 4px solid var(--accent-emerald);">
+          <div class="layer-header">
+            <span class="layer-name">src/server.ts &amp; src/server-http.ts — MCP Server Surface</span>
+            <span class="pill pill-emerald">Entry Points</span>
+          </div>
+          <p class="layer-content">Exposes 6 MCP Tools, 5 Resource URIs, and ESRS prompt templates with middleware rate limiting (100 req/min) and API key auth.</p>
+          <div class="sub-modules">
+            <span class="mod-tag">stdio-transport</span>
+            <span class="mod-tag">sse-transport</span>
+            <span class="mod-tag">auth-middleware</span>
+            <span class="mod-tag">zod-validator</span>
+          </div>
         </div>
-        <div class="tenet-box">
-          <h4>3. Cryptographic Proof &amp; Immutability</h4>
-          <p>Sensitive attributes use RFC 5297 AES-SIV field encryption; audit ledgers enforce 10-year statutory immutability via SQLite triggers and HMAC attestation seals.</p>
+
+        <div class="arrow-connector">▼ Clean Domain Dispatch</div>
+
+        <!-- Engine Layer -->
+        <div class="stack-layer" style="border-left: 4px solid var(--accent-cyan);">
+          <div class="layer-header">
+            <span class="layer-name">src/engine/ — Pure ESG Domain Calculation Engines</span>
+            <span class="pill pill-cyan">Deterministic Core</span>
+          </div>
+          <p class="layer-content">Decoupled calculation engines implementing statutory math across carbon accounting, transition curves, and financial impact models.</p>
+          <div class="sub-modules">
+            <span class="mod-tag">pcaf-engine (Scope 3 Cat 13/15)</span>
+            <span class="mod-tag">crrem-engine (1.5°C/2°C)</span>
+            <span class="mod-tag">sfdr-engine (Art 6/8/9 &amp; PAI)</span>
+            <span class="mod-tag">brown-discount-engine (NAV Drag)</span>
+          </div>
+        </div>
+
+        <div class="arrow-connector">▼ Read-Only Data Integration</div>
+
+        <!-- Connectors & Data Layer -->
+        <div class="stack-layer" style="border-left: 4px solid var(--accent-indigo);">
+          <div class="layer-header">
+            <span class="layer-name">src/connectors/ &amp; src/data/ — Integration &amp; Static Baseline Data</span>
+            <span class="pill pill-indigo">Static / Local Store</span>
+          </div>
+          <p class="layer-content">Emission factors (UBA/BDEW baselines), DIBt building certificate extractors, EU ETS carbon prices, and synthetic portfolio fixtures.</p>
+          <div class="sub-modules">
+            <span class="mod-tag">dibt-connector</span>
+            <span class="mod-tag">eu-ets-pricing</span>
+            <span class="mod-tag">emission-factors</span>
+            <span class="mod-tag">sample-portfolios</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 4. FOOTER -->
+    <!-- 3. DOMAIN ENGINES BREAKDOWN -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>⚙️ Core Calculation Engine Specifications</span>
+        <span class="pill pill-cyan">Domain Logic</span>
+      </div>
+      <div class="grid-4">
+        <div class="rule-card">
+          <h5>PCAF Engine</h5>
+          <p>Calculates Scope 3 Cat 15 (Private Equity) and Cat 13 (Commercial/Residential Real Estate) emissions with EVIC attribution factors and Data Quality Scoring (DQS 1–5).</p>
+        </div>
+        <div class="rule-card">
+          <h5>CRREM Engine</h5>
+          <p>Models asset-specific energy/GHG intensity trajectories against country-specific CRREM 1.5°C and 2.0°C decarbonization curves (DE, AT, CH, UK, FR).</p>
+        </div>
+        <div class="rule-card">
+          <h5>Brown Discount Engine</h5>
+          <p>Derives stranding-adjusted NAV by discounting energy retrofit CapEx requirements, yield expansion penalties, and EU ETS carbon pricing liabilities.</p>
+        </div>
+        <div class="rule-card">
+          <h5>SFDR &amp; PAI Engine</h5>
+          <p>Audits fund classification (Articles 6, 8, 9), flags Principal Adverse Impact violations, and computes remedial investment CapEx to restore alignment.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SOURCE TOPOLOGY -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>📁 Repository Topology &amp; Clean Architecture</span>
+        <span class="pill pill-emerald">TypeScript Source</span>
+      </div>
+      <div class="tree-block"><span class="t-pkg">CSRDBAFINCompliant-MCP/</span>
+├── <span class="t-file">package.json</span>                  <span class="t-comm"># Scripts, dependencies (@modelcontextprotocol/sdk, zod, express)</span>
+├── <span class="t-file">tsconfig.json</span>                 <span class="t-comm"># TypeScript strict type-checking configuration</span>
+├── <span class="t-file">vitest.config.ts</span>              <span class="t-comm"># Vitest configuration for unit & integration test suites</span>
+├── <span class="t-file">Makefile</span>                      <span class="t-comm"># Build, test, lint, and run shortcuts</span>
+├── <span class="t-pkg">deploy/</span>                       <span class="t-comm"># Containerization & environment setups</span>
+│   ├── <span class="t-file">Dockerfile</span>                <span class="t-comm"># Multi-stage production container definition</span>
+│   └── <span class="t-file">.env.example</span>              <span class="t-comm"># Template for port, auth keys, and rate limits</span>
+├── <span class="t-pkg">src/</span>
+│   ├── <span class="t-file">index.ts</span>                  <span class="t-comm"># Stdio transport entry point (for Claude Desktop / local CLI)</span>
+│   ├── <span class="t-file">server.ts</span>                 <span class="t-comm"># Core MCP server setup and tool/resource registration</span>
+│   ├── <span class="t-file">server-http.ts</span>            <span class="t-comm"># Express HTTP/SSE transport entry point (Port 3000)</span>
+│   ├── <span class="t-pkg">connectors/</span>               <span class="t-comm"># External data integrations (DIBt EPC parser, EU ETS)</span>
+│   ├── <span class="t-pkg">data/</span>                     <span class="t-comm"># Static emission factor tables (UBA/BDEW) & sample portfolios</span>
+│   ├── <span class="t-pkg">engine/</span>                   <span class="t-comm"># Domain calculation logic: PCAF, CRREM, SFDR, Brown Discount</span>
+│   ├── <span class="t-pkg">middleware/</span>               <span class="t-comm"># API key validation and Express rate limiting</span>
+│   ├── <span class="t-pkg">prompts/</span>                  <span class="t-comm"># CSRD ESRS E1 disclosure prompt templates</span>
+│   ├── <span class="t-pkg">resources/</span>                <span class="t-comm"># Deterministic MCP resource providers (URIs)</span>
+│   ├── <span class="t-pkg">tools/</span>                    <span class="t-comm"># 6 MCP tool handlers with input validation</span>
+│   ├── <span class="t-pkg">transports/</span>               <span class="t-comm"># Transport layer abstractions (stdio vs HTTP/SSE)</span>
+│   ├── <span class="t-pkg">types/</span>                    <span class="t-comm"># TypeScript domain interfaces and Zod validation schemas</span>
+│   └── <span class="t-pkg">utils/</span>                    <span class="t-comm"># Mathematical rounding and format helpers</span>
+├── <span class="t-pkg">tests/</span>                        <span class="t-comm"># 43 Vitest unit tests mirroring src/</span>
+└── <span class="t-pkg">docs/</span>                         <span class="t-comm"># Architectural diagrams and regulatory references</span></div>
+    </div>
+
+    <!-- 5. SECURITY & ZERO-LEAK MODEL -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>🔐 Security, Data Privacy &amp; Deployment</span>
+        <span class="pill pill-indigo">Zero Data Leakage</span>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="security-box">
+            <h4>Local-First Execution</h4>
+            <p>Calculations execute 100% in-memory without making external network calls during audit evaluation, guaranteeing sensitive fund positions never leave the local boundary.</p>
+          </div>
+          <div class="security-box">
+            <h4>API Key &amp; Rate Limiting Gateways</h4>
+            <p>Hosted HTTP mode protects the SSE stream via bearer/header API key authentication (<code style="color:#34d399">MCP_API_KEYS</code>) and configurable IP rate-limiting.</p>
+          </div>
+        </div>
+        <div>
+          <div class="security-box" style="border-left-color: var(--accent-indigo);">
+            <h4>Zero PII Retention</h4>
+            <p>No Personally Identifiable Information or client portfolio records are persisted across sessions; all calculations run statelessly or against read-only fixtures.</p>
+          </div>
+          <div class="security-box" style="border-left-color: var(--accent-indigo);">
+            <h4>Containerized Isolation</h4>
+            <p>Deployable as a self-contained non-root Docker container with minimal resource overhead, suitable for private enterprise VPC deployment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. FOOTER -->
     <footer class="footer-container">
       <div class="footer-top">
         <div class="brand-col">
@@ -689,32 +674,31 @@
           <h4>Navigation</h4>
           <ul class="footer-links">
             <li><a data-path="/home" target="_self">Home Dashboard</a></li>
+            <li><a data-path="/projects/mcp/csrdbafin-compliant-mcp" target="_self">CSRD/BaFin Tools</a></li>
             <li><a data-path="/projects/mcp" target="_self">MCP Server Registry</a></li>
-            <li><a data-path="/lessons-learnt" target="_self">Lessons Learnt</a></li>
-            <li><a data-path="/lessons-learnt/l-crypto-tax" target="_self">Crypto Tax Lessons</a></li>
+            <li><a data-path="/architecture" target="_self">Architecture Blueprints</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Standards</h4>
+          <h4>Protocols &amp; Standards</h4>
           <ul class="footer-links">
-            <li><a href="#" style="pointer-events: none;">Model Context Protocol</a></li>
-            <li><a href="#" style="pointer-events: none;">RFC 5297 AES-SIV</a></li>
-            <li><a href="#" style="pointer-events: none;">Deterministic Zero-Drift</a></li>
-            <li><a href="#" style="pointer-events: none;">Fidelity Contract v1.0</a></li>
+            <li><a href="#" style="pointer-events: none;">Model Context Protocol (v1)</a></li>
+            <li><a href="#" style="pointer-events: none;">PCAF European Standard 2023</a></li>
+            <li><a href="#" style="pointer-events: none;">CRREM 1.5°C / 2.0°C Pathways</a></li>
+            <li><a href="#" style="pointer-events: none;">BaFin Circular RS BFA-1</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
         <div>
-          <span>&copy; AgenticAIExplorer. System Architecture &amp; Blueprints.</span>
+          <span>&copy; AgenticAIExplorer. CSRDBAFIN Compliant MCP Architecture.</span>
         </div>
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-          <span class="spec-pill">FastMCP</span>
-          <span class="spec-pill">Python 3.11+</span>
-          <span class="spec-pill">RFC 5297</span>
-          <span class="spec-pill">Audit Trigger Locks</span>
+          <span class="spec-pill">TypeScript 5.x</span>
+          <span class="spec-pill">Dual Transport</span>
+          <span class="spec-pill">Vitest (43 Tests)</span>
         </div>
       </div>
     </footer>
@@ -759,10 +743,9 @@
       const isPagesEmbed = window.location.hostname === "th-an.github.io";
       document.querySelectorAll("a[data-path]").forEach(function(el) {
         const rawPath = el.getAttribute("data-path");
-        // For href, keep Google Sites URL for _blank fallback / SEO
         el.href = base + rawPath;
         el.addEventListener('click', function(e) {
-          if (!isPagesEmbed) return; // let normal _self/_blank handle Google Sites embed
+          if (!isPagesEmbed) return;
           e.preventDefault();
           const file = pageMap[rawPath];
           if (file) {
