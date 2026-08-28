@@ -19,9 +19,11 @@ window.SITE_CONFIG = {
     csrdBafin: "/projects/mcp/csrdbafin-compliant-mcp",
     csrdBafinMCP: "/projects/mcp/csrdbafin-compliant-mcp",
     csrdBafinArch: "/architecture/a-csrd-bafin-mcp",
+    csrdArch: "/architecture/a-csrd-mcp",
 
     // Lessons Learned paths (verify these exist on your Google Site)
     cryptoTaxLessons: "/lessons-learnt/l-crypto-tax",
     csrdLessons: "/lessons-learnt/l-csrd",
+    csrdLessonsShort: "/lessons-learnt/l-csrd-mcp",
   }
 };

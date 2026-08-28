@@ -13,7 +13,7 @@ Central reference for Google Sites embeds. Use **GitHub Pages** URLs for `Embed 
 | 3 | MCP Registry | `/projects/mcp` | `https://th-an.github.io/site-config/mcp.html` |
 | 4 | Crypto Tax Inventory | `/projects/mcp/crypto-tax-mcp` | `https://th-an.github.io/site-config/crypto-tax-mcp.html` |
 | 5 | CSRD/BaFin ESG Auditor | `/projects/mcp/csrdbafin-compliant-mcp` | `https://th-an.github.io/site-config/csrdbafin-compliant-mcp.html` |
-| 6 | CSRD/BaFin Architecture | `/architecture/a-csrd-bafin-mcp` | `https://th-an.github.io/site-config/a-csrd-bafin-mcp.html` |
+| 6 | CSRD/BaFin Architecture | `/architecture/a-csrd-bafin-mcp` *(alias `/architecture/a-csrd-mcp`)* | `https://th-an.github.io/site-config/a-csrd-bafin-mcp.html` *(alias `https://th-an.github.io/site-config/a-csrd-mcp.html`)* |
 | 7 | Main Architecture Hub | `/architecture` | `https://th-an.github.io/site-config/architecture.html` |
 | 8 | Crypto Tax Arch Deep Dive | `/architecture/a-crypto-mcp` | `https://th-an.github.io/site-config/a-crypto-mcp.html` |
 | 9 | Lessons Hub | `/lessons-learnt` | `https://th-an.github.io/site-config/lessons-learnt.html` |
@@ -59,7 +59,7 @@ Use in embeds:
 | MCP Registry | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/mcp.html` |
 | Crypto Tax Inventory | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/crypto-tax-mcp.html` |
 | CSRD/BaFin ESG Auditor | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/csrdbafin-compliant-mcp.html` |
-| CSRD/BaFin Architecture | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/a-csrd-bafin-mcp.html` |
+| CSRD/BaFin Architecture | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/a-csrd-bafin-mcp.html` *(alias `a-csrd-mcp.html`)* |
 | CSRD/BaFin Retrospective | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/l-csrd.html` |
 | Architecture Hub | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/architecture.html` |
 | Crypto Tax Arch | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/a-crypto-mcp.html` |
