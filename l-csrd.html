@@ -8,15 +8,16 @@
       --bg-slate: #0b1120;
       --card-bg: rgba(15, 23, 42, 0.85);
       --card-border: rgba(148, 163, 184, 0.15);
+      --border-hover: rgba(16, 185, 129, 0.4);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --accent-cyan: #06b6d4;
       --accent-emerald: #10b981;
+      --accent-cyan: #06b6d4;
       --accent-indigo: #818cf8;
       --accent-amber: #f59e0b;
       --accent-rose: #f43f5e;
-      --accent-purple: #c084fc;
-      --code-bg: #1e293b;
+      --code-bg: #030712;
+      --code-color: #34d399;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,7 +32,7 @@
       color: var(--text-main);
     }
 
-    .page-wrapper {
+    .wrapper {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
@@ -39,10 +40,10 @@
       gap: 24px;
     }
 
-    /* Hero Header */
+    /* 1. HERO HEADER */
     .header-container {
-      background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.14), transparent 45%),
-                  radial-gradient(circle at bottom left, rgba(129, 140, 248, 0.12), transparent 50%),
+      background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.14), transparent 45%),
+                  radial-gradient(circle at bottom left, rgba(245, 158, 11, 0.12), transparent 50%),
                   #0f172a;
       border: 1px solid var(--card-border);
       border-radius: 18px;
@@ -57,7 +58,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
-      background: linear-gradient(90deg, #818cf8, #06b6d4, #10b981);
+      background: linear-gradient(90deg, #10b981, #f59e0b, #06b6d4);
     }
 
     .top-meta {
@@ -78,9 +79,9 @@
       height: 52px;
       border-radius: 12px;
       object-fit: cover;
-      border: 1.5px solid rgba(6, 182, 212, 0.45);
+      border: 1.5px solid rgba(16, 185, 129, 0.45);
       background: #1e293b;
-      box-shadow: 0 0 16px rgba(6, 182, 212, 0.25);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
     }
 
     .brand-name {
@@ -97,32 +98,32 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--accent-indigo);
+      color: var(--accent-emerald);
     }
 
     .status-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(129, 140, 248, 0.1);
-      border: 1px solid rgba(129, 140, 248, 0.25);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
       padding: 6px 12px;
       border-radius: 9999px;
       font-size: 11.5px;
       font-weight: 600;
-      color: #c7d2fe;
+      color: #6ee7b7;
     }
 
     .status-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #818cf8;
-      box-shadow: 0 0 8px #818cf8;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
     }
 
     .hero-content {
-      max-width: 800px;
+      max-width: 880px;
     }
 
     .hero-title {
@@ -131,7 +132,7 @@
       letter-spacing: -0.02em;
       line-height: 1.25;
       margin-bottom: 12px;
-      background: linear-gradient(135deg, #ffffff 40%, #c7d2fe 100%);
+      background: linear-gradient(135deg, #ffffff 40%, #a7f3d0 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -162,12 +163,12 @@
     }
 
     .btn-primary {
-      background: var(--accent-indigo);
+      background: var(--accent-emerald);
       color: #0f172a;
-      box-shadow: 0 4px 14px rgba(129, 140, 248, 0.3);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
     }
     .btn-primary:hover {
-      background: #a5b4fc;
+      background: #34d399;
       transform: translateY(-2px);
     }
 
@@ -182,133 +183,139 @@
       transform: translateY(-2px);
     }
 
-    /* Cards Grid */
-    .grid-mcp {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 22px;
-    }
-
-    .mcp-card {
+    /* 2. LEGEND BAR */
+    .legend-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-    }
-
-    .mcp-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      border-radius: 16px 16px 0 0;
-    }
-
-    .mcp-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.7);
-      border-color: rgba(148, 163, 184, 0.35);
-    }
-
-    .card-crypto::before { background: linear-gradient(90deg, #06b6d4, #3b82f6); }
-    .card-csrd::before   { background: linear-gradient(90deg, #10b981, #059669); }
-    .card-dora::before   { background: linear-gradient(90deg, #818cf8, #6366f1); }
-    .card-estate::before { background: linear-gradient(90deg, #f59e0b, #ea580c); }
-    .card-tisax::before  { background: linear-gradient(90deg, #f43f5e, #e11d48); }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 16px;
-    }
-
-    .project-logo-box {
-      width: 50px;
-      height: 50px;
       border-radius: 14px;
+      padding: 16px 22px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      position: relative;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
     }
 
-    .card-crypto .project-logo-box { background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6, 182, 212, 0.35); color: var(--accent-cyan); }
-    .card-csrd .project-logo-box   { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); color: var(--accent-emerald); }
-    .card-dora .project-logo-box   { background: rgba(129, 140, 248, 0.12); border: 1px solid rgba(129, 140, 248, 0.35); color: var(--accent-indigo); }
-    .card-estate .project-logo-box { background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); color: var(--accent-amber); }
-    .card-tisax .project-logo-box  { background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.35); color: var(--accent-rose); }
+    .legend-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
 
-    .logo-icon { width: 26px; height: 26px; }
-
-    .protocol-badge {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 9999px;
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
       color: #cbd5e1;
     }
 
-    .project-name { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; color: #f8fafc; margin-bottom: 6px; }
-    .project-tagline { font-size: 12.5px; font-weight: 600; margin-bottom: 12px; }
-
-    .card-crypto .project-tagline { color: #67e8f9; }
-    .card-csrd .project-tagline   { color: #6ee7b7; }
-    .card-dora .project-tagline   { color: #c7d2fe; }
-    .card-estate .project-tagline { color: #fcd34d; }
-    .card-tisax .project-tagline  { color: #fda4af; }
-
-    .project-desc { font-size: 13px; line-height: 1.55; color: var(--text-muted); margin-bottom: 16px; }
-
-    .feature-highlights { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
-    .feature-highlights li { font-size: 12px; color: #cbd5e1; display: flex; align-items: center; gap: 8px; }
-    .feature-highlights li::before { content: "▹"; color: var(--accent-cyan); font-weight: bold; }
-
-    .meta-footer {
-      border-top: 1px solid rgba(148, 163, 184, 0.08);
-      padding-top: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    /* 3. SECTION CARDS */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
     }
 
-    .tags-strip { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 11px;
-      background: rgba(30, 41, 59, 0.7);
-      color: #94a3b8;
-      padding: 3px 8px;
-      border-radius: 4px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .project-action-link {
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--accent-cyan);
-      padding-top: 6px;
+      color: #f1f5f9;
     }
 
-    /* Footer */
+    .pill {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+    }
+    .pill-emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .pill-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border: 1px solid rgba(6, 182, 212, 0.3); }
+    .pill-indigo { background: rgba(129, 140, 248, 0.15); color: var(--accent-indigo); border: 1px solid rgba(129, 140, 248, 0.3); }
+    .pill-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+
+    .lesson-item {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lesson-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .lesson-title-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-sym { font-size: 14px; }
+
+    .lesson-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .lesson-body {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .lesson-takeaway {
+      margin-top: 4px;
+      background: rgba(15, 23, 42, 0.6);
+      border-left: 3px solid var(--accent-emerald);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .lesson-takeaway.red-border { border-left-color: var(--accent-rose); }
+    .lesson-takeaway.amber-border { border-left-color: var(--accent-amber); }
+
+    .lesson-takeaway strong {
+      color: var(--accent-emerald);
+    }
+    .lesson-takeaway.red-border strong { color: #f87171; }
+    .lesson-takeaway.amber-border strong { color: #fbbf24; }
+
+    .code-inline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11.5px;
+      color: var(--code-color);
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* 4. FOOTER */
     .footer-container {
-      background: radial-gradient(circle at bottom center, rgba(6, 182, 212, 0.08), transparent 70%), #0f172a;
+      background: radial-gradient(circle at bottom center, rgba(16, 185, 129, 0.08), transparent 70%), #0f172a;
       border: 1px solid var(--card-border);
       border-radius: 18px;
       padding: 32px 36px 24px 36px;
@@ -323,7 +330,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #818cf8, #06b6d4, transparent);
+      background: linear-gradient(90deg, transparent, #10b981, #06b6d4, transparent);
     }
 
     .footer-top {
@@ -342,7 +349,7 @@
       height: 40px;
       border-radius: 10px;
       object-fit: cover;
-      border: 1.5px solid rgba(6, 182, 212, 0.4);
+      border: 1.5px solid rgba(16, 185, 129, 0.4);
       background: #1e293b;
     }
 
@@ -354,7 +361,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--accent-indigo);
+      color: var(--accent-emerald);
       margin-bottom: 14px;
     }
 
@@ -368,7 +375,7 @@
       align-items: center;
       gap: 6px;
     }
-    .footer-links a:hover { color: #38bdf8; }
+    .footer-links a:hover { color: #34d399; }
 
     .footer-bottom {
       display: flex;
@@ -402,7 +409,7 @@
 </head>
 <body>
 
-  <div class="page-wrapper">
+  <div class="wrapper">
 
     <!-- 1. HERO HEADER -->
     <header class="header-container">
@@ -415,244 +422,412 @@
           />
           <div class="brand-name">
             <span>AgenticAIExplorer</span>
-            <span class="brand-sub">Model Context Protocol Servers</span>
+            <span class="brand-sub">CSRD / BaFin MCP Technical Log</span>
           </div>
         </div>
 
         <div class="status-badge">
           <span class="status-dot"></span>
-          <span>5 FastMCP Servers Active</span>
+          <span>Phases 1–6 Complete</span>
         </div>
       </div>
 
       <div class="hero-content">
-        <h1 class="hero-title">Model Context Protocol (MCP) Ecosystem</h1>
+        <h1 class="hero-title">Engineering Retrospective &amp; Lessons Learned</h1>
         <p class="hero-description">
-          Deterministic tool surfaces, compliance engines, and automotive telematics servers implementing strict session fidelity, RFC 5297 security, and zero-fabrication guarantees.
+          Phase-by-phase implementation log capturing calculation engine gotchas, tool and resource contract alignments, dual-transport abstractions, and documentation patterns for the CSRD/BaFin-Compliant ESG Auditor MCP Server.
         </p>
 
         <div class="btn-group">
-          <a data-path="/projects" target="_self" class="btn btn-secondary">
-            <span>← All Projects</span>
+          <a data-path="/lessons-learnt" target="_self" class="btn btn-primary">
+            <span>← Lessons Learnt Hub</span>
           </a>
-          <a data-path="/architecture" target="_self" class="btn btn-primary">
-            <span>Architecture Specs →</span>
+          <a data-path="/projects/mcp/csrdbafin-compliant-mcp" target="_self" class="btn btn-secondary">
+            <span>Feature Inventory</span>
           </a>
-          <a data-path="/lessons-learnt" target="_self" class="btn btn-secondary">
-            <span>Lessons Learnt</span>
+          <a data-path="/architecture/a-csrd-bafin-mcp" target="_self" class="btn btn-secondary">
+            <span>Architecture Specs</span>
           </a>
         </div>
       </div>
     </header>
 
-    <!-- 2. MCP PROJECT CARDS -->
-    <div class="grid-mcp">
-
-      <!-- Project 1: Crypto Tax MCP -->
-      <a data-path="/projects/mcp/crypto-tax-mcp" target="_self" class="mcp-card card-crypto">
-        <div>
-          <div class="card-top">
-            <div class="project-logo-box">
-              <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                <circle cx="12" cy="12" r="9" stroke-dasharray="2 2"/>
-              </svg>
-            </div>
-            <span class="protocol-badge">31 Tools · 3 Resources</span>
-          </div>
-
-          <div class="project-name">CRYPTO TAX MCP</div>
-          <div class="project-tagline">§23 EStG / DAC8 Shadow Reporting Engine</div>
-          <p class="project-desc">
-            Deterministic crypto asset taxation engine with write-once price oracles, BMF Rz. 72–73 spam forensics, DATEV/SKR double-entry sync, and OECD CARF XML export.
-          </p>
-
-          <ul class="feature-highlights">
-            <li>German EStG §23 &amp; §22 Nr.3 multi-strategy tax logic</li>
-            <li>RFC 5297 AES-SIV field encryption &amp; HMAC attestation</li>
-            <li>CARF XML shadow-reporting with XSD validation</li>
-          </ul>
-        </div>
-
-        <div class="meta-footer">
-          <div class="tags-strip">
-            <span class="tag">FastMCP</span>
-            <span class="tag">Python 3.11</span>
-            <span class="tag">DAC8 / CARF</span>
-            <span class="tag">AES-SIV</span>
-          </div>
-          <div class="project-action-link">
-            <span>Explore Crypto Tax Engine</span>
-            <span>→</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- Project 2: CSRDBAFIN Compliance -->
-      <a data-path="/projects/mcp/csrdbafin-compliant-mcp" target="_self" class="mcp-card card-csrd">
-        <div>
-          <div class="card-top">
-            <div class="project-logo-box">
-              <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                <path d="M9 12l2 2 4-4"/>
-              </svg>
-            </div>
-            <span class="protocol-badge">ESG &amp; Regulatory</span>
-          </div>
-
-          <div class="project-name">CSRDBAFIN Compliance</div>
-          <div class="project-tagline">Corporate Sustainability &amp; BaFin Reporting</div>
-          <p class="project-desc">
-            Autonomous compliance and disclosure engine verifying EU Corporate Sustainability Due Diligence (CSRD) and German Federal Financial Supervisory Authority (BaFin) audits.
-          </p>
-
-          <ul class="feature-highlights">
-            <li>ESRS standard metrics aggregation &amp; XBRL tagging</li>
-            <li>Deterministic BaFin regulatory disclosure rulebooks</li>
-            <li>Immutable audit trails for statutory sustainability filings</li>
-          </ul>
-        </div>
-
-        <div class="meta-footer">
-          <div class="tags-strip">
-            <span class="tag">FastMCP</span>
-            <span class="tag">EU CSRD</span>
-            <span class="tag">BaFin Regs</span>
-            <span class="tag">XBRL</span>
-          </div>
-          <div class="project-action-link">
-            <span>View CSRD Specification</span>
-            <span>→</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- Project 3: DORA WEALTH -->
-      <a data-path="/projects/mcp/dora-wealth-mcp" target="_self" class="mcp-card card-dora">
-        <div>
-          <div class="card-top">
-            <div class="project-logo-box">
-              <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                <circle cx="12" cy="16" r="1"/>
-              </svg>
-            </div>
-            <span class="protocol-badge">FinTech &amp; Risk</span>
-          </div>
-
-          <div class="project-name">DORA WEALTH</div>
-          <div class="project-tagline">Digital Operational Resilience &amp; Asset Vault</div>
-          <p class="project-desc">
-            Wealth advisory and risk management server built to satisfy the EU Digital Operational Resilience Act (DORA), stress-testing ICT operational risks and portfolio liquidity.
-          </p>
-
-          <ul class="feature-highlights">
-            <li>DORA ICT third-party risk assessment automation</li>
-            <li>Deterministic asset stress testing &amp; liquidity simulations</li>
-            <li>Cryptographically sealed operational audit registries</li>
-          </ul>
-        </div>
-
-        <div class="meta-footer">
-          <div class="tags-strip">
-            <span class="tag">FastMCP</span>
-            <span class="tag">EU DORA</span>
-            <span class="tag">Risk Modeling</span>
-            <span class="tag">WealthTech</span>
-          </div>
-          <div class="project-action-link">
-            <span>View DORA Protocol</span>
-            <span>→</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- Project 4: ESTATE Simulator -->
-      <a data-path="/projects/mcp/estate-simulator-mcp" target="_self" class="mcp-card card-estate">
-        <div>
-          <div class="card-top">
-            <div class="project-logo-box">
-              <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 21h18M5 21V7l8-4v18M13 10h4v11"/>
-                <path d="M9 10v1M9 14v1M9 18v1M17 14v1M17 18v1"/>
-              </svg>
-            </div>
-            <span class="protocol-badge">Real Estate / Legal</span>
-          </div>
-
-          <div class="project-name">ESTATE Simulator</div>
-          <div class="project-tagline">Inheritance &amp; Succession Planning Core</div>
-          <p class="project-desc">
-            Multi-generational wealth succession and real estate asset simulation engine, calculating statutory inheritance tax, forced heirship limits, and liquidity timing.
-          </p>
-
-          <ul class="feature-highlights">
-            <li>Multi-jurisdiction estate &amp; gift tax bracket modeling</li>
-            <li>What-if asset liquidation &amp; restructuring simulations</li>
-            <li>Deterministic property valuation &amp; yield projections</li>
-          </ul>
-        </div>
-
-        <div class="meta-footer">
-          <div class="tags-strip">
-            <span class="tag">FastMCP</span>
-            <span class="tag">Estate Planning</span>
-            <span class="tag">Tax Modeling</span>
-            <span class="tag">Simulation</span>
-          </div>
-          <div class="project-action-link">
-            <span>View Estate Simulator</span>
-            <span>→</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- Project 5: TISAX Hypercar -->
-      <a data-path="/projects/mcp/tisax-hypercar" target="_self" class="mcp-card card-tisax">
-        <div>
-          <div class="card-top">
-            <div class="project-logo-box">
-              <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2a10 10 0 0 0-10 10c0 5.52 4.48 10 10 10s10-4.48 10-10A10 10 0 0 0 12 2z"/>
-                <path d="M12 6v6l4 2"/>
-                <path d="M6 12h2M16 12h2"/>
-              </svg>
-            </div>
-            <span class="protocol-badge">Automotive AL3</span>
-          </div>
-
-          <div class="project-name">TISAX Hypercar</div>
-          <div class="project-tagline">Automotive Security &amp; Telematics Engine</div>
-          <p class="project-desc">
-            VDA-ISA / TISAX Assessment Level 3 compliant telemetry server processing high-frequency ECU telemetry, over-rev forensic bands, and thermal dispatch triggers.
-          </p>
-
-          <ul class="feature-highlights">
-            <li>TISAX AL3 prototype data protection compliance</li>
-            <li>High-frequency CAN-bus/ECU telemetry stream ingestion</li>
-            <li>DME pulse-math verification &amp; thermal forensics</li>
-          </ul>
-        </div>
-
-        <div class="meta-footer">
-          <div class="tags-strip">
-            <span class="tag">FastMCP</span>
-            <span class="tag">TISAX AL3</span>
-            <span class="tag">Telematics</span>
-            <span class="tag">ECU Forensics</span>
-          </div>
-          <div class="project-action-link">
-            <span>Explore Telematics Engine</span>
-            <span>→</span>
-          </div>
-        </div>
-      </a>
-
+    <!-- 2. LEGEND BAR -->
+    <div class="legend-card">
+      <span style="font-size: 13px; font-weight: 700; color: #f1f5f9;">Phase Convention Legend:</span>
+      <div class="legend-group">
+        <span class="legend-item"><span class="status-sym">🟢</span> Worked / Clean Pattern</span>
+        <span class="legend-item"><span class="status-sym">🟡</span> Caution / Refactored</span>
+        <span class="legend-item"><span class="status-sym">🔴</span> Cost Time / Corrective Win</span>
+      </div>
     </div>
 
-    <!-- 3. FOOTER -->
+    <!-- 3. DETAILED PHASES 1 - 6 -->
+
+    <!-- Phase 1 -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>Phase 1 — Core Calculation Engines (2025-08-05)</span>
+        <span class="pill pill-emerald">Domain Engines</span>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🔴</span>
+            <span class="lesson-title">Decimal precision silently changed across modules</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          The PCAF engine used <code class="code-inline">Decimal.set({ precision: 28 })</code> but the Brown Discount engine re-initialized Decimal with different settings, causing inconsistent rounding in cross-engine calculations. Centralized in <code class="code-inline">utils/decimal.ts</code>.
+        </p>
+        <div class="lesson-takeaway red-border">
+          <strong>Pattern:</strong> Shared numeric configuration lives in one utility, never re-declared.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟡</span>
+            <span class="lesson-title">CRREM pathway data structure duplicated between engine and resource</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          The <code class="code-inline">CRREM_PATHWAYS</code> constant existed in both <code class="code-inline">engine/crrem.ts</code> and <code class="code-inline">resources/crrem_pathways.ts</code> with slight divergences (exponential vs linear curve flag). Moved canonical data to <code class="code-inline">data/crrem_pathways.ts</code>.
+        </p>
+        <div class="lesson-takeaway amber-border">
+          <strong>Pattern:</strong> Reference data belongs in <code class="code-inline">data/</code>, not duplicated in <code class="code-inline">engine/</code> or <code class="code-inline">resources/</code>.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟢</span>
+            <span class="lesson-title">Type-first development caught schema mismatches early</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Defining all types in <code class="code-inline">types/index.ts</code> before engines/tools forced alignment between PCAF output shape, SFDR input expectations, and tool response structures. Kept type definitions as the API contract.
+        </p>
+        <div class="lesson-takeaway">
+          <strong>Pattern:</strong> Types are the API contract; implementation follows, never leads.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟢</span>
+            <span class="lesson-title">Engine test fixtures reused mock data from data/</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Tests imported <code class="code-inline">MOCK_REAL_ESTATE_ASSETS</code> and <code class="code-inline">MOCK_PE_HOLDINGS</code> directly, ensuring engine behavior matches what tools/resources will see. Established <code class="code-inline">data/index.ts</code> as the single export.
+        </p>
+        <div class="lesson-takeaway">
+          <strong>Pattern:</strong> Test fixtures = production data shapes. No synthetic test-only objects.
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>Phase 2 — MCP Tools Layer (2025-08-05)</span>
+        <span class="pill pill-cyan">Tool Primitives</span>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🔴</span>
+            <span class="lesson-title">Zod refinements for mutual exclusivity were harder than expected</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          The <code class="code-inline">extract_epc_rating</code> tool accepts <code class="code-inline">assetId</code> OR <code class="code-inline">dibRegistrationNumber</code> OR <code class="code-inline">certificateDocument</code> (at least one). Zod's <code class="code-inline">.refine()</code> with custom path caused confusing error messages. Created reusable <code class="code-inline">atLeastOne()</code> helper.
+        </p>
+        <div class="lesson-takeaway red-border">
+          <strong>Pattern:</strong> Reusable validation helpers for common MCP input patterns (at-least-one, exactly-one, conditional required).
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟡</span>
+            <span class="lesson-title">Tool response format inconsistency (markdown + JSON vs JSON only)</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Early tools returned only markdown; later tools returned both markdown and JSON in separate content blocks. Standardized all tools to return <code class="code-inline">[{type: 'text', text: markdown}, {type: 'text', text: json}]</code> array.
+        </p>
+        <div class="lesson-takeaway amber-border">
+          <strong>Pattern:</strong> Define the MCP response envelope once, wrap every tool handler in it.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟢</span>
+            <span class="lesson-title">Registering tools via registerAllTools() kept server.ts clean</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Each tool exports <code class="code-inline">registerXxxTool(server)</code> and a definition constant; <code class="code-inline">tools/index.ts</code> wires them all. Adding a tool = one import + one call. Maintained for resources and prompts too.
+        </p>
+        <div class="lesson-takeaway">
+          <strong>Pattern:</strong> Capability registration is additive, not invasive. No monolithic switch statements.
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>Phase 3 — MCP Resources Layer (2025-08-08)</span>
+        <span class="pill pill-indigo">Resource URIs</span>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🔴</span>
+            <span class="lesson-title">Resource URI patterns collided with tool names</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Early resource URIs used <code class="code-inline">esg://asset/{id}</code> but tools expected <code class="code-inline">esg://realestate/energy-metrics/{id}</code>. Defined all URI patterns as constants in <code class="code-inline">types/index.ts</code> (<code class="code-inline">RESOURCE_URI_PATTERNS</code>).
+        </p>
+        <div class="lesson-takeaway red-border">
+          <strong>Pattern:</strong> URI patterns are part of the public API contract &mdash; single source of truth.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟡</span>
+            <span class="lesson-title">CRREM index resource registered duplicate ListResources handler</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          The <code class="code-inline">registerCrremIndexResource()</code> exported a no-op but <code class="code-inline">registerCrremPathwaysResource()</code> already handled the <code class="code-inline">crrem://pathways</code> index URI. Removed index handler; logic consolidated in pathways handler.
+        </p>
+        <div class="lesson-takeaway amber-border">
+          <strong>Pattern:</strong> One handler per URI pattern. If index + detail share a prefix, handle both in one <code class="code-inline">ReadResourceRequestSchema</code> switch.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟢</span>
+            <span class="lesson-title">Resources returning JSON + markdown in contents[] worked seamlessly</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Claude Desktop auto-renders markdown when present, while programmatic consumers parse JSON. All resources return dual-format payloads: <code class="code-inline">{ contents: [{uri, mimeType: 'application/json', text: json}, {uri: uri+'#markdown', mimeType: 'text/markdown', text: markdown}] }</code>.
+        </p>
+        <div class="lesson-takeaway">
+          <strong>Pattern:</strong> Dual-format resource response is the default. Markdown is for humans; JSON is for machines.
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>Phase 4 — MCP Prompt &amp; Statement Builder (2025-08-10)</span>
+        <span class="pill pill-amber">Prompts &amp; Builder</span>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🔴</span>
+            <span class="lesson-title">Prompt argument validation failed silently for enum mismatch</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Schema expected <code class="code-inline">IDW_PS_991</code> but template used <code class="code-inline">IDW PS 991</code> (spaces), rendering the wrong standard name. Built single source of truth for enum labels in <code class="code-inline">utils/formatting.ts</code> (<code class="code-inline">formatAssuranceStandard()</code>).
+        </p>
+        <div class="lesson-takeaway red-border">
+          <strong>Pattern:</strong> Enum display labels are derived from the schema values, never hardcoded in templates.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟡</span>
+            <span class="lesson-title">Prompt became a "god object" &mdash; too much logic in template string</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          The prompt interpolated engine results directly into a massive template literal (200+ lines). Extracted <code class="code-inline">buildDisclosureOutline()</code> and <code class="code-inline">formatDRList()</code> helper functions.
+        </p>
+        <div class="lesson-takeaway amber-border">
+          <strong>Pattern:</strong> Prompt handlers are orchestrators, not template authors. Delegate section generation to pure functions.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟢</span>
+            <span class="lesson-title">Prompt returns structured messages[]</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          The prompt returns <code class="code-inline">{ messages: [{role: 'user', content: {type: 'text', text: promptText}}] }</code> which Claude Desktop displays as a ready-to-use prompt.
+        </p>
+        <div class="lesson-takeaway">
+          <strong>Pattern:</strong> Prompt return shape is fixed by protocol. Test by invoking via MCP inspector.
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>Phase 5 — Documentation &amp; Polish (2025-08-15)</span>
+        <span class="pill pill-emerald">Docs &amp; Workflow</span>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🔴</span>
+            <span class="lesson-title">Template placeholders left in shipped docs</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          The original <code class="code-inline">docs/</code> folder had <code class="code-inline">{{PROJECT_NAME}}</code> placeholders from the scaffold template. Replaced all template files with project-specific content in a single pass.
+        </p>
+        <div class="lesson-takeaway red-border">
+          <strong>Pattern:</strong> Template is a scaffold, not content. Fill placeholders before first commit, not after.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟡</span>
+            <span class="lesson-title">Status legends diverged across files</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Status legends diverged across <code class="code-inline">ROADMAP.md</code> and <code class="code-inline">FEATURE_MAP.md</code>. Defined canonical legend in <code class="code-inline">DOCUMENTATION_WORKFLOW.md</code> and propagated to all files.
+        </p>
+        <div class="lesson-takeaway amber-border">
+          <strong>Pattern:</strong> Status legend is a shared constant. Edit in one place, propagate to all files.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟢</span>
+            <span class="lesson-title">Documentation workflow checklist prevented drift &amp; unified README</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          7-step pre-merge checklist in <code class="code-inline">DOCUMENTATION_WORKFLOW.md</code> ensured no phase closed with stale docs. Consolidated architecture, tools, install, config, and limitations into one README.
+        </p>
+        <div class="lesson-takeaway">
+          <strong>Pattern:</strong> One user manual (README), one developer manual (docs/ folder). No duplication.
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 6 -->
+    <div class="section-card">
+      <div class="section-title">
+        <span>Phase 6 — Dual Transport Architecture (2025-08-16)</span>
+        <span class="pill pill-cyan">Transports &amp; Scale</span>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🔴</span>
+            <span class="lesson-title">Streamable HTTP transport requires session persistence across requests</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Creating a new <code class="code-inline">StreamableHTTPServerTransport</code> per request broke session continuity via the <code class="code-inline">mcp-session-id</code> header. Single transport instance created at startup, connected to a single server instance.
+        </p>
+        <div class="lesson-takeaway red-border">
+          <strong>Pattern:</strong> Stateful transports (SSE, WebSocket, Streamable HTTP) are long-lived. Create once, reuse for all requests.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🔴</span>
+            <span class="lesson-title">MCP Server cannot be connected to multiple transports</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          The SDK throws "Already connected to a transport" if calling <code class="code-inline">server.connect()</code> twice. In HTTP transport, created ONE server, connected it to ONE transport, and handled all requests through that transport.
+        </p>
+        <div class="lesson-takeaway red-border">
+          <strong>Pattern:</strong> Server + Transport = 1:1 pairing for the process lifetime. Don't try to multiplex servers.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟡</span>
+            <span class="lesson-title">Custom keyGenerator in express-rate-limit IPv6 CIDR handling</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Passing <code class="code-inline">req.ip</code> directly to <code class="code-inline">keyGenerator</code> failed validation in express-rate-limit v8+ for IPv6 addresses. Wrapped <code class="code-inline">req.ip</code> using <code class="code-inline">ipKeyGenerator(req.ip)</code>.
+        </p>
+        <div class="lesson-takeaway amber-border">
+          <strong>Pattern:</strong> Always use the library's IP normalization helper. Never pass raw <code class="code-inline">req.ip</code> to rate limiters.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟡</span>
+            <span class="lesson-title">Transport abstraction must be pure &mdash; no coupling to HTTP specifics</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Early draft had HTTP middleware imports in the factory, leaking HTTP concerns into the shared layer. Refactored <code class="code-inline">transports/</code> to be completely self-contained with zero Express dependencies on stdio.
+        </p>
+        <div class="lesson-takeaway amber-border">
+          <strong>Pattern:</strong> Transport modules are leaf nodes. They depend on the core, the core never depends on them.
+        </div>
+      </div>
+
+      <div class="lesson-item">
+        <div class="lesson-header">
+          <div class="lesson-title-group">
+            <span class="status-sym">🟢</span>
+            <span class="lesson-title">Single createServer() factory &amp; environment-driven transport selection</span>
+          </div>
+        </div>
+        <p class="lesson-body">
+          Both entry points (<code class="code-inline">index.ts</code> and <code class="code-inline">server-http.ts</code>) call the transport-agnostic <code class="code-inline">createServer()</code> factory. Runtime switching via <code class="code-inline">MCP_TRANSPORT=stdio|http</code> works without code changes.
+        </p>
+        <div class="lesson-takeaway">
+          <strong>Pattern:</strong> Core factory is the single source of server configuration. Transports are just delivery mechanisms.
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. FOOTER -->
     <footer class="footer-container">
       <div class="footer-top">
         <div class="brand-col">
@@ -665,7 +840,7 @@
             <div class="brand-title">AgenticAIExplorer</div>
           </div>
           <p class="brand-desc">
-            Continuous technical log documenting deterministic architectures, Model Context Protocol primitives, and production engineering retrospectives.
+            Continuous technical log documenting deterministic architectures, Model Context Protocol primitives, and production engineering retrospectives[cite: 1].
           </p>
         </div>
 
@@ -673,31 +848,31 @@
           <h4>Navigation</h4>
           <ul class="footer-links">
             <li><a data-path="/home" target="_self">Home Dashboard</a></li>
-            <li><a data-path="/projects" target="_self">Projects Portal</a></li>
-            <li><a data-path="/architecture" target="_self">Architecture Blueprints</a></li>
-            <li><a data-path="/lessons-learnt" target="_self">Lessons Learnt</a></li>
+            <li><a data-path="/lessons-learnt" target="_self">Lessons Learnt Hub</a></li>
+            <li><a data-path="/projects/mcp/csrdbafin-compliant-mcp" target="_self">CSRD/BaFin MCP Server</a></li>
+            <li><a data-path="/architecture/a-csrd-bafin-mcp" target="_self">CSRD Architecture Specs</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Standards</h4>
+          <h4>Standards &amp; Frameworks</h4>
           <ul class="footer-links">
-            <li><a href="#" style="pointer-events: none;">Model Context Protocol</a></li>
-            <li><a href="#" style="pointer-events: none;">RFC 5297 AES-SIV</a></li>
-            <li><a href="#" style="pointer-events: none;">TISAX AL3 Protection</a></li>
-            <li><a href="#" style="pointer-events: none;">Fidelity Contract v1.0</a></li>
+            <li><a href="#" style="pointer-events: none;">PCAF European Standard 2023</a></li>
+            <li><a href="#" style="pointer-events: none;">CRREM 1.5°C / 2.0°C Pathways</a></li>
+            <li><a href="#" style="pointer-events: none;">CSRD ESRS E1 Climate</a></li>
+            <li><a href="#" style="pointer-events: none;">BaFin Circular RS BFA-1</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
         <div>
-          <span>&copy; AgenticAIExplorer. Model Context Protocol Registry.</span>
+          <span>&copy; AgenticAIExplorer. CSRDBAFIN Technical Retrospective.</span>
         </div>
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-          <span class="spec-pill">FastMCP</span>
-          <span class="spec-pill">Python 3.11+</span>
-          <span class="spec-pill">Deterministic Core</span>
+          <span class="spec-pill">TypeScript</span>
+          <span class="spec-pill">Vitest (43 Tests)</span>
+          <span class="spec-pill">Engineering Review</span>
         </div>
       </div>
     </footer>
@@ -744,10 +919,9 @@
       const isPagesEmbed = window.location.hostname === "th-an.github.io";
       document.querySelectorAll("a[data-path]").forEach(function(el) {
         const rawPath = el.getAttribute("data-path");
-        // For href, keep Google Sites URL for _blank fallback / SEO
         el.href = base + rawPath;
         el.addEventListener('click', function(e) {
-          if (!isPagesEmbed) return; // let normal _self/_blank handle Google Sites embed
+          if (!isPagesEmbed) return;
           e.preventDefault();
           const file = pageMap[rawPath];
           if (file) {

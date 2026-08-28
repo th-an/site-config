@@ -22,5 +22,6 @@ window.SITE_CONFIG = {
 
     // Lessons Learned paths (verify these exist on your Google Site)
     cryptoTaxLessons: "/lessons-learnt/l-crypto-tax",
+    csrdLessons: "/lessons-learnt/l-csrd",
   }
 };

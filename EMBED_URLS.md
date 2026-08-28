@@ -18,6 +18,7 @@ Central reference for Google Sites embeds. Use **GitHub Pages** URLs for `Embed 
 | 8 | Crypto Tax Arch Deep Dive | `/architecture/a-crypto-mcp` | `https://th-an.github.io/site-config/a-crypto-mcp.html` |
 | 9 | Lessons Hub | `/lessons-learnt` | `https://th-an.github.io/site-config/lessons-learnt.html` |
 | 10 | Crypto Tax Retrospective | `/lessons-learnt/l-crypto-tax` | `https://th-an.github.io/site-config/l-crypto-tax.html` |
+| 11 | CSRD/BaFin Retrospective | `/lessons-learnt/l-csrd` | `https://th-an.github.io/site-config/l-csrd.html` |
 
 **Notes:**
 - All 10 pages use neutral terminology (`Retrospective` vs `Post-Mortem`, `Learnings` vs `Gotchas`) at `562ac8e`.
@@ -34,7 +35,7 @@ Central reference for Google Sites embeds. Use **GitHub Pages** URLs for `Embed 
 
 Base: `https://sites.google.com/view/s-agenticaiexplorer`
 Routes in `site-config.js`:
-- `home: "/home"`, `projects: "/projects"`, `architecture: "/architecture"`, `lessonsLearnt: "/lessons-learnt"`, `mcp: "/projects/mcp"`, `cryptoTax: "/projects/mcp/crypto-tax-mcp"`, `cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp"`, `cryptoTaxArch: "/architecture/a-crypto-mcp"`, `cryptoTaxLessons: "/lessons-learnt/l-crypto-tax"`, `csrdBafin: "/projects/mcp/csrdbafin-compliant-mcp"`, `csrdBafinMCP: "/projects/mcp/csrdbafin-compliant-mcp"`, `csrdBafinArch: "/architecture/a-csrd-bafin-mcp"`
+- `home: "/home"`, `projects: "/projects"`, `architecture: "/architecture"`, `lessonsLearnt: "/lessons-learnt"`, `mcp: "/projects/mcp"`, `cryptoTax: "/projects/mcp/crypto-tax-mcp"`, `cryptoTaxMCP: "/projects/mcp/crypto-tax-mcp"`, `cryptoTaxArch: "/architecture/a-crypto-mcp"`, `cryptoTaxLessons: "/lessons-learnt/l-crypto-tax"`, `csrdBafin: "/projects/mcp/csrdbafin-compliant-mcp"`, `csrdBafinMCP: "/projects/mcp/csrdbafin-compliant-mcp"`, `csrdBafinArch: "/architecture/a-csrd-bafin-mcp"`, `csrdLessons: "/lessons-learnt/l-csrd"`
 
 Use in embeds:
 ```html
@@ -59,6 +60,7 @@ Use in embeds:
 | Crypto Tax Inventory | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/crypto-tax-mcp.html` |
 | CSRD/BaFin ESG Auditor | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/csrdbafin-compliant-mcp.html` |
 | CSRD/BaFin Architecture | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/a-csrd-bafin-mcp.html` |
+| CSRD/BaFin Retrospective | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/l-csrd.html` |
 | Architecture Hub | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/architecture.html` |
 | Crypto Tax Arch | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/a-crypto-mcp.html` |
 | Lessons Hub | `https://cdn.jsdelivr.net/gh/th-an/site-config@main/lessons-learnt.html` |
@@ -66,4 +68,4 @@ Use in embeds:
 
 ---
 
-*Generated 2026-08-28 — 10 pages at `5ea6829` + CSRD/BaFin Architecture (`a-csrd-bafin-mcp.html`). Pages via `https://th-an.github.io/site-config/`.*
+*Generated 2026-08-28 — 11 pages at `bafacb6` + CSRD/BaFin Retrospective (`l-csrd.html`). Pages via `https://th-an.github.io/site-config/`.*
